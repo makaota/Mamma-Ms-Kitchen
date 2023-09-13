@@ -1,5 +1,7 @@
 package com.makaota.mammamskitchen.utils
 
+import com.makaota.mammamskitchen.interfaces.NotificationAPI
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

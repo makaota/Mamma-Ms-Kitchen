@@ -1,7 +1,8 @@
-package com.makaota.mammamskitchen
+package com.makaota.mammamskitchen.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.makaota.mammamskitchen.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

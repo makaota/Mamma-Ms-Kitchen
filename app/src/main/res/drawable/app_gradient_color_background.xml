@@ -5,7 +5,7 @@
 
     <gradient
         android:angle="360"
-        android:endColor="@color/amigosColorGreenTheme"
-        android:startColor="@color/amigosColorReadTheme"
+        android:endColor="@color/mammaColorLightYellowTheme"
+        android:startColor="@color/mammaColorGoldTheme"
         android:type="linear"/>
 </shape>

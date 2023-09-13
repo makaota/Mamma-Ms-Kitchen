@@ -6,17 +6,22 @@
     <string name="title_login">LOGIN</string>
     <string name="et_hint_phone_number">Phone Number</string>
     <string name="et_hint_email_id">Email ID</string>
-    <string name="et_hint_order_number">Order Number</string>
     <string name="et_hint_password">Password</string>
     <string name="lbl_forgot_password">Forgot Password?</string>
+    <string name="lbl_resend_otp">Resend OTP?</string>
     <string name="btn_lbl_login">Login</string>
+    <string name="btn_lbl_send_otp">Send OTP</string>
+    <string name="btn_lbl_resend_otp">Resend OTP</string>
+    <string name="btn_lbl_submit_otp">Submit OTP</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="register"><u>Register</u></string>
 
     <string name="create_an_account">CREATE AN ACCOUNT</string>
+    <string name="enter_otp">PLEASE ENTER OTP</string>
 
     <string name="hint_last_name">Last name</string>
     <string name="hint_first_name">First name</string>
+    <string name="hint_otp_number">OTP Number</string>
     <string name="et_hint_confirm_password">Confirm Password</string>
 
     <string name="i_agree_to_the_terms_and_condition">I Agree To The <u> Terms &amp; Condition </u></string>
@@ -28,7 +33,6 @@
     <string name="err_msg_enter_first_name">Please enter first name.</string>
     <string name="err_msg_enter_last_name">Please enter last name.</string>
     <string name="err_msg_enter_email">Please enter email.</string>
-    <string name="err_msg_enter_order_number">Please enter order number.</string>
     <string name="err_msg_enter_phone_number">Please enter phone number.</string>
     <string name="err_msg_enter_password">Please enter password.</string>
     <string name="err_msg_enter_confirm_password">Please enter confirm password.</string>
@@ -45,8 +49,7 @@
 
     <string name="register_success">You are registered successfully.</string>
 
-    <string name="title_complete_profile">COMPLETE PROFILE</string>
-    <string name="title_save_profile">SAVE PROFILE</string>
+    <string name="title_complete_profile">PLEASE COMPLETE PROFILE</string>
     <string name="et_hint_mobile_number">Mobile Number</string>
 
     <string name="rb_lbl_male">MALE</string>
@@ -57,6 +60,7 @@
     <string name="image_selection_failed">Image selection Failed!</string>
 
     <string name="err_msg_enter_mobile_number">Please enter mobile number.</string>
+    <string name="err_msg_enter_otp_number">Please enter OTP number.</string>
 
     <string name="msg_profile_update_success">Your profile is updated successfully.</string>
 
@@ -79,11 +83,11 @@
 
     <string name="title_edit_profile">EDIT PROFILE</string>
 
-    <string name="action_add_menu">Add Menu</string>
+    <string name="action_add_product">Add Product</string>
 
     <string name="title_add_product">ADD PRODUCT</string>
     <string name="et_hint_product_title">Product Title</string>
-    <string name="et_hint_product_price">Product Price (R)</string>
+    <string name="et_hint_product_price">Product Price ($)</string>
     <string name="et_hint_product_description">Product Description</string>
     <string name="et_hint_product_quantity">Product Quantity</string>
 
@@ -162,27 +166,21 @@
     <string name="lbl_payment_mode">Payment Mode</string>
     <string name="lbl_cash_on_delivery">Cash On Delivery</string>
     <string name="btn_lbl_place_order">PLACE ORDER</string>
-    <string name="btn_lbl_order_received">NOTIFY USER ORDER WAS RECEIVED</string>
-    <string name="btn_lbl_send_order_number">SEND ORDER NUMBER</string>
-    <string name="btn_lbl_ready_for_collection">SEND READY FOR COLLECTION</string>
-    <string name="btn_lbl_order_delivered">SEND ORDER DELIVERED</string>
 
     <string name="no_orders_placed_yet">No orders placed yet!</string>
 
     <string name="title_my_order_details">MY ORDER DETAILS</string>
     <string name="order_details_lbl">Order Details</string>
-    <string name="user_details_lbl">User Details</string>
     <string name="order_details_lbl_order_id">Order ID</string>
     <string name="order_details_lbl_order_date">Order Date</string>
     <string name="order_details_lbl_order_status">Order Status</string>
-    <string name="order_details_lbl_order_number">Order Number</string>
     <string name="order_status_pending">Pending</string>
+    <string name="order_details_lbl_order_number">Order Number</string>
     <string name="order_details_lbl_shipping_address">Shipping Address</string>
 
     <string name="order_status_in_process">In Process</string>
-    <string name="order_status_preparing">Preparing</string>
     <string name="order_status_delivered">Delivered</string>
-
+    <string name="order_status_preparing">Preparing</string>
     <string name="order_status_ready_for_collection">Ready For Collection</string>
 
     <string name="title_sold_products">Sold Products</string>
@@ -192,8 +190,8 @@
     <string name="hello_blank_fragment">hello</string>
     <string name="registery_successfull">"Thank you for registering "</string>
     <string name="title_menu">Menu</string>
+    <string name="title_notifications">Notifications</string>
     <string name="lbl_product_category">Product Category</string>
-    <string name="title_manage_menu">Manage Menu</string>
-    <string name="title_manage_orders">Manage Orders</string>
+
 
 </resources>
