@@ -23,7 +23,7 @@
             android:paddingStart="@dimen/toolbar_title_paddingStart"
             android:paddingEnd="0dp"
             android:text="@string/title_complete_profile"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/toolbar_title_text_size"
             android:textStyle="bold" />
 
@@ -71,6 +71,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_first_name"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/mammaColorGoldTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -95,6 +96,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_last_name"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/mammaColorGoldTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -119,6 +121,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_email"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/mammaColorGoldTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -143,6 +146,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_mobile_number"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/mammaColorGoldTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -168,6 +172,7 @@
                 android:id="@+id/til_opt_number"
                 android:labelFor="@id/et_otp_number"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/mammaColorGoldTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -223,7 +228,7 @@
                 android:paddingBottom="@dimen/btn_padding"
                 android:text="@string/btn_lbl_send_otp"
 
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/btn_textSize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -246,7 +251,7 @@
                 android:paddingTop="@dimen/btn_padding"
                 android:paddingBottom="@dimen/btn_padding"
                 android:text="@string/btn_lbl_submit_otp"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/btn_textSize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -270,7 +275,7 @@
                 android:paddingTop="@dimen/btn_padding"
                 android:paddingBottom="@dimen/btn_padding"
                 android:text="@string/btn_lbl_resend_otp"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/btn_textSize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -310,7 +315,7 @@
                 android:text="@string/btn_lbl_save"
                 android:visibility="gone"
                 tools:visibility="visible"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/btn_textSize"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

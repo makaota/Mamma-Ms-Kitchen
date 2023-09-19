@@ -23,7 +23,7 @@
             android:paddingStart="@dimen/toolbar_title_paddingStart"
             android:paddingEnd="0dp"
             android:text="@string/title_product_details"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/toolbar_title_text_size"
             android:textStyle="bold" />
 
@@ -158,7 +158,7 @@
                 android:paddingTop="@dimen/btn_padding"
                 android:paddingBottom="@dimen/btn_padding"
                 android:text="@string/btn_lbl_add_to_cart"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/btn_textSize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -179,7 +179,7 @@
                 android:paddingTop="@dimen/btn_padding"
                 android:paddingBottom="@dimen/btn_padding"
                 android:text="@string/btn_lbl_go_to_cart"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/btn_textSize"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"

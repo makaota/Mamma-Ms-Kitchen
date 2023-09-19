@@ -5,8 +5,12 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import com.makaota.mammamskitchen.R
 
 class SplashActivity : AppCompatActivity() {
@@ -25,18 +29,27 @@ class SplashActivity : AppCompatActivity() {
             )
         }
 
-        // Adding the handler to after the a task after some delay.
-        // It is deprecated in the API level 30.
-        @Suppress("DEPRECATION")
-        Handler().postDelayed(
-            {
-                // Launch the Main Activity
-                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-                finish() // Call this when your activity is done and should be closed.
-            },
-            3000
-        ) // Here we pass the delay time in milliSeconds after which the splash activity will disappear.
+        val splashAnimation = AnimationUtils.loadAnimation(this@SplashActivity, R.anim.anim_splash)
+        val splashText = findViewById<ImageView>(R.id.splash_text)
+            splashText.animation = splashAnimation
 
-        // END
+        splashAnimation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {
+                // "Add the code that you want to execute when animation starts")
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                // "Add the code that you want to execute when animation ends")
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    startActivity(Intent(this@SplashActivity, DashboardActivity::class.java))
+                    finish()
+                }, 500)
+            }
+
+            override fun onAnimationRepeat(animation: Animation?) {
+                // "Add the code that you want to execute when animation repeats")
+            }
+        })
     }
 }

@@ -1,44 +1,45 @@
 {
   "project_info": {
-    "project_number": "413836783222",
-    "project_id": "bella-mamma",
-    "storage_bucket": "bella-mamma.appspot.com"
+    "project_number": "1002531018552",
+    "project_id": "weighty-treat-316511",
+    "storage_bucket": "weighty-treat-316511.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:413836783222:android:4fe8dff362093989e73957",
+        "mobilesdk_app_id": "1:1002531018552:android:2140c8ad7e6e756fcd13cd",
         "android_client_info": {
           "package_name": "com.makaota.mammamskitchen"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "413836783222-h643rg6s91vkr8l1mcq192jlifb6iie9.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.makaota.mammamskitchen",
-            "certificate_hash": "1a1cdcf6a63311ef9ce3e50aaaada095cfd8939b"
-          }
-        },
-        {
-          "client_id": "413836783222-og2m0g424st812c287iqt1ki1vm8nde9.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAY9SPWeq_zLpa7Vpaz0b4YBy83HvjgnP4"
+          "current_key": "AIzaSyCoXu-HkjvPcs3tBnwNJak5EPbGfF-dyC4"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "413836783222-og2m0g424st812c287iqt1ki1vm8nde9.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002531018552:android:85539b614dd5be3ecd13cd",
+        "android_client_info": {
+          "package_name": "com.makaota.mammamskitchenmanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoXu-HkjvPcs3tBnwNJak5EPbGfF-dyC4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     }

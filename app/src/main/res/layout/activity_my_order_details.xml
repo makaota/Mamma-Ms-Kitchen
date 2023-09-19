@@ -23,7 +23,7 @@
             android:paddingStart="@dimen/toolbar_title_paddingStart"
             android:paddingEnd="0dp"
             android:text="@string/title_my_order_details"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/toolbar_title_text_size"
             android:textStyle="bold" />
 

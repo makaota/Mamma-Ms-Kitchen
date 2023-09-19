@@ -9,7 +9,7 @@ import android.webkit.MimeTypeMap
 object Constants {
 
     const val BASE_URL = "https://fcm.googleapis.com"
-    const val SERVER_KEY = "AAAAyRG1c14:APA91bGdMMYeDl7sXoqvSR2vhARf5kY9rjmlSidrvdX9WacjLYDyHyyYCrDKv4W8Hwp4SL1QeKMcFa_lE2zLgqv56N7xE7UoE3xpWfrp4kY1Ja5gmD3WGc8CvomRgmpVwR0fvpPtKGiq"
+    const val SERVER_KEY = "AAAA6WuBVzg:APA91bG42BqsBYwZ9UHeROrVNaWFE6A1Bl2b8eMDFpWsE3MI4MaLY1PLbGd7R9YIj6ysR4FoIwMmO8fSXALcKAB78RU4eRVBGGz4zjcr6c8Xm9IVE0wZ0O21KgFE_yk_XALjg5JfQ6db"
     const val CONTENT_TYPE = "application/json"
 
     // Firebase Constants

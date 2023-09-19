@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.makaota.mammamskitchen"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.makaota.mammamskitchen"
@@ -43,7 +43,7 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -57,7 +57,7 @@ dependencies {
 
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
 
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies

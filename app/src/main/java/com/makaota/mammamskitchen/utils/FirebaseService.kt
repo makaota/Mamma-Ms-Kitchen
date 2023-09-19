@@ -11,6 +11,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.makaota.mammamskitchen.R
+import com.makaota.mammamskitchen.ui.fragments.OrdersFragment
 import kotlin.random.Random
 
 const val CHANNEL_ID = "my_channel"
