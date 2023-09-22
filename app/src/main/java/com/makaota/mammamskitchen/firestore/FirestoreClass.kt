@@ -18,6 +18,7 @@ import com.makaota.mammamskitchen.models.User
 import com.makaota.mammamskitchen.ui.activities.CartListActivity
 import com.makaota.mammamskitchen.ui.activities.CheckoutActivity
 import com.makaota.mammamskitchen.ui.activities.LoginActivity
+import com.makaota.mammamskitchen.ui.activities.MyOrderDetailsActivity
 import com.makaota.mammamskitchen.ui.activities.ProductDetailsActivity
 import com.makaota.mammamskitchen.ui.activities.RegisterActivity
 import com.makaota.mammamskitchen.ui.activities.SettingsActivity

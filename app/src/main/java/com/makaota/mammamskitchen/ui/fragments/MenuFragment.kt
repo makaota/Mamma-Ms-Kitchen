@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.FragmentMenuBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
@@ -18,11 +19,14 @@ import com.makaota.mammamskitchen.ui.activities.ProductDetailsActivity
 import com.makaota.mammamskitchen.ui.activities.SettingsActivity
 import com.makaota.mammamskitchen.ui.adapters.MenuItemsListAdapter
 import com.makaota.mammamskitchen.utils.Constants
+import com.shashank.sony.fancytoastlib.FancyToast
 import java.util.ArrayList
 
 class MenuFragment : BaseFragment() {
 
     private var _binding: FragmentMenuBinding? = null
+    private lateinit var menuSwipeRefreshLayout: SwipeRefreshLayout
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -63,7 +67,8 @@ class MenuFragment : BaseFragment() {
 
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
+        menuSwipeRefreshLayout = root.findViewById(R.id.menu_swipe_refresh_layout)
+        refreshPage()
         return root
     }
 
@@ -75,6 +80,22 @@ class MenuFragment : BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun refreshPage() {
+
+        menuSwipeRefreshLayout.setOnRefreshListener {
+            getMenuItemsList() // Reload Menu Items
+            FancyToast.makeText(
+                requireContext(),
+                "Menu Refreshed",
+                FancyToast.LENGTH_SHORT,
+                FancyToast.SUCCESS,
+                true
+            ).show()
+
+            _binding!!.menuSwipeRefreshLayout.isRefreshing = false
+        }
     }
 
     fun successMenuItemsList(menuItemsList: ArrayList<Product>) {

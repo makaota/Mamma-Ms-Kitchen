@@ -7,19 +7,25 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.ActivityMyOrderDetailsBinding
+import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.Order
 import com.makaota.mammamskitchen.ui.adapters.CartItemsListAdapter
 import com.makaota.mammamskitchen.utils.Constants
+import com.shashank.sony.fancytoastlib.FancyToast
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
+
+const val ORDER_TAG = "MyOrderDetailsActivity"
 class MyOrderDetailsActivity : BaseActivity() {
 
     lateinit var binding: ActivityMyOrderDetailsBinding
+    private lateinit var orderDetailsSwipeRefreshLayout: SwipeRefreshLayout
     var username: String? = null
     private var userMobile: String? = null
     lateinit var myOrderDetails: Order
@@ -31,6 +37,7 @@ class MyOrderDetailsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMyOrderDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        orderDetailsSwipeRefreshLayout = findViewById(R.id.order_details_swipe_refresh_layout)
         setupActionBar()
 
         // Get the order details through intent.
@@ -59,6 +66,24 @@ class MyOrderDetailsActivity : BaseActivity() {
 
         setupUI(myOrderDetails)
 
+        refreshOrdersPage()
+
+    }
+
+    private fun refreshOrdersPage() {
+
+        orderDetailsSwipeRefreshLayout.setOnRefreshListener {
+            onBackPressed()
+            FancyToast.makeText(
+                this,
+                "Order Details Refreshed",
+                FancyToast.LENGTH_SHORT,
+                FancyToast.SUCCESS,
+                true
+            ).show()
+
+            orderDetailsSwipeRefreshLayout.isRefreshing = false
+        }
     }
 
     // Create a function to setup UI.

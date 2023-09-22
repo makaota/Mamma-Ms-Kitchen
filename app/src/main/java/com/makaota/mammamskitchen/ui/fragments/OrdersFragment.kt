@@ -5,15 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.FragmentOrdersBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.Order
 import com.makaota.mammamskitchen.ui.adapters.MyOrdersListAdapter
+import com.shashank.sony.fancytoastlib.FancyToast
 
 class OrdersFragment : BaseFragment() {
 
     private var _binding: FragmentOrdersBinding? = null
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -26,7 +29,10 @@ class OrdersFragment : BaseFragment() {
     ): View {
         _binding = FragmentOrdersBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        swipeRefreshLayout = root.findViewById(R.id.swipe_refresh_layout)
+        refreshPage()
         return root
+
     }
 
     override fun onResume() {
@@ -37,6 +43,23 @@ class OrdersFragment : BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun refreshPage(){
+
+        swipeRefreshLayout.setOnRefreshListener {
+
+            getMyOrdersList() //Reload order List Items
+
+            FancyToast.makeText(requireContext(),
+                "Orders Refreshed",
+                FancyToast.LENGTH_SHORT,
+                FancyToast.SUCCESS,
+                true).show()
+
+            _binding!!.swipeRefreshLayout.isRefreshing = false
+
+        }
     }
 
     // Create a function to get the success result of the my order list from cloud firestore.
@@ -68,6 +91,8 @@ class OrdersFragment : BaseFragment() {
             _binding!!.tvNoOrdersFound.visibility = View.VISIBLE
         }
         // END
+
+
     }
     // END
 
