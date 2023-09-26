@@ -13,6 +13,7 @@ import com.google.gson.Gson
 import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.ActivityCheckoutBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
+import com.makaota.mammamskitchen.models.Address
 import com.makaota.mammamskitchen.models.CartItem
 import com.makaota.mammamskitchen.models.NotificationData
 import com.makaota.mammamskitchen.models.Order
@@ -33,6 +34,10 @@ const val TOPIC = "myOrders"
 class CheckoutActivity : BaseActivity() {
 
     lateinit var binding: ActivityCheckoutBinding
+
+    // A global variable for the selected address details.
+    private var mAddressDetails: Address? = null
+
 
     // Global variable for all product list.
     // START
@@ -66,6 +71,33 @@ class CheckoutActivity : BaseActivity() {
         binding = ActivityCheckoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupActionBar()
+
+        // Get the selected address details through intent.
+        // START
+        if (intent.hasExtra(Constants.EXTRA_SELECTED_ADDRESS)) {
+            mAddressDetails =
+                intent.getParcelableExtra<Address>(Constants.EXTRA_SELECTED_ADDRESS)!!
+        }
+        // END
+
+        // Set the selected address details to UI that is received through intent.
+        // START
+        if (mAddressDetails != null) {
+            binding.tvCheckoutAddressType.text = mAddressDetails?.type
+            binding.tvCheckoutFullName.text = mAddressDetails?.name
+            binding.tvCheckoutAddress.text = "${mAddressDetails!!.address}, ${mAddressDetails!!.zipCode}"
+            binding.tvCheckoutAdditionalNote.text = mAddressDetails?.additionalNote
+
+            if (mAddressDetails?.otherDetails!!.isNotEmpty()) {
+                binding.tvCheckoutOtherDetails.text = mAddressDetails?.otherDetails
+            }
+            binding.tvCheckoutMobileNumber.text = mAddressDetails?.mobileNumber
+        }else{
+            binding.llCheckoutAddressDetails.visibility = View.GONE
+            binding.tvSelectedAddress.visibility = View.GONE
+        }
+        // END
+
         getProductList()
 
 
@@ -209,35 +241,64 @@ class CheckoutActivity : BaseActivity() {
             getSharedPreferences(Constants.RESTAURANT_USER_PREFERENCES, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         val username = sharedPreferences.getString(Constants.LOGGED_IN_USERNAME, "")
-        val userMobile = sharedPreferences.getString(Constants.LOGGED_IN_USER_MOBILE,"")
+        val userMobile = sharedPreferences.getString(Constants.LOGGED_IN_USER_MOBILE, "")
         editor.apply()
 
         // Now prepare the order details based on all the required details.
         // START
-        mOrderDetails = Order(
-            user_id = FirestoreClass().getCurrentUserId(),
-            mCartItemsList,
-            title = "$username ${System.currentTimeMillis()}",
-            orderStatus = resources.getString(R.string.order_status_pending),
-            userName = username!!,
-            userMobile = userMobile!!,
-            image = mCartItemsList[0].image,
-            sub_total_amount = mSubTotal.toString(),
-            shipping_charge = "10.0", // The Shipping Charge is fixed as $10 for now in our case.
-            total_amount = mTotalAmount.toString(),
-            order_datetime = System.currentTimeMillis()
-        )
+        if (mAddressDetails != null) {
+            mOrderDetails = Order(
+                user_id = FirestoreClass().getCurrentUserId(),
+                mCartItemsList,
+                mAddressDetails!!,
+                title = "$username ${System.currentTimeMillis()}",
+                orderStatus = resources.getString(R.string.order_status_pending),
+                userName = username!!,
+                userMobile = userMobile!!,
+                image = mCartItemsList[0].image,
+                sub_total_amount = mSubTotal.toString(),
+                shipping_charge = "10.0", // The Shipping Charge is fixed as $10 for now in our case.
+                total_amount = mTotalAmount.toString(),
+                order_datetime = System.currentTimeMillis()
+            )
+            // END
+
+
+            // Call the function to place the order in the cloud firestore.
+            // START
+            FirestoreClass().placeOrder(this@CheckoutActivity, mOrderDetails)
+            // END
+
+            sendOrderNotificationToUserManager()
+
+        }else{ // Customer to Pickup Items address not required
+
+            mOrderDetails = Order(
+                user_id = FirestoreClass().getCurrentUserId(),
+                mCartItemsList,
+                title = "$username ${System.currentTimeMillis()}",
+                orderStatus = resources.getString(R.string.order_status_pending),
+                userName = username!!,
+                userMobile = userMobile!!,
+                image = mCartItemsList[0].image,
+                sub_total_amount = mSubTotal.toString(),
+                shipping_charge = "10.0", // The Shipping Charge is fixed as $10 for now in our case.
+                total_amount = mTotalAmount.toString(),
+                order_datetime = System.currentTimeMillis()
+            )
+            // END
+
+
+            // Call the function to place the order in the cloud firestore.
+            // START
+            FirestoreClass().placeOrder(this@CheckoutActivity, mOrderDetails)
+            // END
+
+            sendOrderNotificationToUserManager()
+
+        }
         // END
-
-
-        // Call the function to place the order in the cloud firestore.
-        // START
-        FirestoreClass().placeOrder(this@CheckoutActivity, mOrderDetails)
-        // END
-
-        sendOrderNotificationToUserManager()
     }
-    // END
 
     private fun sendOrderNotificationToUserManager(){
         val userCollection = FirebaseFirestore.getInstance().collection(Constants.USER_MANAGER)

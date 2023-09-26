@@ -21,6 +21,7 @@ data class SoldProduct(
     val sub_total_amount: String = "",
     val shipping_charge: String = "",
     val total_amount: String = "",
+    val address: Address = Address(),
     val user: User = User(),
     var id: String = "",
 ) : Parcelable

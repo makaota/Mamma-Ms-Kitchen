@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mamma_m_kitchen_auth"
+    tools:context=".ui.activities.PickupOrDeliveryActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_pickup_delivery_activity"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/app_gradient_color_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingStart="@dimen/toolbar_title_paddingStart"
+            android:paddingEnd="0dp"
+            android:text="PICKUP / DELIVERY"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/toolbar_title_text_size"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.makaota.mammamskitchen.utils.RUATextView
+        android:id="@+id/tv_pickup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/btn_add_address_margin"
+        android:background="@drawable/item_primary_color_border_background"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:padding="@dimen/btn_add_address_padding"
+        android:text="Pickup"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/add_address_textSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_pickup_delivery_activity" />
+
+
+    <com.makaota.mammamskitchen.utils.RUATextView
+        android:id="@+id/tv_delivery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/item_primary_color_border_background"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:padding="@dimen/btn_add_address_padding"
+        android:text="Delivery"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/add_address_textSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_pickup" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

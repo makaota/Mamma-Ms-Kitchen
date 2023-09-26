@@ -11,6 +11,7 @@ import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.CartItem
 import com.makaota.mammamskitchen.models.Product
 import com.makaota.mammamskitchen.ui.adapters.CartItemsListAdapter
+import com.makaota.mammamskitchen.utils.Constants
 import com.shashank.sony.fancytoastlib.FancyToast
 
 class CartListActivity : BaseActivity(), View.OnClickListener {
@@ -34,7 +35,14 @@ class CartListActivity : BaseActivity(), View.OnClickListener {
             when (v.id) {
 
                 R.id.btn_checkout->{
-                    startActivity(Intent(this@CartListActivity, CheckoutActivity::class.java))
+
+                    val intent = Intent(this@CartListActivity, PickupOrDeliveryActivity::class.java)
+                   // intent.putExtra(Constants.EXTRA_SELECT_ADDRESS, true)
+                    startActivity(intent)
+
+//                    val intent = Intent(this@CartListActivity, AddressListActivity::class.java)
+//                    intent.putExtra(Constants.EXTRA_SELECT_ADDRESS, true)
+//                    startActivity(intent)
                 }
             }
         }

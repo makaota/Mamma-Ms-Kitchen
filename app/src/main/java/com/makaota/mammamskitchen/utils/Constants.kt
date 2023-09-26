@@ -19,6 +19,7 @@ object Constants {
     const val PRODUCTS: String = "products"
     const val ORDERS: String = "orders"
     const val SOLD_PRODUCTS: String = "sold_products"
+    const val ADDRESSES: String = "addresses"
 
     const val ORDER_STATUS: String = "orderStatus"
 
@@ -26,11 +27,15 @@ object Constants {
     const val LOGGED_IN_USERNAME: String = "logged_in_username"
     const val EXTRA_USER_DETAILS: String = "extra_user_details"
     const val USER_PROFILE_IMAGE: String = "user_profile_image"
+    const val EXTRA_ADDRESS_DETAILS: String = "AddressDetails"
+    const val EXTRA_SELECT_ADDRESS: String = "extra_select_address"
+    const val EXTRA_SELECTED_ADDRESS: String = "extra_selected_address"
     const val EXTRA_MY_ORDER_DETAILS: String = "extra_my_order_details"
 
     const val READ_STORAGE_PERMISSION_CODE: Int = 2
     const val PICK_IMAGE_REQUEST_CODE = 1
     const val PICK_PRODUCT_IMAGE_REQUEST_CODE = 1
+    const val ADD_ADDRESS_REQUEST_CODE: Int = 121
 
     const val EXTRA_PRODUCT_ID: String = "extra_product_id"
 
@@ -53,6 +58,10 @@ object Constants {
     const val PRODUCT_ID: String = "product_id"
 
     const val LOGGED_IN_USER_MOBILE = "user_mobile"
+
+    const val HOME: String = "Home"
+    const val OFFICE: String = "Office"
+    const val OTHER: String = "Other"
 
     // START
     /**

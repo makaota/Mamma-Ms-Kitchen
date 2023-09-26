@@ -110,10 +110,10 @@ class SettingsActivity :  BaseActivity(), View.OnClickListener {
                 }
                 // END
 
-//                R.id.ll_address ->{
-//                    val intent = Intent(this@SettingsActivity, AddressListActivity::class.java)
-//                    startActivity(intent)
-//                }
+                R.id.ll_address ->{
+                    val intent = Intent(this@SettingsActivity, AddressListActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
 

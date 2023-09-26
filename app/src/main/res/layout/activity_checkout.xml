@@ -61,7 +61,7 @@
                 android:layout_below="@id/tv_product_items" />
 
             <com.makaota.mammamskitchen.utils.RUATextView
-                android:id="@+id/tv_selected_user_details"
+                android:id="@+id/tv_selected_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rv_cart_list_items"
@@ -71,15 +71,15 @@
                 android:layout_marginBottom="@dimen/checkout_content_marginTopBottom"
                 android:paddingTop="@dimen/checkout_content_lbl_padding"
                 android:paddingBottom="@dimen/checkout_content_lbl_padding"
-                android:text="User Details"
+                android:text="@string/checkout_lbl_selected_address"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/checkout_lbl_textSize" />
 
             <LinearLayout
-                android:id="@+id/ll_checkout_user_details"
+                android:id="@+id/ll_checkout_address_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_selected_user_details"
+                android:layout_below="@id/tv_selected_address"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingStart="@dimen/checkout_content_paddingStartEnd"
@@ -87,6 +87,16 @@
                 android:paddingEnd="@dimen/checkout_content_paddingStartEnd"
                 android:paddingBottom="@dimen/checkout_content_paddingTopBottom">
 
+                <com.makaota.mammamskitchen.utils.RUATextView
+                    android:id="@+id/tv_checkout_address_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/address_details_marginTop"
+                    android:paddingBottom="@dimen/address_details_marginTop"
+                    android:textColor="@color/item_value_text_color"
+                    android:textSize="@dimen/address_details_textSize"
+                    android:textStyle="bold"
+                    tools:text="Home" />
 
                 <com.makaota.mammamskitchen.utils.RUATextViewBold
                     android:id="@+id/tv_checkout_full_name"
@@ -95,6 +105,33 @@
                     android:textColor="@color/item_value_text_color"
                     android:textSize="@dimen/item_address_name_textSize"
                     tools:text="Papi Makaota" />
+
+                <com.makaota.mammamskitchen.utils.RUATextView
+                    android:id="@+id/tv_checkout_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/address_details_marginTop"
+                    android:textColor="@color/item_value_text_color"
+                    android:textSize="@dimen/address_details_textSize"
+                    tools:text="XYZ" />
+
+                <com.makaota.mammamskitchen.utils.RUATextView
+                    android:id="@+id/tv_checkout_additional_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/address_details_marginTop"
+                    android:textColor="@color/item_value_text_color"
+                    android:textSize="@dimen/address_details_textSize"
+                    tools:text="XYZ" />
+
+                <com.makaota.mammamskitchen.utils.RUATextView
+                    android:id="@+id/tv_checkout_other_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/address_details_marginTop"
+                    android:textColor="@color/item_value_text_color"
+                    android:textSize="@dimen/address_details_textSize"
+                    tools:text="XYZ" />
 
                 <com.makaota.mammamskitchen.utils.RUATextView
                     android:id="@+id/tv_checkout_mobile_number"
@@ -110,7 +147,7 @@
                 android:id="@+id/tv_items_receipt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ll_checkout_user_details"
+                android:layout_below="@id/ll_checkout_address_details"
                 android:layout_marginStart="@dimen/checkout_content_marginStartEnd"
                 android:layout_marginTop="@dimen/checkout_content_marginTopBottom"
                 android:layout_marginEnd="@dimen/checkout_content_marginStartEnd"
