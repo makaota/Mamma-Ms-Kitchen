@@ -65,6 +65,8 @@ class CheckoutActivity : BaseActivity() {
     // A global variable for the Total Amount.
     private var mTotalAmount: Double = 0.0
 
+    private var userProfileComplete: Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,7 +106,16 @@ class CheckoutActivity : BaseActivity() {
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
 
         binding.btnPlaceOrder.setOnClickListener {
-            placeAnOrder()
+
+            val sharedPreferences = getSharedPreferences("CheckoutPrefs", Context.MODE_PRIVATE)
+             userProfileComplete = sharedPreferences.getInt("userProfileComplete", 0)
+
+            if (userProfileComplete == 0) {
+                FirestoreClass().getUserDetails(this)
+            }else{
+                placeAnOrder()
+            }
+
         }
     }
 
@@ -298,6 +309,49 @@ class CheckoutActivity : BaseActivity() {
 
         }
         // END
+    }
+
+    /**
+     * This Function provide a question that needs to be answered
+     * If the userProfile is completed the user can place an order else
+     * The user will need to complete the profile before placing an order*/
+    fun isUserProfileComplete(user: User) {
+
+        // Redirect the user to the UserProfile screen if it is incomplete otherwise to the Main screen.
+        // START
+        if (user.profileCompleted == 0) {
+            // If the user profile is incomplete then launch the UserProfileActivity.
+            val intent = Intent(this, UserProfileActivity::class.java)
+
+            val sharedPreferences = getSharedPreferences("CheckoutPrefs", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            userProfileComplete = 1 // Set your value here (0 or 1)
+            editor.putInt("userProfileComplete", userProfileComplete)
+            //editor.clear()
+            editor.apply()
+            intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+            startActivity(intent)
+
+        }else{
+
+            /***
+             * / This part here will only happen when the user uninstall the app and re-installing it
+             *  This part re-write the shared-preference instance only if the app was uninstalled and
+             *  the user has previously completed the user profile
+             */
+
+            // If the user profile is complete then launch the CartListActivity.
+            val intent = Intent(this, CartListActivity::class.java)
+
+            val sharedPreferences = getSharedPreferences("CheckoutPrefs", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            userProfileComplete = 1 // Set your value here (0 or 1)
+            editor.putInt("userProfileComplete", userProfileComplete)
+            //editor.clear()
+            editor.apply()
+            startActivity(intent)
+
+        }
     }
 
     private fun sendOrderNotificationToUserManager(){

@@ -306,9 +306,8 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             FancyToast.LENGTH_SHORT, FancyToast.SUCCESS,true
         ).show()
 
-        // auth.signOut()
+        auth.signOut()
         startActivity(Intent(this@UserProfileActivity, LoginActivity::class.java))
-        finish()
     }
 
     override fun onRequestPermissionsResult(

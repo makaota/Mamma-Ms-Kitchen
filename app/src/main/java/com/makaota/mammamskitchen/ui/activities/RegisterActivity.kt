@@ -197,9 +197,6 @@ class RegisterActivity : BaseActivity(), View.OnClickListener {
 
                             FirestoreClass().registerUser(this@RegisterActivity,user)
 
-
-//                            FirebaseAuth.getInstance().signOut()
-//                            finish()
                         } else {
 
                             hideProgressDialog()
@@ -222,6 +219,9 @@ class RegisterActivity : BaseActivity(), View.OnClickListener {
             resources.getString(R.string.register_success),
             FancyToast.LENGTH_SHORT, FancyToast.SUCCESS,true
         ).show()
+
+        FirebaseAuth.getInstance().signOut()
+        onBackPressedDispatcher.onBackPressed()
 
     }
 

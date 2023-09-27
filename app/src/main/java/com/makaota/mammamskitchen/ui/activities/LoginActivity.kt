@@ -146,17 +146,21 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
         // Redirect the user to the UserProfile screen if it is incomplete otherwise to the Main screen.
         // START
-        if (user.profileCompleted == 0) {
-            // If the user profile is incomplete then launch the UserProfileActivity.
-            val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
-            intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
-            startActivity(intent)
-        } else {
-            // Redirect the user to Main Screen after log in.
-            startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
-        }
-        finish()
+//        if (user.profileCompleted == 0) {
+//            // If the user profile is incomplete then launch the UserProfileActivity.
+//            val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
+//            intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+//            startActivity(intent)
+//        } else {
+//            // Redirect the user to Main Screen after log in.
+//            startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
+//        }
+//        finish()
         // END
+
+        // Redirect the user to Main Screen after log in.
+        startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
+        finish()
     }
 
 }

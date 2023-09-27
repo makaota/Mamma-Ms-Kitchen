@@ -127,6 +127,9 @@ class FirestoreClass {
                     is SettingsActivity -> {
                         activity.userDetailsSuccess(user)
                     }
+                    is CheckoutActivity ->{
+                        activity.isUserProfileComplete(user)
+                    }
 
                 }
                 // END
