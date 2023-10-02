@@ -680,32 +680,11 @@ class FirestoreClass {
             productHashMap[Constants.STOCK_QUANTITY] =
                 (cartItem.stock_quantity.toInt() - cartItem.cart_quantity.toInt()).toString()
 
-
-            val soldProduct = SoldProduct(
-                // Here the user id will be of product owner.
-                user_id = FirestoreClass().getCurrentUserId(),
-                title = cartItem.title,
-                price = cartItem.price,
-                sold_quantity = cartItem.cart_quantity,
-                image = cartItem.image,
-                order_id = order.title,
-                order_date = order.order_datetime,
-                sub_total_amount = order.sub_total_amount,
-                shipping_charge = order.shipping_charge,
-                total_amount = order.total_amount,
-            )
-
-
             val documentReference = mFirestore.collection(Constants.PRODUCTS)
                 .document(cartItem.product_id)
 
             writeBatch.update(documentReference, productHashMap)
 
-
-            val documentRef = mFirestore.collection(Constants.SOLD_PRODUCTS)
-                .document(cartItem.product_id)
-
-            writeBatch.set(documentRef, soldProduct)
         }
 
         // Delete the list of cart items
