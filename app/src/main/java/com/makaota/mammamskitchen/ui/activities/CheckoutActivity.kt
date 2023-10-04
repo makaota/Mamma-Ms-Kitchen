@@ -29,7 +29,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-const val TOPIC = "myOrders"
+
 
 class CheckoutActivity : BaseActivity() {
 
@@ -46,7 +46,7 @@ class CheckoutActivity : BaseActivity() {
 
     private lateinit var mUserDetailsList: ArrayList<User>
 
-    var userManagerToken = ""
+    private var userManagerToken = ""
 
     private var mUserDetails: User? = null
 
@@ -103,7 +103,7 @@ class CheckoutActivity : BaseActivity() {
         getProductList()
 
 
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+        FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
 
         binding.btnPlaceOrder.setOnClickListener {
 
@@ -385,6 +385,8 @@ class CheckoutActivity : BaseActivity() {
             }
     }
 
+    // This Function get the id of user manager via product
+    // meaning the manager who created the product has an Id
     private fun getUserMangerId(): String {
 
         var userManagerId = ""

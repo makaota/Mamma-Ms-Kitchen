@@ -5,16 +5,30 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.Gson
 import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.ActivityMyOrderDetailsBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
+import com.makaota.mammamskitchen.models.NotificationData
 import com.makaota.mammamskitchen.models.Order
+import com.makaota.mammamskitchen.models.PushNotification
+import com.makaota.mammamskitchen.models.UserManager
 import com.makaota.mammamskitchen.ui.adapters.CartItemsListAdapter
 import com.makaota.mammamskitchen.utils.Constants
+import com.makaota.mammamskitchen.utils.RetrofitInstance
 import com.shashank.sony.fancytoastlib.FancyToast
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -22,7 +36,7 @@ import java.util.concurrent.TimeUnit
 
 
 const val ORDER_TAG = "MyOrderDetailsActivity"
-class MyOrderDetailsActivity : BaseActivity() {
+class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
 
     lateinit var binding: ActivityMyOrderDetailsBinding
     private lateinit var orderDetailsSwipeRefreshLayout: SwipeRefreshLayout
@@ -31,6 +45,7 @@ class MyOrderDetailsActivity : BaseActivity() {
     lateinit var myOrderDetails: Order
     lateinit var mOrderStatus: String
     lateinit var mOrderNumber: String
+    private var userManagerToken = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +83,167 @@ class MyOrderDetailsActivity : BaseActivity() {
 
         refreshOrdersPage()
 
+        FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
+
+        binding.btnSendCancelOrder.setOnClickListener(this)
+        binding.btnUserConfirmOrder.setOnClickListener(this)
+
     }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+
+            R.id.btn_user_confirm_order -> {
+
+                showProgressDialog(resources.getString(R.string.please_wait))
+
+                val db = Firebase.firestore
+                val batch = db.batch()
+
+                val documentRef = db.collection(Constants.ORDERS)
+                    .document(myOrderDetails.id)
+                // Update the value of the order status
+                batch.update(documentRef, Constants.ORDER_CONFIRMATION, "Yes")
+                Log.i(TAG, "orders status is = $mOrderStatus")
+                Log.i(TAG, "document ID is = ${myOrderDetails.id}")
+                batch.commit()
+                    .addOnSuccessListener {
+                        // Update successful
+                        //hideProgressDialog()
+
+                    }
+                    .addOnFailureListener { e ->
+                        // Handle error
+                        //hideProgressDialog()
+                    }
+
+                sendOrderNotificationToUserManager()
+                hideProgressDialog()
+                onBackPressed()
+
+            }
+            R.id.btn_send_cancel_order -> {
+
+                cancelOrder(myOrderDetails.id)
+            }
+        }
+    }
+    // END
+
+    private fun sendOrderNotificationToUserManager(){
+
+        showProgressDialog(resources.getString(R.string.please_wait))
+        val userCollection = FirebaseFirestore.getInstance().collection(Constants.USER_MANAGER)
+        userCollection.document(myOrderDetails.user_manager_id).get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val userManager = documentSnapshot.toObject(UserManager::class.java)
+                    // Extract user information here
+                    userManagerToken = userManager?.userToken.toString()
+
+
+                    val title = "My Order Title"
+                    val message = "My Order Confirmation Message"
+
+
+                    PushNotification(NotificationData(title,message),userManagerToken).also {
+                        sendOrderNotification(it)
+                        Log.i("TAG","userManager Token sent notification = $userManagerToken")
+                    }
+
+                    Log.i("TAG","userManager Token = $userManagerToken")
+                } else {
+                    // User document does not exist
+                }
+            }
+            .addOnFailureListener { exception ->
+                // Error occurred while fetching user data
+            }
+    }
+
+
+    private fun sendOrderNotification(notification: PushNotification) =
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = RetrofitInstance.api.postNotification(notification)
+                if (response.isSuccessful) {
+                    Log.i("CheckoutActivity", "Response: ${Gson().toJson(response)}")
+                } else {
+                    Log.i("CheckoutActivity","not successful ${response.errorBody().toString()}")
+
+                }
+
+            } catch (e: Exception) {
+                Log.i("CheckoutActivity","Exception found $e")
+            }
+
+            hideProgressDialog()
+            finish()
+
+        }
+
+    private fun cancelOrder(orderID: String){
+
+        showAlertDialogToDeleteDeliveredOrder(orderID)
+
+    }
+
+    // Create a function to show the alert dialog for the confirmation of delete product from cloud firestore.
+    // START
+    /**
+     * A function to show the alert dialog for the confirmation of delete product from cloud firestore.
+     */
+    private fun showAlertDialogToDeleteDeliveredOrder(orderID: String) {
+
+        val builder = AlertDialog.Builder(this)
+        //set title for alert dialog
+        builder.setTitle(resources.getString(R.string.delete_dialog_title))
+        //set message for alert dialog
+        builder.setMessage(resources.getString(R.string.delete_dialog_message))
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+        //performing positive action
+        builder.setPositiveButton(resources.getString(R.string.yes)) { dialogInterface, _ ->
+
+            // Call the function to delete the product from cloud firestore.
+            // START
+            // Show the progress dialog.
+            showProgressDialog(resources.getString(R.string.please_wait))
+
+            // Call the function of Firestore class.
+            FirestoreClass().cancelOrder(this,orderID)
+            // END
+
+            dialogInterface.dismiss()
+        }
+
+        //performing negative action
+        builder.setNegativeButton(resources.getString(R.string.no)) { dialogInterface, _ ->
+
+            dialogInterface.dismiss()
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
+
+    fun orderCancelSuccess(){
+
+        // Hide the progress dialog
+        hideProgressDialog()
+
+        Toast.makeText(
+            this,
+            resources.getString(R.string.product_delete_success_message),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        finish()
+
+    }
+    // END
 
     private fun refreshOrdersPage() {
 
@@ -109,6 +284,8 @@ class MyOrderDetailsActivity : BaseActivity() {
         calendar.timeInMillis = orderDetails.order_datetime
 
         val orderDateTime = formatter.format(calendar.time)
+
+
         binding.tvOrderDetailsDate.text = orderDateTime
         // END
 
@@ -123,6 +300,14 @@ class MyOrderDetailsActivity : BaseActivity() {
         val diffInHours: Long = TimeUnit.MILLISECONDS.toHours(diffInMilliSeconds)
         Log.e("Difference in Hours", "$diffInHours")
 
+
+        if (orderDetails.order_confirmation == ""){
+            binding.tvOrderConfirmationText.text = "No"
+        }else{
+            binding.tvOrderConfirmationText.text = orderDetails.order_confirmation
+        }
+
+
         when {
             mOrderStatus == resources.getString(R.string.order_status_pending) -> {
                 binding.tvOrderStatus.setTextColor(
@@ -132,6 +317,7 @@ class MyOrderDetailsActivity : BaseActivity() {
                     )
                 )
                 binding.tvOrderStatus.text = resources.getString(R.string.order_status_pending)
+                binding.btnSendCancelOrder.visibility = View.VISIBLE
             }
 
 
@@ -143,6 +329,16 @@ class MyOrderDetailsActivity : BaseActivity() {
                     )
                 )
                 binding.tvOrderStatus.text = resources.getString(R.string.order_status_in_process)
+
+                if(orderDetails.order_confirmation == "Yes"){
+                    binding.btnSendCancelOrder.visibility = View.GONE
+                    binding.btnUserConfirmOrder.visibility = View.GONE
+                }else{
+                    binding.btnSendCancelOrder.visibility = View.VISIBLE
+                    binding.btnUserConfirmOrder.visibility = View.VISIBLE
+                }
+
+
             }
 
             mOrderStatus == resources.getString(R.string.order_status_preparing) -> {
@@ -153,6 +349,9 @@ class MyOrderDetailsActivity : BaseActivity() {
                     )
                 )
                 binding.tvOrderStatus.text = resources.getString(R.string.order_status_preparing)
+
+                binding.btnSendCancelOrder.visibility = View.GONE
+                binding.btnUserConfirmOrder.visibility = View.GONE
             }
 
             mOrderStatus == resources.getString(R.string.order_status_ready_for_collection) -> {
@@ -163,6 +362,8 @@ class MyOrderDetailsActivity : BaseActivity() {
                     )
                 )
                 binding.tvOrderStatus.text = resources.getString(R.string.order_status_ready_for_collection)
+                binding.btnSendCancelOrder.visibility = View.GONE
+                binding.btnUserConfirmOrder.visibility = View.GONE
             }
 
             mOrderStatus == resources.getString(R.string.order_status_delivered) -> {
@@ -173,6 +374,8 @@ class MyOrderDetailsActivity : BaseActivity() {
                     )
                 )
                 binding.tvOrderStatus.text = resources.getString(R.string.order_status_delivered)
+                binding.btnSendCancelOrder.visibility = View.GONE
+                binding.btnUserConfirmOrder.visibility = View.GONE
             }
         }
         // END
@@ -213,5 +416,6 @@ class MyOrderDetailsActivity : BaseActivity() {
 
         binding.toolbarMyOrderDetailsActivity.setNavigationOnClickListener { onBackPressed() }
     }
-    // END
+
+
 }

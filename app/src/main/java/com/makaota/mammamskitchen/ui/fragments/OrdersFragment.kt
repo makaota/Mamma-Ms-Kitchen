@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makaota.mammamskitchen.R
@@ -84,8 +86,9 @@ class OrdersFragment : BaseFragment() {
             _binding!!.rvMyOrderItems.layoutManager = LinearLayoutManager(activity)
             _binding!!.rvMyOrderItems.setHasFixedSize(true)
 
-            val myOrdersAdapter = MyOrdersListAdapter(requireActivity(), ordersList)
+            val myOrdersAdapter = MyOrdersListAdapter(requireActivity(), ordersList,this)
             _binding!!.rvMyOrderItems.adapter = myOrdersAdapter
+
         } else {
             _binding!!.rvMyOrderItems.visibility = View.GONE
             _binding!!.tvNoOrdersFound.visibility = View.VISIBLE
@@ -106,6 +109,75 @@ class OrdersFragment : BaseFragment() {
         showProgressDialog(resources.getString(R.string.please_wait))
 
         FirestoreClass().getMyOrdersList(this@OrdersFragment)
+    }
+    // END
+
+    fun deleteDeliveredOrder(orderID: String){
+
+        showAlertDialogToDeleteDeliveredOrder(orderID)
+
+    }
+
+    // Create a function to show the alert dialog for the confirmation of delete product from cloud firestore.
+    // START
+    /**
+     * A function to show the alert dialog for the confirmation of delete product from cloud firestore.
+     */
+    private fun showAlertDialogToDeleteDeliveredOrder(orderID: String) {
+
+        val builder = AlertDialog.Builder(requireActivity())
+        //set title for alert dialog
+        builder.setTitle(resources.getString(R.string.delete_dialog_title))
+        //set message for alert dialog
+        builder.setMessage(resources.getString(R.string.delete_dialog_message))
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+        //performing positive action
+        builder.setPositiveButton(resources.getString(R.string.yes)) { dialogInterface, _ ->
+
+            // Call the function to delete the product from cloud firestore.
+            // START
+            // Show the progress dialog.
+            showProgressDialog(resources.getString(R.string.please_wait))
+
+            // Call the function of Firestore class.
+            FirestoreClass().deleteDeliveredOrder(this, orderID)
+            // END
+
+            dialogInterface.dismiss()
+        }
+
+        //performing negative action
+        builder.setNegativeButton(resources.getString(R.string.no)) { dialogInterface, _ ->
+
+            dialogInterface.dismiss()
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
+
+    // Create a function to notify the success result of product deleted from cloud firestore.
+    // START
+    /**
+     * A function to notify the success result of product deleted from cloud firestore.
+     */
+    fun orderDeleteSuccess() {
+
+        // Hide the progress dialog
+        hideProgressDialog()
+
+        Toast.makeText(
+            requireActivity(),
+            resources.getString(R.string.product_delete_success_message),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        // Get the latest products list from cloud firestore.
+        getMyOrdersList()
+
     }
     // END
 }

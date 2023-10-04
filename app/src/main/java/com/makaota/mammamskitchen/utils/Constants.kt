@@ -22,6 +22,9 @@ object Constants {
     const val ADDRESSES: String = "addresses"
 
     const val ORDER_STATUS: String = "orderStatus"
+    const val ORDER_CONFIRMATION: String = "order_confirmation"
+
+    const val TOPIC = "myOrders"
 
     const val RESTAURANT_USER_PREFERENCES: String = "restaurantUserPrefs"
     const val LOGGED_IN_USERNAME: String = "logged_in_username"

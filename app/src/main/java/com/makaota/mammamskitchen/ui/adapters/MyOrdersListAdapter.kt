@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.makaota.mammamskitchen.databinding.ItemListLayoutBinding
 import com.makaota.mammamskitchen.models.Order
 import com.makaota.mammamskitchen.ui.activities.MyOrderDetailsActivity
+import com.makaota.mammamskitchen.ui.fragments.OrdersFragment
 import com.makaota.mammamskitchen.utils.Constants
 import com.makaota.mammamskitchen.utils.GlideLoader
 import java.util.ArrayList
@@ -17,7 +18,8 @@ import java.util.ArrayList
 // START
 open class MyOrdersListAdapter(
     private val context: Context,
-    private var list: ArrayList<Order>
+    private var list: ArrayList<Order>,
+    private var fragment: OrdersFragment
 ) : RecyclerView.Adapter<MyOrdersListAdapter.MyViewHolder>() {
 
 
@@ -54,8 +56,17 @@ open class MyOrdersListAdapter(
 
                 binding.tvItemName.text = model.title
                 binding.tvItemPrice.text = "R${model.total_amount}"
-
                 binding.ibDeleteProduct.visibility = View.GONE
+
+                if (model.orderStatus == "Delivered"){
+                    binding.ibDeleteProduct.visibility = View.VISIBLE
+
+                    binding.ibDeleteProduct.setOnClickListener{
+
+                        fragment.deleteDeliveredOrder(model.id)
+                    }
+                }
+
 
                 // Assign the click event to my order item and launch and pass the details to the detail page through intent.
                 // START

@@ -16,6 +16,8 @@ data class Order(
     val items: ArrayList<CartItem> = ArrayList(),
     val address: Address = Address(),
     val title: String = "",
+    val user_manager_id: String = "",
+    val order_confirmation: String = "",
     val orderStatus: String = "",
     val orderNumber: String = "",
     val userName: String = "",

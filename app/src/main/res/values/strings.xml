@@ -18,6 +18,7 @@
 
     <string name="create_an_account">CREATE AN ACCOUNT</string>
     <string name="enter_otp">PLEASE ENTER OTP</string>
+    <string name="order_details_lbl_order_confirmation">Order Confirmed</string>
 
     <string name="hint_last_name">Last name</string>
     <string name="hint_first_name">First name</string>

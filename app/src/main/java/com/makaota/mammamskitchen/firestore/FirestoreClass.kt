@@ -882,15 +882,64 @@ class FirestoreClass {
                 )
             }
     }
+
+
+
+    // Create a function to delete the existing order from the cloud firestore.
+    // START
+    fun deleteDeliveredOrder(ordersFragment: OrdersFragment, orderID: String) {
+
+        mFirestore.collection(Constants.ORDERS)
+            .document(orderID)
+            .delete()
+            .addOnSuccessListener {
+
+                // Notify the success result to the base class.
+                // START
+                // Notify the success result to the base class.
+                ordersFragment.orderDeleteSuccess()
+                // END
+            }
+            .addOnFailureListener { e ->
+
+                // Hide the progress dialog if there is an error.
+                ordersFragment.hideProgressDialog()
+
+                Log.e(
+                    ordersFragment.requireActivity().javaClass.simpleName,
+                    "Error while deleting the product.",
+                    e
+                )
+            }
+
+    }
     // END
 
-    // Create a function to place an order of the user in the cloud firestore.
+    // Create a function to delete the existing order from the cloud firestore.
     // START
-    /**
-     * A function to place an order of the user in the cloud firestore.
-     *
-     * @param activity base class
-     * @param order Order Info
-     */
+    fun cancelOrder(activity: MyOrderDetailsActivity, orderID: String) {
+
+        mFirestore.collection(Constants.ORDERS)
+            .document(orderID)
+            .delete()
+            .addOnSuccessListener {
+
+                // Notify the success result to the base class.
+                // START
+                // Notify the success result to the base class.
+                activity.orderCancelSuccess()
+                // END
+            }
+            .addOnFailureListener { e ->
+
+                // Hide the progress dialog if there is an error.
+                activity.hideProgressDialog()
+
+            }
+
+    }
+    // END
+
+
 
 }
