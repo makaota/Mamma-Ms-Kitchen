@@ -5,9 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mamma_m_kitchen_auth"
-    tools:context=".ui.fragments.NotificationsFragment">
+    tools:context=".ui.fragments.NotificationsFragment"
+    android:layout_marginBottom="?actionBarSize">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/notifications_swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

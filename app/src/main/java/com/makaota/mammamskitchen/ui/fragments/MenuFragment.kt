@@ -26,6 +26,7 @@ class MenuFragment : BaseFragment() {
 
     private var _binding: FragmentMenuBinding? = null
     private lateinit var menuSwipeRefreshLayout: SwipeRefreshLayout
+    private var menu: Menu? = null
 
 
     // This property is only valid between onCreateView and
@@ -39,7 +40,9 @@ class MenuFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.dashboard_menu,menu)
+        this.menu = menu
         super.onCreateOptionsMenu(menu, inflater)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -69,6 +72,7 @@ class MenuFragment : BaseFragment() {
         val root: View = binding.root
         menuSwipeRefreshLayout = root.findViewById(R.id.menu_swipe_refresh_layout)
         refreshPage()
+
         return root
     }
 
