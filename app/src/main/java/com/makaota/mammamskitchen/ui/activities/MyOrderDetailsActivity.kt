@@ -19,8 +19,10 @@ import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.ActivityMyOrderDetailsBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.NotificationData
+import com.makaota.mammamskitchen.models.Notifications
 import com.makaota.mammamskitchen.models.Order
 import com.makaota.mammamskitchen.models.PushNotification
+import com.makaota.mammamskitchen.models.User
 import com.makaota.mammamskitchen.models.UserManager
 import com.makaota.mammamskitchen.ui.adapters.CartItemsListAdapter
 import com.makaota.mammamskitchen.utils.Constants
@@ -46,6 +48,7 @@ class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
     lateinit var mOrderStatus: String
     lateinit var mOrderNumber: String
     private var userManagerToken = ""
+    private var mUserDeviceToken= ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -130,9 +133,40 @@ class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
     }
     // END
 
+    private fun sendOrderNotificationToUser() {
+
+        val userCollection = FirebaseFirestore.getInstance().collection(Constants.USER)
+        userCollection.document(FirestoreClass().getCurrentUserId()).get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val user = documentSnapshot.toObject(User::class.java)
+                    // Extract user information here
+                    mUserDeviceToken = user?.userToken.toString()
+
+
+                    val title = myOrderDetails.title
+                    val message = "${myOrderDetails.userName} has confirmed the order please proceed"
+
+                    PushNotification(NotificationData(title,message),mUserDeviceToken).also {
+                        sendOrderNotification(it)
+                        Log.i("MyOrderDetailsActivity", "${title}, $message user Token sent notification = $mUserDeviceToken")
+
+                    }
+
+                    Log.i("TAG","userManager Token = $mUserDeviceToken")
+                } else {
+                    // User document does not exist
+                }
+            }
+            .addOnFailureListener { exception ->
+                // Error occurred while fetching user data
+            }
+    }
+    // END
+
     private fun sendOrderNotificationToUserManager(){
 
-        showProgressDialog(resources.getString(R.string.please_wait))
+
         val userCollection = FirebaseFirestore.getInstance().collection(Constants.USER_MANAGER)
         userCollection.document(myOrderDetails.user_manager_id).get()
             .addOnSuccessListener { documentSnapshot ->
@@ -142,14 +176,29 @@ class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
                     userManagerToken = userManager?.userToken.toString()
 
 
-                    val title = "My Order Title"
-                    val message = "My Order Confirmation Message"
+                    val title = myOrderDetails.title
+                    val message = "${myOrderDetails.userName} has confirmed the order please proceed"
 
 
                     PushNotification(NotificationData(title,message),userManagerToken).also {
                         sendOrderNotification(it)
                         Log.i("TAG","userManager Token sent notification = $userManagerToken")
                     }
+
+                    sendOrderNotificationToUser()
+
+
+                    val notifications = Notifications(
+                        title = title,
+                        orderDateTime = myOrderDetails.order_datetime,
+                        orderStatus = myOrderDetails.orderStatus,
+                        orderMessage = message,
+                        orderConfirmed = myOrderDetails.order_confirmation,
+                        orderNumber = myOrderDetails.orderNumber,
+                        user_id = FirestoreClass().getCurrentUserId()
+                    )
+
+                    FirestoreClass().uploadNotificationsDetails(this, notifications)
 
                     Log.i("TAG","userManager Token = $userManagerToken")
                 } else {
@@ -161,6 +210,17 @@ class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
             }
     }
 
+    fun notificationsUploadSuccess(){
+
+        //  hideProgressDialog()
+
+        FancyToast.makeText(
+            this,
+            "Notifications Info Uploaded successfully.",
+            FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, true
+        )
+            .show()
+    }
 
     private fun sendOrderNotification(notification: PushNotification) =
         CoroutineScope(Dispatchers.IO).launch {
@@ -177,7 +237,6 @@ class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
                 Log.i("CheckoutActivity","Exception found $e")
             }
 
-            hideProgressDialog()
             finish()
 
         }
@@ -199,7 +258,7 @@ class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
         //set title for alert dialog
         builder.setTitle(resources.getString(R.string.delete_dialog_title))
         //set message for alert dialog
-        builder.setMessage(resources.getString(R.string.delete_dialog_message))
+        builder.setMessage(resources.getString(R.string.delete_order_dialog_message))
         builder.setIcon(android.R.drawable.ic_dialog_alert)
 
         //performing positive action
@@ -236,7 +295,7 @@ class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
 
         Toast.makeText(
             this,
-            resources.getString(R.string.product_delete_success_message),
+            "Your order was canceled successfully",
             Toast.LENGTH_SHORT
         ).show()
 

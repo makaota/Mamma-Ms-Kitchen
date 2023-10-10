@@ -19,6 +19,7 @@
     <string name="create_an_account">CREATE AN ACCOUNT</string>
     <string name="enter_otp">PLEASE ENTER OTP</string>
     <string name="order_details_lbl_order_confirmation">Order Confirmed</string>
+    <string name="order_details_lbl_order_message">Order Message</string>
 
     <string name="hint_last_name">Last name</string>
     <string name="hint_first_name">First name</string>
@@ -103,8 +104,12 @@
     <string name="no_dashboard_item_found">No items found!</string>
 
     <string name="product_delete_success_message">Your product is deleted successfully.</string>
+    <string name="notification_delete_success_message">Your notification is deleted successfully.</string>
+    <string name="order_delete_success_message">Your order is deleted successfully.</string>
+    <string name="delete_notification_dialog_message">Are you sure you want to delete the notification?</string>
     <string name="delete_dialog_title">Delete</string>
     <string name="delete_dialog_message">Are you sure you want to delete the product?</string>
+    <string name="delete_order_dialog_message">Are you sure you want to delete the order?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
@@ -169,6 +174,8 @@
     <string name="btn_lbl_place_order">PLACE ORDER</string>
 
     <string name="no_orders_placed_yet">No orders placed yet!</string>
+
+    <string name="no_notifications_yet">Notifications not found yet!</string>
 
     <string name="title_my_order_details">MY ORDER DETAILS</string>
     <string name="order_details_lbl">Order Details</string>

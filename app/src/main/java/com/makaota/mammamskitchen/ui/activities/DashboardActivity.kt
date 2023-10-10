@@ -30,7 +30,7 @@ class DashboardActivity : BaseActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_menu, R.id.navigation_orders
+                R.id.navigation_menu, R.id.navigation_orders, R.id.navigation_notifications
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

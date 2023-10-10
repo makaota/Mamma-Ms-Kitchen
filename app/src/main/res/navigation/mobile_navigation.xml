@@ -17,5 +17,11 @@
         android:label="@string/title_orders"
         tools:layout="@layout/fragment_orders" />
 
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.makaota.mammamskitchen.ui.fragments.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+
 
 </navigation>

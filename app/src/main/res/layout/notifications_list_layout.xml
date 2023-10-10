@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:cardElevation="10dp"
+        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardMaxElevation="12dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/my_order_details_content_paddingStartEnd"
+            android:paddingTop="@dimen/my_order_details_content_paddingTopBottom"
+            android:paddingEnd="@dimen/my_order_details_content_paddingStartEnd"
+            android:paddingBottom="@dimen/my_order_details_content_paddingTopBottom">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.makaota.mammamskitchen.utils.RUATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_details_lbl_order_id"
+                    android:textColor="@color/colorDarkGrey"
+                    android:textSize="@dimen/notification_textSize" />
+
+                <com.makaota.mammamskitchen.utils.RUATextView
+                    android:id="@+id/order_details_id"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="@dimen/notification_textSize"
+                    tools:text="123456" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.makaota.mammamskitchen.utils.RUATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_details_lbl_order_date"
+                    android:textColor="@color/colorDarkGrey"
+                    android:textSize="@dimen/notification_textSize" />
+
+                <com.makaota.mammamskitchen.utils.RUATextView
+                    android:id="@+id/order_details_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="@dimen/notification_textSize"
+                    tools:text="04 May 2022" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.makaota.mammamskitchen.utils.RUATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_details_lbl_order_status"
+                    android:textColor="@color/colorDarkGrey"
+                    android:textSize="@dimen/notification_textSize" />
+
+                <com.makaota.mammamskitchen.utils.RUATextView
+                    android:id="@+id/order_status"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/order_status_pending"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/notification_textSize" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ll_order_message"
+                tools:visibility="visible"
+                android:orientation="horizontal">
+
+                <com.makaota.mammamskitchen.utils.RUATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_details_lbl_order_message"
+                    android:textColor="@color/colorDarkGrey"
+                    android:textSize="@dimen/notification_textSize" />
+
+                <com.makaota.mammamskitchen.utils.RUATextView
+                    android:id="@+id/order_message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Message"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/notification_textSize" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ll_order_number"
+                android:orientation="horizontal">
+
+                <com.makaota.mammamskitchen.utils.RUATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_details_lbl_order_number"
+                    android:textColor="@color/colorDarkGrey"
+                    android:textSize="@dimen/notification_textSize" />
+
+                <com.makaota.mammamskitchen.utils.RUATextView
+                    android:id="@+id/order_number"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="123"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/notification_textSize" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/delete_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DELETE"
+                android:textSize="12sp"
+                android:textColor="@color/colorThemePink"
+                android:background="@android:color/transparent"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="@dimen/delete_icon_padding"
+                android:layout_gravity="right" />
+        </LinearLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

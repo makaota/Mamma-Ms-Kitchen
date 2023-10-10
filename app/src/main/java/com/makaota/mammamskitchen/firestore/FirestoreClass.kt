@@ -12,6 +12,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.makaota.mammamskitchen.models.Address
 import com.makaota.mammamskitchen.models.CartItem
+import com.makaota.mammamskitchen.models.Notifications
 import com.makaota.mammamskitchen.models.Order
 import com.makaota.mammamskitchen.models.Product
 import com.makaota.mammamskitchen.models.SoldProduct
@@ -27,6 +28,7 @@ import com.makaota.mammamskitchen.ui.activities.RegisterActivity
 import com.makaota.mammamskitchen.ui.activities.SettingsActivity
 import com.makaota.mammamskitchen.ui.activities.UserProfileActivity
 import com.makaota.mammamskitchen.ui.fragments.MenuFragment
+import com.makaota.mammamskitchen.ui.fragments.NotificationsFragment
 import com.makaota.mammamskitchen.ui.fragments.OrdersFragment
 import com.makaota.mammamskitchen.utils.Constants
 
@@ -939,6 +941,113 @@ class FirestoreClass {
 
     }
     // END
+
+    /**
+     * A function to make an entry of the user's notifications in the cloud firestore database.
+     */
+    fun uploadNotificationsDetails(activity: Activity, notificationsInfo: Notifications) {
+
+        mFirestore.collection(Constants.NOTIFICATIONS)
+            //.document()
+            // Here the userInfo are Field and the SetOption is set to merge. It is for if we wants to merge
+            .add(notificationsInfo)
+            .addOnSuccessListener {
+
+                // Here call a function of base activity for transferring the result to it.
+                when(activity){
+                    is CheckoutActivity ->{
+                        activity.notificationsUploadSuccess()
+                    }
+                    is MyOrderDetailsActivity->{
+                        activity.notificationsUploadSuccess()
+                    }
+                }
+
+            }
+            .addOnFailureListener { e ->
+
+                when(activity){
+                    is CheckoutActivity->{
+                        activity.hideProgressDialog()
+                    }
+                    is MyOrderDetailsActivity->{
+                        activity.hideProgressDialog()
+                    }
+                }
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while uploading the product details.",
+                    e
+                )
+            }
+    }
+
+// Create a function to get the list of notifications from cloud firestore.
+    // START
+    /**
+     * A function to get the list of notifications from cloud firestore.
+     */
+    fun getMyNotificationsList(fragment: NotificationsFragment) {
+        mFirestore.collection(Constants.NOTIFICATIONS)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserId())
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+                Log.e(fragment.javaClass.simpleName, document.documents.toString())
+                val list: ArrayList<Notifications> = ArrayList()
+
+                for (i in document.documents) {
+
+                    val notifications = i.toObject(Notifications::class.java)!!
+                    notifications.documentId = i.id
+
+                    list.add(notifications)
+                }
+
+                // Notify the success result to base class.
+                // START
+                fragment.populateNotificationsListInUI(list)
+                // END
+            }
+            .addOnFailureListener { e ->
+                // Here call a function of base activity for transferring the result to it.
+
+                fragment.hideProgressDialog()
+
+                Log.e(fragment.javaClass.simpleName, "Error while getting the orders list.", e)
+            }
+    }
+    // END
+
+    // Create a function to delete the existing notification from the cloud firestore.
+    // START
+    fun deleteNotification(notificationsFragment: NotificationsFragment, documentId: String) {
+
+        mFirestore.collection(Constants.NOTIFICATIONS)
+            .document(documentId)
+            .delete()
+            .addOnSuccessListener {
+
+                // Notify the success result to the base class.
+                // START
+                // Notify the success result to the base class.
+                notificationsFragment.notificationDeleteSuccess()
+                // END
+            }
+            .addOnFailureListener { e ->
+
+                // Hide the progress dialog if there is an error.
+                notificationsFragment.hideProgressDialog()
+
+                Log.e(
+                    notificationsFragment.requireActivity().javaClass.simpleName,
+                    "Error while deleting the product.",
+                    e
+                )
+            }
+
+    }
+    // END
+
 
 
 

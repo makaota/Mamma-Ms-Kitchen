@@ -16,6 +16,7 @@ import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.Address
 import com.makaota.mammamskitchen.models.CartItem
 import com.makaota.mammamskitchen.models.NotificationData
+import com.makaota.mammamskitchen.models.Notifications
 import com.makaota.mammamskitchen.models.Order
 import com.makaota.mammamskitchen.models.Product
 import com.makaota.mammamskitchen.models.PushNotification
@@ -48,7 +49,7 @@ class CheckoutActivity : BaseActivity() {
 
     private var userManagerToken = ""
 
-    private var mUserDetails: User? = null
+    private var mUserDeviceToken= ""
 
     // Global variable for cart items list.
     // START
@@ -354,6 +355,38 @@ class CheckoutActivity : BaseActivity() {
         }
     }
 
+
+    private fun sendOrderNotificationToUser() {
+
+        val userCollection = FirebaseFirestore.getInstance().collection(Constants.USER)
+        userCollection.document(FirestoreClass().getCurrentUserId()).get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val user = documentSnapshot.toObject(User::class.java)
+                    // Extract user information here
+                    mUserDeviceToken = user?.userToken.toString()
+
+
+                    val title = mOrderDetails.title
+                    val message = "${mOrderDetails.userName} has placed an order of R${mOrderDetails.total_amount}"
+
+                    PushNotification(NotificationData(title,message),mUserDeviceToken).also {
+                        sendOrderNotification(it)
+                        Log.i("MyOrderDetailsActivity", "${title}, $message user Token sent notification = $mUserDeviceToken")
+
+                    }
+
+                    Log.i("TAG","userManager Token = $mUserDeviceToken")
+                } else {
+                    // User document does not exist
+                }
+            }
+            .addOnFailureListener { exception ->
+                // Error occurred while fetching user data
+            }
+    }
+    // END
+
     private fun sendOrderNotificationToUserManager(){
         val userCollection = FirebaseFirestore.getInstance().collection(Constants.USER_MANAGER)
 
@@ -366,14 +399,29 @@ class CheckoutActivity : BaseActivity() {
                     userManagerToken = userManager?.userToken.toString()
 
 
-                    val title = "My Order Title"
-                    val message = "My Order Message"
+                    val title = mOrderDetails.title
+                    val message = "${mOrderDetails.userName} has placed an order of R${mOrderDetails.total_amount}"
 
 
                     PushNotification(NotificationData(title,message),userManagerToken).also {
                         sendOrderNotification(it)
                         Log.i("TAG","userManager Token sent notification = $userManagerToken")
                     }
+
+                    sendOrderNotificationToUser()
+
+
+                    val notifications = Notifications(
+                        title = title,
+                        orderDateTime = mOrderDetails.order_datetime,
+                        orderStatus = mOrderDetails.orderStatus,
+                        orderMessage = message,
+                        orderConfirmed = mOrderDetails.order_confirmation,
+                        orderNumber = mOrderDetails.orderNumber,
+                        user_id = FirestoreClass().getCurrentUserId()
+                    )
+
+                    FirestoreClass().uploadNotificationsDetails(this, notifications)
 
                     Log.i("TAG","userManager Token = $userManagerToken")
                 } else {
@@ -383,6 +431,18 @@ class CheckoutActivity : BaseActivity() {
             .addOnFailureListener { exception ->
                 // Error occurred while fetching user data
             }
+    }
+
+    fun notificationsUploadSuccess(){
+
+      //  hideProgressDialog()
+
+        FancyToast.makeText(
+            this@CheckoutActivity,
+            "Notifications Info Uploaded successfully.",
+            FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, true
+        )
+            .show()
     }
 
     // This Function get the id of user manager via product
@@ -474,6 +534,6 @@ class CheckoutActivity : BaseActivity() {
         }
         binding.toolbarCheckoutActivity.setNavigationOnClickListener { onBackPressed() }
     }
-    // END
+
 
 }

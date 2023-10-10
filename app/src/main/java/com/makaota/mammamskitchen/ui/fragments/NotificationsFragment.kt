@@ -1,6 +1,7 @@
 package com.makaota.mammamskitchen.ui.fragments
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,37 +10,33 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makaota.mammamskitchen.R
+import com.makaota.mammamskitchen.databinding.FragmentNotificationsBinding
 import com.makaota.mammamskitchen.databinding.FragmentOrdersBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
-import com.makaota.mammamskitchen.models.Order
+import com.makaota.mammamskitchen.models.Notifications
+import com.makaota.mammamskitchen.ui.adapters.MyNotificationsListAdapter
 import com.makaota.mammamskitchen.ui.adapters.MyOrdersListAdapter
 import com.shashank.sony.fancytoastlib.FancyToast
+import java.util.ArrayList
 
-class OrdersFragment : BaseFragment() {
 
-    private var _binding: FragmentOrdersBinding? = null
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+class NotificationsFragment : BaseFragment() {
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+
+    private var _binding: FragmentNotificationsBinding? = null
+    private lateinit var notificationsSwipeRefreshLayout: SwipeRefreshLayout
+
     private val binding get() = _binding!!
-
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentOrdersBinding.inflate(inflater, container, false)
+    ): View? {
+        // Inflate the layout for this fragment
+        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        swipeRefreshLayout = root.findViewById(R.id.swipe_refresh_layout)
+        notificationsSwipeRefreshLayout = root.findViewById(R.id.notifications_swipe_refresh_layout)
         refreshPage()
         return root
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        getMyOrdersList()
     }
 
     override fun onDestroyView() {
@@ -47,11 +44,16 @@ class OrdersFragment : BaseFragment() {
         _binding = null
     }
 
+    override fun onResume() {
+        super.onResume()
+        getMyNotificationsList()
+    }
+
     private fun refreshPage(){
 
-        swipeRefreshLayout.setOnRefreshListener {
+        notificationsSwipeRefreshLayout.setOnRefreshListener {
 
-            getMyOrdersList() //Reload order List Items
+            getMyNotificationsList()
 
             FancyToast.makeText(requireContext(),
                 "Orders Refreshed",
@@ -59,89 +61,82 @@ class OrdersFragment : BaseFragment() {
                 FancyToast.SUCCESS,
                 true).show()
 
-            _binding!!.swipeRefreshLayout.isRefreshing = false
+            _binding!!.notificationsSwipeRefreshLayout.isRefreshing = false
 
         }
     }
 
-    // Create a function to get the success result of the my order list from cloud firestore.
-    // START
-    /**
-     * A function to get the success result of the my order list from cloud firestore.
-     *
-     * @param ordersList List of my orders.
-     */
-    fun populateOrdersListInUI(ordersList: ArrayList<Order>) {
+    fun populateNotificationsListInUI(notificationsList: ArrayList<Notifications>) {
+
 
         // Hide the progress dialog.
         hideProgressDialog()
 
         // Populate the orders list in the UI.
         // START
-        if (ordersList.size > 0) {
+        if (notificationsList.size > 0) {
 
-            _binding!!.rvMyOrderItems.visibility = View.VISIBLE
-            _binding!!.tvNoOrdersFound.visibility = View.GONE
+            _binding!!.rvMyNotificationsItems.visibility = View.VISIBLE
+            _binding!!.tvNoNotificationFound.visibility = View.GONE
 
-            _binding!!.rvMyOrderItems.layoutManager = LinearLayoutManager(activity)
-            _binding!!.rvMyOrderItems.setHasFixedSize(true)
+            _binding!!.rvMyNotificationsItems.layoutManager = LinearLayoutManager(activity)
+            _binding!!.rvMyNotificationsItems.setHasFixedSize(true)
 
-            val myOrdersAdapter = MyOrdersListAdapter(requireActivity(), ordersList,this)
-            _binding!!.rvMyOrderItems.adapter = myOrdersAdapter
+            val myNotificationsAdapter = MyNotificationsListAdapter(requireActivity(),
+                notificationsList,this)
+            _binding!!.rvMyNotificationsItems.adapter = myNotificationsAdapter
 
         } else {
-            _binding!!.rvMyOrderItems.visibility = View.GONE
-            _binding!!.tvNoOrdersFound.visibility = View.VISIBLE
+            _binding!!.rvMyNotificationsItems.visibility = View.GONE
+            _binding!!.tvNoNotificationFound.visibility = View.VISIBLE
         }
         // END
 
-
     }
-    // END
 
     // Create a function to call the firestore class function to get the list of my orders.
     // START
     /**
      * A function to get the list of my orders.
      */
-    private fun getMyOrdersList() {
+    private fun getMyNotificationsList() {
         // Show the progress dialog.
         showProgressDialog(resources.getString(R.string.please_wait))
 
-        FirestoreClass().getMyOrdersList(this@OrdersFragment)
+        FirestoreClass().getMyNotificationsList(this)
     }
     // END
 
-    fun deleteDeliveredOrder(orderID: String){
+    fun deleteNotification(notificationId: String){
 
-        showAlertDialogToDeleteDeliveredOrder(orderID)
+        showAlertDialogToDeleteNotification(notificationId)
 
     }
 
-    // Create a function to show the alert dialog for the confirmation of delete product from cloud firestore.
+    // Create a function to show the alert dialog for the confirmation of delete notification from cloud firestore.
     // START
     /**
-     * A function to show the alert dialog for the confirmation of delete product from cloud firestore.
+     * A function to show the alert dialog for the confirmation of delete notification from cloud firestore.
      */
-    private fun showAlertDialogToDeleteDeliveredOrder(orderID: String) {
+    private fun showAlertDialogToDeleteNotification(notificationId: String) {
 
         val builder = AlertDialog.Builder(requireActivity())
         //set title for alert dialog
         builder.setTitle(resources.getString(R.string.delete_dialog_title))
         //set message for alert dialog
-        builder.setMessage(resources.getString(R.string.delete_order_dialog_message))
+        builder.setMessage(resources.getString(R.string.delete_notification_dialog_message))
         builder.setIcon(android.R.drawable.ic_dialog_alert)
 
         //performing positive action
         builder.setPositiveButton(resources.getString(R.string.yes)) { dialogInterface, _ ->
 
-            // Call the function to delete the product from cloud firestore.
+            // Call the function to delete the notification from cloud firestore.
             // START
             // Show the progress dialog.
             showProgressDialog(resources.getString(R.string.please_wait))
 
             // Call the function of Firestore class.
-            FirestoreClass().deleteDeliveredOrder(this, orderID)
+            FirestoreClass().deleteNotification(this, notificationId)
             // END
 
             dialogInterface.dismiss()
@@ -164,20 +159,21 @@ class OrdersFragment : BaseFragment() {
     /**
      * A function to notify the success result of product deleted from cloud firestore.
      */
-    fun orderDeleteSuccess() {
+    fun notificationDeleteSuccess() {
 
         // Hide the progress dialog
         hideProgressDialog()
 
         Toast.makeText(
             requireActivity(),
-            resources.getString(R.string.order_delete_success_message),
+            resources.getString(R.string.notification_delete_success_message),
             Toast.LENGTH_SHORT
         ).show()
 
         // Get the latest products list from cloud firestore.
-        getMyOrdersList()
+        getMyNotificationsList()
 
     }
     // END
+
 }
