@@ -17,10 +17,15 @@
         android:theme="@style/Theme.MammaMsKitchen"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activities.PickupOrDeliveryActivity"
+            android:name=".ui.activities.MenuByCategoryActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activities.PickupOrDeliveryActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.AddressListActivity"
             android:exported="false"

@@ -294,6 +294,10 @@ class FirestoreClass {
             }
     }
 
+    fun getProductItemByCategory(){
+
+    }
+
     // Create a function to get the product details based on the product id.
     // START
     /**

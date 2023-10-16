@@ -5,10 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.FragmentNotificationsBinding
 import com.makaota.mammamskitchen.databinding.FragmentOrdersBinding

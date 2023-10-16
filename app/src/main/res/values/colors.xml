@@ -39,4 +39,6 @@
     <color name="colorOrderStatusPreparing">#FF98A0</color>
     <color name="colorOrderStatusReadyForCollection">#FF0800</color>
 
+    <color name="chip_color_gradiant">#ABF7B1</color>
+
 </resources>

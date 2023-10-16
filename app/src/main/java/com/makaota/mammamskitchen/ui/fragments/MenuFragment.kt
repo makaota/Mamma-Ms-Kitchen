@@ -2,6 +2,7 @@ package com.makaota.mammamskitchen.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -15,18 +16,19 @@ import com.makaota.mammamskitchen.databinding.FragmentMenuBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.Product
 import com.makaota.mammamskitchen.ui.activities.CartListActivity
+import com.makaota.mammamskitchen.ui.activities.MenuByCategoryActivity
 import com.makaota.mammamskitchen.ui.activities.ProductDetailsActivity
 import com.makaota.mammamskitchen.ui.activities.SettingsActivity
 import com.makaota.mammamskitchen.ui.adapters.MenuItemsListAdapter
 import com.makaota.mammamskitchen.utils.Constants
 import com.shashank.sony.fancytoastlib.FancyToast
-import java.util.ArrayList
 
-class MenuFragment : BaseFragment() {
+const val MENU_FRAGMENT_TAG = "MenuFragment"
+class MenuFragment : BaseFragment(), View.OnClickListener {
 
     private var _binding: FragmentMenuBinding? = null
     private lateinit var menuSwipeRefreshLayout: SwipeRefreshLayout
-    private var menu: Menu? = null
+    private lateinit var mMenuItemsList: ArrayList<Product>
 
 
     // This property is only valid between onCreateView and
@@ -39,8 +41,7 @@ class MenuFragment : BaseFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.dashboard_menu,menu)
-        this.menu = menu
+        inflater.inflate(R.menu.dashboard_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
 
     }
@@ -73,6 +74,15 @@ class MenuFragment : BaseFragment() {
         menuSwipeRefreshLayout = root.findViewById(R.id.menu_swipe_refresh_layout)
         refreshPage()
 
+
+        _binding!!.tvScambane.setOnClickListener(this)
+        _binding!!.tvChips.setOnClickListener(this)
+        _binding!!.tvRussian.setOnClickListener(this)
+        _binding!!.tvAdditionalMeals.setOnClickListener(this)
+        _binding!!.tvDrinks.setOnClickListener(this)
+
+
+
         return root
     }
 
@@ -84,6 +94,104 @@ class MenuFragment : BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onClick(v: View?) {
+
+        if (v != null) {
+            when (v.id) {
+                R.id.tv_scambane -> {
+
+
+                    val scambaneList = ArrayList<Product>()
+
+                    for (product in mMenuItemsList){
+
+                        if (product.category == Constants.SCAMBANE){
+
+                            scambaneList.add(product)
+
+                        }
+                    }
+                    Log.i(MENU_FRAGMENT_TAG,"List Of Scambanes $scambaneList")
+
+
+                    val intent = Intent(context, MenuByCategoryActivity::class.java)
+                    intent.putParcelableArrayListExtra(Constants.SCAMBANE, scambaneList)
+                    startActivity(intent)
+
+                }
+
+                R.id.tv_chips -> {
+
+
+                    val chipsList = ArrayList<Product>()
+
+                    for (product in mMenuItemsList){
+
+                        if (product.category == Constants.CHIPS){
+
+                            chipsList.add(product)
+
+                        }
+                    }
+                    val intent = Intent(context, MenuByCategoryActivity::class.java)
+                    intent.putParcelableArrayListExtra(Constants.CHIPS, chipsList)
+                    startActivity(intent)
+                }
+
+                R.id.tv_russian -> {
+
+                    val russianList = ArrayList<Product>()
+
+                    for (product in mMenuItemsList){
+
+                        if (product.category == Constants.RUSSIAN){
+
+                            russianList.add(product)
+
+                        }
+                    }
+                    val intent = Intent(context, MenuByCategoryActivity::class.java)
+                    intent.putParcelableArrayListExtra(Constants.RUSSIAN, russianList)
+                    startActivity(intent)
+                }
+
+                R.id.tv_additional_meals -> {
+
+                    val additionalList = ArrayList<Product>()
+
+                    for (product in mMenuItemsList){
+
+                        if (product.category == Constants.ADDITIONAL_MEALS){
+
+                            additionalList.add(product)
+
+                        }
+                    }
+                    val intent = Intent(context, MenuByCategoryActivity::class.java)
+                    intent.putParcelableArrayListExtra(Constants.ADDITIONAL_MEALS, additionalList)
+                    startActivity(intent)
+                }
+
+                R.id.tv_drinks -> {
+
+                    val drinksList = ArrayList<Product>()
+
+                    for (product in mMenuItemsList){
+
+                        if (product.category == Constants.DRINKS){
+
+                            drinksList.add(product)
+
+                        }
+                    }
+                    val intent = Intent(context, MenuByCategoryActivity::class.java)
+                    intent.putParcelableArrayListExtra(Constants.DRINKS, drinksList)
+                    startActivity(intent)
+                }
+            }
+        }
     }
 
     private fun refreshPage() {
@@ -107,6 +215,8 @@ class MenuFragment : BaseFragment() {
         hideProgressDialog()
 
         if (menuItemsList.size > 0) {
+
+            mMenuItemsList = menuItemsList
 
             binding.rvMyProductItems.visibility = View.VISIBLE
             binding.tvNoProductsFound.visibility = View.GONE
@@ -152,4 +262,6 @@ class MenuFragment : BaseFragment() {
 
         FirestoreClass().getMenuItemsList(this@MenuFragment)
     }
+
+
 }

@@ -27,6 +27,13 @@ object Constants {
 
     const val TOPIC = "myOrders"
 
+    //menu categories
+    const val ADDITIONAL_MEALS: String = "ADDITIONAL MEALS"
+    const val SCAMBANE: String = "SCAMBANE"
+    const val CHIPS: String = "CHIPS"
+    const val RUSSIAN: String= "RUSSIAN"
+    const val DRINKS: String = "DRINKS"
+
     const val RESTAURANT_USER_PREFERENCES: String = "restaurantUserPrefs"
     const val LOGGED_IN_USERNAME: String = "logged_in_username"
     const val EXTRA_USER_DETAILS: String = "extra_user_details"

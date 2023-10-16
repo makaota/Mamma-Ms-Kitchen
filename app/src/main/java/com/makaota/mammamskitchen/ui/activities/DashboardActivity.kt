@@ -1,6 +1,8 @@
 package com.makaota.mammamskitchen.ui.activities
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -25,6 +27,7 @@ class DashboardActivity : BaseActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
+
         val navController = findNavController(R.id.nav_host_fragment_activity_dashboard)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -35,6 +38,9 @@ class DashboardActivity : BaseActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
+
     }
 
     override fun onBackPressed() {
