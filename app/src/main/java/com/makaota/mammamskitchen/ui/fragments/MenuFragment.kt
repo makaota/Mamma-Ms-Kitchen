@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.FragmentMenuBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
+import com.makaota.mammamskitchen.models.Favorites
 import com.makaota.mammamskitchen.models.Product
 import com.makaota.mammamskitchen.ui.activities.CartListActivity
 import com.makaota.mammamskitchen.ui.activities.MenuByCategoryActivity
@@ -224,7 +225,7 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
             binding.rvMyProductItems.layoutManager = GridLayoutManager(activity, 2)
             binding.rvMyProductItems.setHasFixedSize(true)
 
-            val adapter = MenuItemsListAdapter(requireActivity(), menuItemsList)
+            val adapter = MenuItemsListAdapter(requireActivity(), menuItemsList, this)
             binding.rvMyProductItems.adapter = adapter
 
 
@@ -262,6 +263,7 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
 
         FirestoreClass().getMenuItemsList(this@MenuFragment)
     }
+
 
 
 }

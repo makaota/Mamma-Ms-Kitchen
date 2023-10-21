@@ -10,6 +10,7 @@
 
     <!--CUSTOM COLORS-->
 
+    <color name="colorGreen">#8BC34A</color>
     <color name="colorPrimary">#ED2173</color>
     <color name="colorPrimary_dark">#222934</color>
     <color name="colorAccent">#ED2173</color>

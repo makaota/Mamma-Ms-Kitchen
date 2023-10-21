@@ -11,17 +11,24 @@ import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.ActivityProductDetailsBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.CartItem
+import com.makaota.mammamskitchen.models.Favorites
 import com.makaota.mammamskitchen.models.Product
+import com.makaota.mammamskitchen.ui.fragments.MenuFragment
 import com.makaota.mammamskitchen.utils.Constants
 import com.makaota.mammamskitchen.utils.GlideLoader
 import com.shashank.sony.fancytoastlib.FancyToast
+import java.util.ArrayList
 
+const val PRODUCT_DETAILS_TAG = "ProductDetails"
 class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityProductDetailsBinding
 
     private lateinit var mProductDetails: Product
     private var mProductId: String = ""
+
+    private lateinit var favorites: Favorites
+    private lateinit var favDishDocId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +47,20 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
 
         getProductDetails()
 
+
+        FirestoreClass().getMyFavoritesList(this)
+
+
         binding.btnAddToCart.setOnClickListener(this)
         binding.btnGoToCart.setOnClickListener(this)
+        binding.ibAddToFavoriteFromMenu.setOnClickListener(this)
+        binding.ibRemoveToFavoriteFromMenu.setOnClickListener(this)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        FirestoreClass().getMyFavoritesList(this)
     }
 
     override fun onClick(v: View?) {
@@ -54,12 +72,45 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
                 R.id.btn_add_to_cart -> {
                     addToCart()
                 }
-                R.id.btn_go_to_cart->{
+
+                R.id.btn_go_to_cart -> {
                     startActivity(Intent(this@ProductDetailsActivity, CartListActivity::class.java))
+                }
+
+                R.id.ib_add_to_favorite_from_menu -> {
+
+
+                    showProgressDialog(resources.getString(R.string.please_wait))
+
+                    FirestoreClass().addToFavorites(this, favorites)
+
+                    FirestoreClass().getMyFavoritesList(this) // update the list
+
+
+                }
+
+                R.id.ib_remove_to_favorite_from_menu -> {
+
+
+                    showProgressDialog(resources.getString(R.string.please_wait))
+
+                    FirestoreClass().getMyFavoritesList(this)
+
+                    removeFavorites(favDishDocId)
+
+                    Log.i(PRODUCT_DETAILS_TAG,"TAG Ke $favDishDocId")
+
+
                 }
             }
         }
         // END
+    }
+
+    private fun removeFavorites(documentId: String){
+
+        FirestoreClass().deleteMyFavorites(this, documentId)
+
     }
 
     // Create a function to prepare the cart item to add it to the cart.
@@ -97,7 +148,7 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
         FancyToast.makeText(
             this@ProductDetailsActivity,
             resources.getString(R.string.success_message_item_added_to_cart),
-            FancyToast.LENGTH_SHORT, FancyToast.SUCCESS,true
+            FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, true
         ).show()
 
         // Change the buttons visibility once the item is added to the cart.
@@ -177,7 +228,70 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
             }
 
         }
+
+        favorites = Favorites(
+            user_id = mProductDetails.user_id,
+            title = mProductDetails.title,
+            category = mProductDetails.category,
+            app_user_id = FirestoreClass().getCurrentUserId(),
+            description = mProductDetails.description,
+            price = mProductDetails.price,
+            image = mProductDetails.image,
+            product_id = mProductId)
+
+
     }
+
+    fun addToFavoritesSuccess() {
+        // Hide the progress dialog.
+        hideProgressDialog()
+
+        FancyToast.makeText(
+            this, "${mProductDetails.title} added to favorites",
+            FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, true
+        ).show()
+
+        binding.ibRemoveToFavoriteFromMenu.visibility = View.VISIBLE
+        binding.ibAddToFavoriteFromMenu.visibility = View.GONE
+    }
+
+    fun favoritesDeleteSuccess() {
+
+        // Hide the progress dialog.
+        hideProgressDialog()
+
+        FancyToast.makeText(
+            this, "${mProductDetails.title} removed from favorites",
+            FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, true
+        ).show()
+
+        binding.ibRemoveToFavoriteFromMenu.visibility = View.GONE
+        binding.ibAddToFavoriteFromMenu.visibility = View.VISIBLE
+    }
+
+    fun populateFavoritesListInUI(favList: ArrayList<Favorites>) {
+
+        var productIdFromFavorites = ""
+
+        for (favorites in favList){
+            productIdFromFavorites = favorites.product_id
+            if (productIdFromFavorites == mProductId){
+
+                binding.ibRemoveToFavoriteFromMenu.visibility = View.VISIBLE
+                binding.ibAddToFavoriteFromMenu.visibility = View.GONE
+
+                favDishDocId = favorites.documentId
+                Log.i(PRODUCT_DETAILS_TAG,"fav dish id $favDishDocId")
+            }
+
+        }
+        Log.i(PRODUCT_DETAILS_TAG,"from Fav $productIdFromFavorites to Product $mProductId")
+
+
+    }
+
+
+
 
     // Create a function to call the firestore class function that will get the product details from cloud firestore based on the product id.
     // START
@@ -191,6 +305,8 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
 
         // Call the function of FirestoreClass to get the product details.
         FirestoreClass().getProductDetails(this@ProductDetailsActivity, mProductId)
+
+
     }
     // END
 
@@ -208,6 +324,8 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
 
         toolbarSettingsActivity.setNavigationOnClickListener { onBackPressed() }
     }
+
+
 
 
 }

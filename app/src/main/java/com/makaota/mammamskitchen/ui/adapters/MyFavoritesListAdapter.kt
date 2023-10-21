@@ -3,22 +3,20 @@ package com.makaota.mammamskitchen.ui.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.makaota.mammamskitchen.databinding.ItemMenuLayoutBinding
-import com.makaota.mammamskitchen.firestore.FirestoreClass
+import com.makaota.mammamskitchen.models.Favorites
 import com.makaota.mammamskitchen.models.Product
-import com.makaota.mammamskitchen.ui.fragments.MenuFragment
+import com.makaota.mammamskitchen.ui.fragments.MyFavoritesFragment
 import com.makaota.mammamskitchen.utils.GlideLoader
-import com.shashank.sony.fancytoastlib.FancyToast
 import java.util.ArrayList
 
-open class MenuItemsListAdapter(
+open class MyFavoritesListAdapter(
     private val context: Context,
-    private var list: ArrayList<Product>,
-    private var fragment: MenuFragment
-) : RecyclerView.Adapter<MenuItemsListAdapter.MyViewHolder>() {
+    private var list: ArrayList<Favorites>,
+    private var fragment: MyFavoritesFragment
+) : RecyclerView.Adapter<MyFavoritesListAdapter.MyViewHolder>() {
 
     // Create a global variable for OnClickListener interface.
     // START
@@ -107,7 +105,7 @@ open class MenuItemsListAdapter(
 
         // Define a function to get the required params when user clicks on the item view in the interface.
         // START
-        fun onClick(position: Int, product: Product)
+        fun onClick(position: Int, product: Favorites)
         // END
     }
     // END

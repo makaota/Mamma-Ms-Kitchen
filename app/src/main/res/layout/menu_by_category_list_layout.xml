@@ -74,31 +74,59 @@
                     android:orientation="horizontal"
                     android:padding="10dp">
 
-
-
-
+                    <!-- Add To Cart ImageButton -->
                     <ImageButton
                         android:id="@+id/ib_add_to_cart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:padding="5dp"
                         android:layout_weight="1"
+                        android:layout_gravity="start|center_vertical"
                         android:background="@android:color/transparent"
                         android:foreground="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="Add To Cart"
-                        android:src="@drawable/ic_vector_cart" />
+                        android:src="@drawable/baseline_add_shopping_cart_24" />
 
+                    <!-- Go To Cart ImageButton -->
                     <ImageButton
-                        android:id="@+id/ib_add_to_favorite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/ib_go_to_cart"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:padding="5dp"
                         android:layout_weight="1"
+                        android:layout_gravity="start|center_vertical"
+                        android:background="@android:color/transparent"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="Go To Cart"
+                        android:visibility="gone"
+                        android:src="@drawable/baseline_shopping_cart_checkout_24" />
+
+                    <!-- Add To Favorites ImageButton (To be hidden initially) -->
+                    <ImageButton
+                        android:id="@+id/ib_add_to_favorite"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="5dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
                         android:background="@android:color/transparent"
                         android:foreground="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="Add To Favorites"
                         android:src="@drawable/baseline_favorite_border_24" />
 
+                    <!-- Remove From Favorites ImageButton (Initially set to invisible) -->
+                    <ImageButton
+                        android:id="@+id/ib_remove_to_favorite"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="5dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="Remove From Favorites"
+                        android:src="@drawable/baseline_favorite_24"
+                        android:visibility="gone" />
 
                 </LinearLayout>
             </LinearLayout>

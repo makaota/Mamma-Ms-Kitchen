@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="250dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/item_dashboard_margin"
     android:background="@drawable/item_dashboard_background"
@@ -10,6 +10,13 @@
     android:orientation="vertical"
     android:padding="@dimen/item_dashboard_padding">
 
+
+    <FrameLayout
+        android:id="@+id/fl_dish_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Main Image -->
     <ImageView
         android:id="@+id/iv_dashboard_item_image"
         android:layout_width="match_parent"
@@ -21,15 +28,18 @@
         android:background="@color/colorImageViewBackground"
         android:contentDescription="@string/content_description"
         android:minHeight="@dimen/item_dashboard_image_height"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:src="@drawable/mamma_m_kitchen_auth" />
+
+    </FrameLayout>
 
     <View
         android:id="@+id/view_divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
-        android:layout_below="@id/iv_dashboard_item_image"
+        android:layout_below="@id/fl_dish_image"
         android:background="@color/colorBorder" />
+
 
     <LinearLayout
         android:id="@+id/ll_dashboard_item_details"
@@ -62,4 +72,5 @@
             android:textStyle="bold"
             tools:text="R100.00" />
     </LinearLayout>
+
 </RelativeLayout>

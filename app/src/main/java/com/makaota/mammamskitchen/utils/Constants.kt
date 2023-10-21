@@ -21,6 +21,7 @@ object Constants {
     const val SOLD_PRODUCTS: String = "sold_products"
     const val ADDRESSES: String = "addresses"
     const val NOTIFICATIONS: String = "notifications"
+    const val FAVORITES: String = "favorites"
 
     const val ORDER_STATUS: String = "orderStatus"
     const val ORDER_CONFIRMATION: String = "order_confirmation"
@@ -66,6 +67,7 @@ object Constants {
     const val FIRST_NAME: String = "firstName"
     const val LAST_NAME: String = "lastName"
     const val USER_ID: String = "user_id"
+    const val APP_USER_ID: String = "app_user_id"
     const val PRODUCT_ID: String = "product_id"
 
     const val LOGGED_IN_USER_MOBILE = "user_mobile"

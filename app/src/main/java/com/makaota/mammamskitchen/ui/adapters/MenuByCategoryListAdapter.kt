@@ -3,19 +3,25 @@ package com.makaota.mammamskitchen.ui.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.makaota.mammamskitchen.databinding.ItemMenuLayoutBinding
 import com.makaota.mammamskitchen.databinding.MenuByCategoryListLayoutBinding
+import com.makaota.mammamskitchen.firestore.FirestoreClass
+import com.makaota.mammamskitchen.models.CartItem
 import com.makaota.mammamskitchen.models.Product
-import com.makaota.mammamskitchen.utils.Constants
+import com.makaota.mammamskitchen.ui.activities.MenuByCategoryActivity
 import com.makaota.mammamskitchen.utils.GlideLoader
 import com.shashank.sony.fancytoastlib.FancyToast
-import java.util.ArrayList
+
 
 open class MenuByCategoryListAdapter(
     private val context: Context,
-    private var list: ArrayList<Product>
+    private var list: ArrayList<Product>,
+    private var activity: MenuByCategoryActivity,
+    private var binding: MenuByCategoryListLayoutBinding?,
+    private val cartItems: Set<String>, // store the product IDs of items in the cart
+    private val favorites: Set<String>
 ) : RecyclerView.Adapter<MenuByCategoryListAdapter.MyViewHolder>() {
 
     // Create a global variable for OnClickListener interface.
@@ -33,9 +39,8 @@ open class MenuByCategoryListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
 
-        val binding =
-            MenuByCategoryListLayoutBinding.inflate(LayoutInflater.from(context), parent, false)
-        return MyViewHolder(binding)
+        binding = MenuByCategoryListLayoutBinding.inflate(LayoutInflater.from(context), parent, false)
+        return MyViewHolder(binding!!)
     }
 
 
@@ -64,17 +69,45 @@ open class MenuByCategoryListAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val model = list[position]
+        val productID = model.product_id
+
+        // Check if the item is in the cart
+        val isItemInCart = cartItems.contains(productID)
+
+        val isItemInFavorites = favorites.contains(productID)
+
 
         with(holder) {
             with(model) {
 
 
+                holder.setIsRecyclable(true)
                 GlideLoader(context).loadProductPicture(
                     model.image, binding.ivProductItemImage
                 )
                 binding.tvItemTitle.text = model.title
                 binding.tvItemDescription.text = model.description
                 binding.tvItemPrice.text = "R${model.price}"
+
+
+                // Check if the item is in the cart and adjust button visibility
+                if (isItemInCart) {
+                    binding.ibGoToCart.visibility = View.VISIBLE
+                    binding.ibAddToCart.visibility = View.GONE
+                } else {
+                    binding.ibGoToCart.visibility = View.GONE
+                    binding.ibAddToCart.visibility = View.VISIBLE
+                }
+
+                // Check if the item is in the favorites and adjust button visibility
+                if (isItemInFavorites) {
+                    binding.ibRemoveToFavorite.visibility = View.VISIBLE
+                    binding.ibAddToFavorite.visibility = View.GONE
+                } else {
+                    binding.ibRemoveToFavorite.visibility = View.GONE
+                    binding.ibAddToFavorite.visibility = View.VISIBLE
+                }
+
 
                 holder.itemView.setOnClickListener {
                     if (onClickListener != null) {
@@ -83,16 +116,47 @@ open class MenuByCategoryListAdapter(
                 }
 
                 binding.ibAddToCart.setOnClickListener{
+
+                    activity.addToCart(model)
+
                     FancyToast.makeText(context,"${model.title} added to cart",
                         FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show()
+
+                    binding.ibGoToCart.visibility = View.VISIBLE
+                    binding.ibAddToCart.visibility = View.GONE
+                }
+
+                binding.ibGoToCart.setOnClickListener{
+
+                    activity.goToCart()
                 }
 
                 binding.ibAddToFavorite.setOnClickListener{
+
+                    activity.addToFavorites(model)
+
                     FancyToast.makeText(context,"${model.title} added to favorites",
                         FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show()
+
+                    binding.ibRemoveToFavorite.visibility = View.VISIBLE
+                    binding.ibAddToFavorite.visibility = View.GONE
+                }
+
+                binding.ibRemoveToFavorite.setOnClickListener{
+
+                    activity.removeFavorites(productID)
+
+                    FancyToast.makeText(context,"${model.title} removed from favorites",
+                        FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show()
+
+                    binding.ibRemoveToFavorite.visibility = View.GONE
+                    binding.ibAddToFavorite.visibility = View.VISIBLE
                 }
             }
+
+
         }
+
 
     }
 
@@ -101,6 +165,25 @@ open class MenuByCategoryListAdapter(
      */
     override fun getItemCount(): Int {
         return list.size
+    }
+
+    // Create a function to notify the success result of item exists in the cart.
+    // START
+    /**
+     * A function to notify the success result of item exists in the cart.
+     */
+    fun productExistsInCart() {
+
+        // Hide the progress dialog.
+        hideProgressDialog()
+
+        binding!!.ibGoToCart.visibility = View.VISIBLE
+        binding!!.ibAddToCart.visibility = View.GONE
+    }
+    // END
+
+    fun hideProgressDialog() {
+
     }
 
     /**

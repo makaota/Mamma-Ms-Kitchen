@@ -59,7 +59,7 @@ class NotificationsFragment : BaseFragment() {
             getMyNotificationsList()
 
             FancyToast.makeText(requireContext(),
-                "Orders Refreshed",
+                "Notifications Refreshed",
                 FancyToast.LENGTH_SHORT,
                 FancyToast.SUCCESS,
                 true).show()
@@ -173,7 +173,7 @@ class NotificationsFragment : BaseFragment() {
             Toast.LENGTH_SHORT
         ).show()
 
-        // Get the latest products list from cloud firestore.
+        // Get the latest notifications list from cloud firestore.
         getMyNotificationsList()
 
     }

@@ -184,7 +184,7 @@ class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
                         sendOrderNotification(it)
                         Log.i("TAG","userManager Token sent notification = $userManagerToken")
                     }
-
+                    Log.i("TAG","userManager Token = $userManagerToken")
                     sendOrderNotificationToUser()
 
 
@@ -200,7 +200,7 @@ class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
 
                     FirestoreClass().uploadNotificationsDetails(this, notifications)
 
-                    Log.i("TAG","userManager Token = $userManagerToken")
+
                 } else {
                     // User document does not exist
                 }

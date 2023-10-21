@@ -77,6 +77,7 @@
     <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
 
     <string name="action_settings">Settings</string>
+    <string name="action_about_us">About us</string>
 
     <string name="title_settings">SETTINGS</string>
     <string name="lbl_edit">Edit</string>
@@ -176,6 +177,8 @@
     <string name="no_orders_placed_yet">No orders placed yet!</string>
 
     <string name="no_notifications_yet">Notifications not found yet!</string>
+
+    <string name="no_favorites_yet">Favorites not found yet!</string>
 
     <string name="title_my_order_details">MY ORDER DETAILS</string>
     <string name="order_details_lbl">Order Details</string>

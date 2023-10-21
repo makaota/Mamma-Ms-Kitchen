@@ -12,25 +12,30 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.makaota.mammamskitchen.models.Address
 import com.makaota.mammamskitchen.models.CartItem
+import com.makaota.mammamskitchen.models.Favorites
 import com.makaota.mammamskitchen.models.Notifications
 import com.makaota.mammamskitchen.models.Order
 import com.makaota.mammamskitchen.models.Product
-import com.makaota.mammamskitchen.models.SoldProduct
 import com.makaota.mammamskitchen.models.User
 import com.makaota.mammamskitchen.ui.activities.AddEditAddressActivity
 import com.makaota.mammamskitchen.ui.activities.AddressListActivity
 import com.makaota.mammamskitchen.ui.activities.CartListActivity
 import com.makaota.mammamskitchen.ui.activities.CheckoutActivity
 import com.makaota.mammamskitchen.ui.activities.LoginActivity
+import com.makaota.mammamskitchen.ui.activities.MenuByCategoryActivity
 import com.makaota.mammamskitchen.ui.activities.MyOrderDetailsActivity
 import com.makaota.mammamskitchen.ui.activities.ProductDetailsActivity
 import com.makaota.mammamskitchen.ui.activities.RegisterActivity
 import com.makaota.mammamskitchen.ui.activities.SettingsActivity
 import com.makaota.mammamskitchen.ui.activities.UserProfileActivity
+import com.makaota.mammamskitchen.ui.adapters.MenuByCategoryListAdapter
 import com.makaota.mammamskitchen.ui.fragments.MenuFragment
+import com.makaota.mammamskitchen.ui.fragments.MyFavoritesFragment
 import com.makaota.mammamskitchen.ui.fragments.NotificationsFragment
 import com.makaota.mammamskitchen.ui.fragments.OrdersFragment
 import com.makaota.mammamskitchen.utils.Constants
+
+const val FIRESTORE_CLASS_TAG = "FirestoreClass"
 
 class FirestoreClass {
 
@@ -113,8 +118,10 @@ class FirestoreClass {
 
                 // Create an instance of the editor which is help us to edit the SharedPreference.
                 val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                editor.putString(Constants.LOGGED_IN_USERNAME,
-                    "${user.firstName} ${user.lastName}")
+                editor.putString(
+                    Constants.LOGGED_IN_USERNAME,
+                    "${user.firstName} ${user.lastName}"
+                )
                 editor.putString(Constants.LOGGED_IN_USER_MOBILE, user.mobile)
                 editor.apply()
                 // END
@@ -126,10 +133,12 @@ class FirestoreClass {
                         activity.userDeviceTokenListener(user)
                         activity.userLoggedInSuccess(user)
                     }
+
                     is SettingsActivity -> {
                         activity.userDetailsSuccess(user)
                     }
-                    is CheckoutActivity ->{
+
+                    is CheckoutActivity -> {
                         activity.isUserProfileComplete(user)
                     }
 
@@ -142,6 +151,7 @@ class FirestoreClass {
                     is LoginActivity -> {
                         activity.hideProgressDialog()
                     }
+
                     is SettingsActivity -> {
                         activity.hideProgressDialog()
                     }
@@ -180,7 +190,7 @@ class FirestoreClass {
                     is UserProfileActivity -> {
                         // Call a function of base activity for transferring the result to it.
                         activity.userProfileUpdateSuccess()
-                        Log.i("Firestore","Firestore user id = ${getCurrentUserId()}")
+                        Log.i("Firestore", "Firestore user id = ${getCurrentUserId()}")
                     }
                 }
                 // END
@@ -281,7 +291,7 @@ class FirestoreClass {
 
                     val product = i.toObject(Product::class.java)!!
                     product.product_id = i.id
-                    productsList.add(product)
+                    productsList.add(0, product)
                 }
 
                 // Pass the success result to the base fragment.
@@ -292,10 +302,6 @@ class FirestoreClass {
                 fragment.hideProgressDialog()
                 Log.e(fragment.javaClass.simpleName, "Error while getting dashboard items list.", e)
             }
-    }
-
-    fun getProductItemByCategory(){
-
     }
 
     // Create a function to get the product details based on the product id.
@@ -340,7 +346,7 @@ class FirestoreClass {
      * @param activity
      * @param addToCart
      */
-    fun addCartItems(activity: ProductDetailsActivity, addToCart: CartItem) {
+    fun addCartItems(activity: Activity, addToCart: CartItem) {
 
         mFirestore.collection(Constants.CART_ITEMS)
             .document()
@@ -349,11 +355,28 @@ class FirestoreClass {
             .addOnSuccessListener {
 
                 // Here call a function of base activity for transferring the result to it.
-                activity.addToCartSuccess()
+
+                when (activity) {
+                    is ProductDetailsActivity -> {
+                        activity.addToCartSuccess()
+                    }
+
+                    is MenuByCategoryActivity -> {
+                        activity.addToCartSuccess()
+                    }
+                }
             }
             .addOnFailureListener { e ->
 
-                activity.hideProgressDialog()
+                when (activity) {
+                    is ProductDetailsActivity -> {
+                        activity.hideProgressDialog()
+                    }
+
+                    is MenuByCategoryActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                }
 
                 Log.e(
                     activity.javaClass.simpleName,
@@ -402,6 +425,7 @@ class FirestoreClass {
     }
     // END
 
+
     // Create a function to get the cart items list from the cloud firestore.
     /**
      * A function to get the cart items list from the cloud firestore.
@@ -427,7 +451,7 @@ class FirestoreClass {
                     val cartItem = i.toObject(CartItem::class.java)!!
                     cartItem.id = i.id
 
-                    list.add(cartItem)
+                    list.add(0, cartItem)
                 }
 
                 // Notify the success result.
@@ -440,6 +464,7 @@ class FirestoreClass {
                     is CheckoutActivity -> {
                         activity.successCartItemsList(list)
                     }
+
                 }
                 // END
             }
@@ -449,6 +474,7 @@ class FirestoreClass {
                     is CartListActivity -> {
                         activity.hideProgressDialog()
                     }
+
                     is CheckoutActivity -> {
                         activity.hideProgressDialog()
                     }
@@ -483,7 +509,7 @@ class FirestoreClass {
                     val product = i.toObject(Product::class.java)
                     product!!.product_id = i.id
 
-                    productsList.add(product)
+                    productsList.add(0, product)
                 }
 
                 when (activity) {
@@ -646,7 +672,7 @@ class FirestoreClass {
      * if that is the case then update the new token in the userToken field with the new tokenDevice
      * this process happens automatically no user intervention
      */
-    fun writeNewDeviceToken(newToken: String, user: User){
+    fun writeNewDeviceToken(newToken: String, user: User) {
 
         val writeBatch = mFirestore.batch()
 
@@ -712,7 +738,11 @@ class FirestoreClass {
             // Here call a function of base activity for transferring the result to it.
             activity.hideProgressDialog()
 
-            Log.e(activity.javaClass.simpleName, "Error while updating all the details after order placed.", e)
+            Log.e(
+                activity.javaClass.simpleName,
+                "Error while updating all the details after order placed.",
+                e
+            )
         }
     }
     // END
@@ -735,7 +765,7 @@ class FirestoreClass {
                     val orderItem = i.toObject(Order::class.java)!!
                     orderItem.id = i.id
 
-                    list.add(orderItem)
+                    list.add(0, orderItem)
                 }
 
                 // Notify the success result to base class.
@@ -811,7 +841,7 @@ class FirestoreClass {
                     val address = i.toObject(Address::class.java)!!
                     address.id = i.id
 
-                    addressList.add(address)
+                    addressList.add(0, address)
                 }
 
                 // Notify the success result to the base class.
@@ -890,7 +920,6 @@ class FirestoreClass {
     }
 
 
-
     // Create a function to delete the existing order from the cloud firestore.
     // START
     fun deleteDeliveredOrder(ordersFragment: OrdersFragment, orderID: String) {
@@ -958,11 +987,12 @@ class FirestoreClass {
             .addOnSuccessListener {
 
                 // Here call a function of base activity for transferring the result to it.
-                when(activity){
-                    is CheckoutActivity ->{
+                when (activity) {
+                    is CheckoutActivity -> {
                         activity.notificationsUploadSuccess()
                     }
-                    is MyOrderDetailsActivity->{
+
+                    is MyOrderDetailsActivity -> {
                         activity.notificationsUploadSuccess()
                     }
                 }
@@ -970,11 +1000,12 @@ class FirestoreClass {
             }
             .addOnFailureListener { e ->
 
-                when(activity){
-                    is CheckoutActivity->{
+                when (activity) {
+                    is CheckoutActivity -> {
                         activity.hideProgressDialog()
                     }
-                    is MyOrderDetailsActivity->{
+
+                    is MyOrderDetailsActivity -> {
                         activity.hideProgressDialog()
                     }
                 }
@@ -1003,8 +1034,9 @@ class FirestoreClass {
 
                     val notifications = i.toObject(Notifications::class.java)!!
                     notifications.documentId = i.id
+                    Log.i(FIRESTORE_CLASS_TAG, "the doc ref of noti " + notifications.documentId)
 
-                    list.add(notifications)
+                    list.add(0, notifications)
                 }
 
                 // Notify the success result to base class.
@@ -1052,7 +1084,225 @@ class FirestoreClass {
     }
     // END
 
+    fun addToFavorites(activity: Activity, favorites: Favorites) {
 
+        mFirestore.collection(Constants.FAVORITES)
+            // .document()
+            // Here the userInfo are Field and the SetOption is set to merge. It is for if we wants to merge
+            .add(favorites)
+            .addOnSuccessListener {
+
+                // Notify the success result.
+                // START
+                // Here call a function of base activity for transferring the result to it.
+
+                when (activity) {
+                    is ProductDetailsActivity -> {
+                        activity.addToFavoritesSuccess()
+                    }
+
+                    is MenuByCategoryActivity -> {
+                        activity.addToFavoritesSuccess()
+                    }
+                }
+            }// END
+            .addOnFailureListener { e ->
+
+
+                when (activity) {
+                    is ProductDetailsActivity -> {
+                        // Hide the progress dialog if there is any error.
+                        activity.hideProgressDialog()
+                    }
+
+                    is MenuByCategoryActivity -> {
+                        // Hide the progress dialog if there is any error.
+                        activity.hideProgressDialog()
+                    }
+                }
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while placing an order.",
+                    e
+                )
+            }
+    }
+    // END
+
+    // Create a function to get the list of notifications from cloud firestore.
+    // START
+    /**
+     * A function to get the list of notifications from cloud firestore.
+     */
+    fun getMyFavoritesList(fragment: MyFavoritesFragment) {
+        mFirestore.collection(Constants.FAVORITES)
+            .whereEqualTo(Constants.APP_USER_ID, getCurrentUserId())
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+                Log.e(fragment.javaClass.simpleName, document.documents.toString())
+                val list: ArrayList<Favorites> = ArrayList()
+
+                for (i in document.documents) {
+
+                    val favorites = i.toObject(Favorites::class.java)!!
+                    favorites.documentId = i.id
+                    Log.i(FIRESTORE_CLASS_TAG, "the doc ref of noti " + favorites.documentId)
+
+                    list.add(0, favorites)
+                }
+
+                // Notify the success result to base class.
+                // START
+                fragment.populateFavoritesListInUI(list)
+                // END
+            }
+            .addOnFailureListener { e ->
+                // Here call a function of base activity for transferring the result to it.
+
+                fragment.hideProgressDialog()
+
+                Log.e(fragment.javaClass.simpleName, "Error while getting the orders list.", e)
+            }
+    }
+    // END
+
+    // Create a function to get the list of notifications from cloud firestore.
+    // START
+    /**
+     * A function to get the list of notifications from cloud firestore.
+     */
+    fun getMyFavoritesList(activity: Activity) {
+        mFirestore.collection(Constants.FAVORITES)
+            .whereEqualTo(Constants.APP_USER_ID, getCurrentUserId())
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+                Log.e(activity.javaClass.simpleName, document.documents.toString())
+                val favList: ArrayList<Favorites> = ArrayList()
+
+                for (i in document.documents) {
+
+                    val favorites = i.toObject(Favorites::class.java)!!
+                    favorites.documentId = i.id
+                    Log.i(FIRESTORE_CLASS_TAG, "the doc ref " + favorites.documentId)
+
+                    favList.add(0, favorites)
+                }
+
+
+                when (activity) {
+                    is ProductDetailsActivity -> {
+                        // Notify the success result to base class.
+                        // START
+                        activity.populateFavoritesListInUI(favList)
+                        // END
+                    }
+
+                    is MenuByCategoryActivity -> {
+                        // Pass the selectedFavorites item to initializeFavDishDocId
+//                        activity.initializeFavDishDocId(favList, selectedFavorites)
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                // Here call a function of base activity for transferring the result to it.
+
+                when (activity) {
+                    is ProductDetailsActivity -> {
+                        activity.hideProgressDialog()
+                    }
+
+                    is MenuByCategoryActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                }
+
+                Log.e(activity.javaClass.simpleName, "Error while getting the orders list.", e)
+            }
+    }
+    // END
+
+    fun deleteMyFavorites(activity: MenuByCategoryActivity, productId: String) {
+        mFirestore.collection(Constants.FAVORITES)
+            .whereEqualTo(Constants.PRODUCT_ID, productId)
+            .whereEqualTo(Constants.APP_USER_ID, getCurrentUserId())
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    mFirestore.collection(Constants.FAVORITES)
+                        .document(document.id)
+                        .delete()
+                        .addOnSuccessListener {
+
+                            activity.favoritesDeleteSuccess()
+
+                        }
+                        .addOnFailureListener { e ->
+                            // Handle deletion failure here
+                            activity.hideProgressDialog()
+                            Log.e(
+                                activity.javaClass.simpleName,
+                                "Error while deleting the product.",
+                                e
+                            )
+                        }
+                }
+            }
+            .addOnFailureListener { e ->
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while querying for favorites to delete.",
+                    e
+                )
+            }
+    }
+
+
+    // Create a function to delete the existing notification from the cloud firestore.
+    // START
+    fun deleteMyFavorites(activity: Activity, documentId: String) {
+
+        mFirestore.collection(Constants.FAVORITES)
+            .document(documentId)
+            .delete()
+            .addOnSuccessListener {
+                when (activity) {
+                    is ProductDetailsActivity -> {
+                        // Notify the success result to the base class.
+                        // START
+                        // Notify the success result to the base class.
+                        activity.favoritesDeleteSuccess()
+                        // END
+                    }
+
+                    is MenuByCategoryActivity -> {
+                        activity.favoritesDeleteSuccess()
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+
+                when (activity) {
+                    is ProductDetailsActivity -> {
+                        // Hide the progress dialog if there is an error.
+                        activity.hideProgressDialog()
+                    }
+
+                    is MenuByCategoryActivity -> {
+                        // Hide the progress dialog if there is an error.
+                        activity.hideProgressDialog()
+                    }
+                }
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while deleting the product.",
+                    e
+                )
+            }
+
+    }
+    // END
 
 
 }

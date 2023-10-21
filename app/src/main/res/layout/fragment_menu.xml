@@ -10,7 +10,7 @@
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/chip_shape_layout"
             android:scrollbars="none"
             android:layout_margin="3dp"
