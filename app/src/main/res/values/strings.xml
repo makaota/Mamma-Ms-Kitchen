@@ -70,7 +70,7 @@
     <string name="title_activity_dashboard">MainActivity</string>
 
 
-    <string name="title_favorites">Favorites</string>
+    <string name="title_favorites">My Favorites</string>
     <string name="title_products">Products</string>
     <string name="title_orders">Orders</string>
 

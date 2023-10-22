@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makaota.mammamskitchen.R
@@ -86,7 +87,7 @@ class MyFavoritesFragment : BaseFragment() {
             _binding!!.rvMyFavoritesItems.visibility = View.VISIBLE
             _binding!!.tvNoFavoritesFound.visibility = View.GONE
 
-            _binding!!.rvMyFavoritesItems.layoutManager = LinearLayoutManager(activity)
+            _binding!!.rvMyFavoritesItems.layoutManager = GridLayoutManager(activity, 2)
             _binding!!.rvMyFavoritesItems.setHasFixedSize(true)
 
             val myFavoritesListAdapter = MyFavoritesListAdapter(requireContext(),list,this)

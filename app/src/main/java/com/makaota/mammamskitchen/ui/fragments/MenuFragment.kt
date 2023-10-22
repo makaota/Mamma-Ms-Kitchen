@@ -9,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makaota.mammamskitchen.R
@@ -77,18 +78,42 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
 
 
         _binding!!.tvScambane.setOnClickListener(this)
+
         _binding!!.tvChips.setOnClickListener(this)
         _binding!!.tvRussian.setOnClickListener(this)
         _binding!!.tvAdditionalMeals.setOnClickListener(this)
         _binding!!.tvDrinks.setOnClickListener(this)
-
-
 
         return root
     }
 
     override fun onResume() {
         super.onResume()
+        binding.tvScambane.text = "Scambane"
+        binding.tvScambane.isEnabled = true
+        binding.tvScambane.setTextColor(ContextCompat.getColor(requireContext(),
+            R.color.colorPrimaryText))
+
+        binding.tvChips.text = "Chips"
+        binding.tvChips.isEnabled = true
+        binding.tvChips.setTextColor(ContextCompat.getColor(requireContext(),
+            R.color.colorPrimaryText))
+
+        binding.tvRussian.text = "Russian"
+        binding.tvRussian.isEnabled = true
+        binding.tvRussian.setTextColor(ContextCompat.getColor(requireContext(),
+            R.color.colorPrimaryText))
+
+        binding.tvAdditionalMeals.text = "Additionals"
+        binding.tvAdditionalMeals.isEnabled = true
+        binding.tvAdditionalMeals.setTextColor(ContextCompat.getColor(requireContext(),
+            R.color.colorPrimaryText))
+
+        binding.tvDrinks.text = "Drinks"
+        binding.tvDrinks.isEnabled = true
+        binding.tvDrinks.setTextColor(ContextCompat.getColor(requireContext(),
+            R.color.colorPrimaryText))
+
         getMenuItemsList()
     }
 
@@ -103,6 +128,14 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
             when (v.id) {
                 R.id.tv_scambane -> {
 
+                    binding.tvScambane.text = resources.getString(R.string.please_wait)
+                    binding.tvScambane.setTextColor(ContextCompat.getColor(requireContext(),
+                        R.color.colorOffWhite))
+                    binding.tvChips.isEnabled = false
+                    binding.tvRussian.isEnabled = false
+                    binding.tvAdditionalMeals.isEnabled = false
+                    binding.tvDrinks.isEnabled = false
+
 
                     val scambaneList = ArrayList<Product>()
 
@@ -114,16 +147,25 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
 
                         }
                     }
-                    Log.i(MENU_FRAGMENT_TAG,"List Of Scambanes $scambaneList")
 
+                    Log.i(MENU_FRAGMENT_TAG,"List Of Scambanes $scambaneList")
 
                     val intent = Intent(context, MenuByCategoryActivity::class.java)
                     intent.putParcelableArrayListExtra(Constants.SCAMBANE, scambaneList)
+
                     startActivity(intent)
 
                 }
 
                 R.id.tv_chips -> {
+
+                    binding.tvScambane.isEnabled = false
+                    binding.tvChips.text = resources.getString(R.string.please_wait)
+                    binding.tvChips.setTextColor(ContextCompat.getColor(requireContext(),
+                        R.color.colorOffWhite))
+                    binding.tvRussian.isEnabled = false
+                    binding.tvAdditionalMeals.isEnabled = false
+                    binding.tvDrinks.isEnabled = false
 
 
                     val chipsList = ArrayList<Product>()
@@ -143,6 +185,14 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
 
                 R.id.tv_russian -> {
 
+                    binding.tvScambane.isEnabled = false
+                    binding.tvChips.isEnabled = false
+                    binding.tvRussian.text = resources.getString(R.string.please_wait)
+                    binding.tvRussian.setTextColor(ContextCompat.getColor(requireContext(),
+                        R.color.colorOffWhite))
+                    binding.tvAdditionalMeals.isEnabled = false
+                    binding.tvDrinks.isEnabled = false
+
                     val russianList = ArrayList<Product>()
 
                     for (product in mMenuItemsList){
@@ -160,6 +210,14 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
 
                 R.id.tv_additional_meals -> {
 
+                    binding.tvScambane.isEnabled = false
+                    binding.tvChips.isEnabled = false
+                    binding.tvRussian.isEnabled = false
+                    binding.tvAdditionalMeals.text = resources.getString(R.string.please_wait)
+                    binding.tvAdditionalMeals.setTextColor(ContextCompat.getColor(requireContext(),
+                        R.color.colorOffWhite))
+                    binding.tvDrinks.isEnabled = false
+
                     val additionalList = ArrayList<Product>()
 
                     for (product in mMenuItemsList){
@@ -176,6 +234,14 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
                 }
 
                 R.id.tv_drinks -> {
+
+                    binding.tvScambane.isEnabled = false
+                    binding.tvChips.isEnabled = false
+                    binding.tvRussian.isEnabled = false
+                    binding.tvAdditionalMeals.isEnabled = false
+                    binding.tvDrinks.text = resources.getString(R.string.please_wait)
+                    binding.tvDrinks.setTextColor(ContextCompat.getColor(requireContext(),
+                        R.color.colorOffWhite))
 
                     val drinksList = ArrayList<Product>()
 

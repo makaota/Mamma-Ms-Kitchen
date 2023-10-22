@@ -40,7 +40,6 @@ class MenuByCategoryActivity : BaseActivity() {
             menuByCategoryList = intent.getParcelableArrayListExtra(Constants.SCAMBANE)!!
             binding.tvMenuByCategoryTitle.text = Constants.SCAMBANE
 
-
         }
 
 
@@ -67,23 +66,12 @@ class MenuByCategoryActivity : BaseActivity() {
             binding.tvMenuByCategoryTitle.text = Constants.DRINKS
         }
 
-
-        // This dialog is not showing
-        showProgressDialog(resources.getString(R.string.please_wait))
         getMenuByCategory()
-
-
-
-
-
-
-
-
-
     }
 
     override fun onResume() {
         super.onResume()
+
         getMenuByCategory()
     }
 
@@ -139,8 +127,6 @@ class MenuByCategoryActivity : BaseActivity() {
 
     private fun getMenuByCategory(){
 
-
-
         val userId = FirestoreClass().getCurrentUserId()
 
         val cartItems: Set<String> = runBlocking {
@@ -175,8 +161,6 @@ class MenuByCategoryActivity : BaseActivity() {
             }
         })
         // END
-
-        hideProgressDialog()
     }
 
     fun removeFavorites(productId: String){
