@@ -12,6 +12,8 @@ import com.makaota.mammamskitchen.databinding.ItemCartLayoutBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.CartItem
 import com.makaota.mammamskitchen.ui.activities.CartListActivity
+import com.makaota.mammamskitchen.ui.activities.DashboardActivity
+import com.makaota.mammamskitchen.ui.fragments.MenuFragment
 import com.makaota.mammamskitchen.utils.Constants
 import com.makaota.mammamskitchen.utils.GlideLoader
 
@@ -23,7 +25,7 @@ import com.makaota.mammamskitchen.utils.GlideLoader
 open class CartItemsListAdapter(
     private val context: Context,
     private var list: ArrayList<CartItem>,
-    private val updateCartItems: Boolean
+    private val updateCartItems: Boolean,
 ) : RecyclerView.Adapter<CartItemsListAdapter.MyViewHolder>() {
 
     /**
@@ -173,6 +175,7 @@ open class CartItemsListAdapter(
                         if (context is CartListActivity) {
                             context.showProgressDialog(context.resources.getString(R.string.please_wait))
                         }
+
 
                         FirestoreClass().updateMyCart(context, model.id, itemHashMap)
                     } else {

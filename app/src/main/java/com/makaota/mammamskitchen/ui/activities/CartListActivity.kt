@@ -1,7 +1,6 @@
 package com.makaota.mammamskitchen.ui.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +10,7 @@ import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.CartItem
 import com.makaota.mammamskitchen.models.Product
 import com.makaota.mammamskitchen.ui.adapters.CartItemsListAdapter
-import com.makaota.mammamskitchen.utils.Constants
+import com.makaota.mammamskitchen.ui.fragments.MenuFragment
 import com.shashank.sony.fancytoastlib.FancyToast
 
 class CartListActivity : BaseActivity(), View.OnClickListener {
@@ -194,6 +193,8 @@ class CartListActivity : BaseActivity(), View.OnClickListener {
             resources.getString(R.string.msg_item_removed_successfully),
             FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, true
         ).show()
+
+
 
         getCartItemsList()
     }

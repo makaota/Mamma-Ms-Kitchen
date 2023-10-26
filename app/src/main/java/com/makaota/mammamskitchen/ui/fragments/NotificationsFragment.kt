@@ -1,24 +1,21 @@
 package com.makaota.mammamskitchen.ui.fragments
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.FragmentNotificationsBinding
-import com.makaota.mammamskitchen.databinding.FragmentOrdersBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.Notifications
+import com.makaota.mammamskitchen.ui.activities.DashboardActivity
 import com.makaota.mammamskitchen.ui.adapters.MyNotificationsListAdapter
-import com.makaota.mammamskitchen.ui.adapters.MyOrdersListAdapter
 import com.shashank.sony.fancytoastlib.FancyToast
 import java.util.ArrayList
 
@@ -28,6 +25,7 @@ class NotificationsFragment : BaseFragment() {
 
     private var _binding: FragmentNotificationsBinding? = null
     private lateinit var notificationsSwipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var notificationsList: ArrayList<Notifications>
 
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -54,8 +52,10 @@ class NotificationsFragment : BaseFragment() {
 
     private fun refreshPage(){
 
+
         notificationsSwipeRefreshLayout.setOnRefreshListener {
 
+            showProgressDialog(resources.getString(R.string.please_wait))
             getMyNotificationsList()
 
             FancyToast.makeText(requireContext(),
@@ -75,6 +75,7 @@ class NotificationsFragment : BaseFragment() {
         // Hide the progress dialog.
         hideProgressDialog()
 
+        this.notificationsList = notificationsList
         // Populate the orders list in the UI.
         // START
         if (notificationsList.size > 0) {
@@ -94,6 +95,9 @@ class NotificationsFragment : BaseFragment() {
             _binding!!.tvNoNotificationFound.visibility = View.VISIBLE
         }
         // END
+
+        val myAct = activity as DashboardActivity
+        myAct.getNotificationsList(notificationsList.size)
 
     }
 
@@ -176,7 +180,10 @@ class NotificationsFragment : BaseFragment() {
         // Get the latest notifications list from cloud firestore.
         getMyNotificationsList()
 
+
+
     }
     // END
+
 
 }

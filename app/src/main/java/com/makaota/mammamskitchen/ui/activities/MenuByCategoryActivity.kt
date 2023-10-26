@@ -106,7 +106,7 @@ class MenuByCategoryActivity : BaseActivity() {
 
     private suspend fun fetchFavoritesItems(userId: String): Set<String> {
         return withContext(Dispatchers.IO) {
-            val cartItems = HashSet<String>()
+            val favorites = HashSet<String>()
             val firestore = FirebaseFirestore.getInstance()
 
             val documents = firestore.collection(Constants.FAVORITES)
@@ -117,11 +117,11 @@ class MenuByCategoryActivity : BaseActivity() {
             for (document in documents) {
                 val productId = document.getString(Constants.PRODUCT_ID)
                 if (!productId.isNullOrBlank()) {
-                    cartItems.add(productId)
+                    favorites.add(productId)
                 }
             }
 
-            cartItems
+            favorites
         }
     }
 

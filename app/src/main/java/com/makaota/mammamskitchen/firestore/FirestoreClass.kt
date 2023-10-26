@@ -21,6 +21,7 @@ import com.makaota.mammamskitchen.ui.activities.AddEditAddressActivity
 import com.makaota.mammamskitchen.ui.activities.AddressListActivity
 import com.makaota.mammamskitchen.ui.activities.CartListActivity
 import com.makaota.mammamskitchen.ui.activities.CheckoutActivity
+import com.makaota.mammamskitchen.ui.activities.DashboardActivity
 import com.makaota.mammamskitchen.ui.activities.LoginActivity
 import com.makaota.mammamskitchen.ui.activities.MenuByCategoryActivity
 import com.makaota.mammamskitchen.ui.activities.MyOrderDetailsActivity
@@ -28,7 +29,6 @@ import com.makaota.mammamskitchen.ui.activities.ProductDetailsActivity
 import com.makaota.mammamskitchen.ui.activities.RegisterActivity
 import com.makaota.mammamskitchen.ui.activities.SettingsActivity
 import com.makaota.mammamskitchen.ui.activities.UserProfileActivity
-import com.makaota.mammamskitchen.ui.adapters.MenuByCategoryListAdapter
 import com.makaota.mammamskitchen.ui.fragments.MenuFragment
 import com.makaota.mammamskitchen.ui.fragments.MyFavoritesFragment
 import com.makaota.mammamskitchen.ui.fragments.NotificationsFragment

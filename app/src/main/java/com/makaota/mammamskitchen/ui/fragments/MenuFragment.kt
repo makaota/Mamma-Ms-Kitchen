@@ -9,13 +9,19 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.FragmentMenuBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
-import com.makaota.mammamskitchen.models.Favorites
+import com.makaota.mammamskitchen.models.CartItem
 import com.makaota.mammamskitchen.models.Product
 import com.makaota.mammamskitchen.ui.activities.CartListActivity
 import com.makaota.mammamskitchen.ui.activities.MenuByCategoryActivity
@@ -23,14 +29,27 @@ import com.makaota.mammamskitchen.ui.activities.ProductDetailsActivity
 import com.makaota.mammamskitchen.ui.activities.SettingsActivity
 import com.makaota.mammamskitchen.ui.adapters.MenuItemsListAdapter
 import com.makaota.mammamskitchen.utils.Constants
+import com.makaota.mammamskitchen.viewmodel.CounterViewModel
 import com.shashank.sony.fancytoastlib.FancyToast
 
 const val MENU_FRAGMENT_TAG = "MenuFragment"
+
 class MenuFragment : BaseFragment(), View.OnClickListener {
 
     private var _binding: FragmentMenuBinding? = null
     private lateinit var menuSwipeRefreshLayout: SwipeRefreshLayout
     private lateinit var mMenuItemsList: ArrayList<Product>
+
+    private lateinit var viewModel: CounterViewModel
+
+    private lateinit var menu: Menu
+
+    private var cartQuantity = 0
+    private lateinit var cartListener: ListenerRegistration // To listen for changes in the cart
+    private var isMenuInitialized: Boolean = false
+    private var isCartQuantityInitialized: Boolean = false
+
+    private val mFirestore = FirebaseFirestore.getInstance()
 
 
     // This property is only valid between onCreateView and
@@ -40,12 +59,122 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+
+
+        Log.i(MENU_FRAGMENT_TAG, " in onCreate")
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.dashboard_menu, menu)
+
+
+        viewModel = ViewModelProvider(requireActivity()).get(CounterViewModel::class.java)
+
+        this.menu = menu
+        isMenuInitialized = true
+        // The collection name for Cart Items
+        mFirestore.collection(Constants.CART_ITEMS)
+            .whereEqualTo(Constants.USER_ID, FirestoreClass().getCurrentUserId())
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+
+                // Here we get the list of cart items in the form of documents.
+                //   Log.e(javaClass.simpleName, document.documents.toString())
+
+                // Here we have created a new instance for Cart Items ArrayList.
+                val list: ArrayList<CartItem> = ArrayList()
+
+                // A for loop as per the list of documents to convert them into Cart Items ArrayList.
+                for (i in document.documents) {
+
+                    val cartItem = i.toObject(CartItem::class.java)!!
+                    cartItem.id = i.id
+
+                    list.add(0, cartItem)
+                }
+
+                // Notify the success result.
+                // START
+                var quantity = 0
+
+                for (cartItems in list) {
+                    quantity += cartItems.cart_quantity.toInt()
+                }
+
+                cartQuantity = quantity
+                isCartQuantityInitialized = true
+
+                val menuItem = menu.findItem(R.id.action_cart)
+                val actionView = menuItem.actionView
+                val cartBadgeTextView =
+                    actionView!!.findViewById<TextView>(R.id.cart_badge_text_view)
+
+                updateCountInUI()
+
+                actionView.setOnClickListener {
+                    onOptionsItemSelected(menuItem)
+
+                }
+
+                Log.i(MENU_FRAGMENT_TAG, " in onCreateOptionsMenu")
+
+            }
+            .addOnFailureListener { e ->
+
+                Log.e(javaClass.simpleName, "Error while getting the cart list items.", e)
+            }
+
+
+        invalidateOptionsMenu(requireActivity())
         super.onCreateOptionsMenu(menu, inflater)
 
+    }
+
+    private fun updateCountInUI() {
+
+
+        viewModel.currentCartNumber.value = cartQuantity
+
+        val menuItem = menu.findItem(R.id.action_cart)
+        val actionView = menuItem.actionView
+        val cartBadgeTextView = actionView!!.findViewById<TextView>(R.id.cart_badge_text_view)
+
+
+        viewModel.currentCartNumber.observe(this, Observer {
+            cartBadgeTextView.text = it.toString()
+        })
+//            cartBadgeTextView.text = cartQuantity.toString()
+
+        Log.i(MENU_FRAGMENT_TAG, " in updateCountInUI ${viewModel.currentCartNumber.value}")
+
+
+    }
+
+    private fun registerCartListener() {
+        val userId = FirestoreClass().getCurrentUserId()
+
+        if (userId.isNotEmpty()) {
+            val cartItemsRef = mFirestore.collection(Constants.CART_ITEMS)
+                .whereEqualTo(Constants.USER_ID, userId)
+
+            cartListener = cartItemsRef.addSnapshotListener { snapshots, e ->
+                if (e != null) {
+                    Log.e(javaClass.simpleName, "Error while listening for cart items", e)
+                    return@addSnapshotListener
+                }
+
+                // Handle cart item changes here
+                val cartItems = snapshots?.documents ?: emptyList()
+                val quantity = cartItems.sumBy { (it[Constants.CART_QUANTITY] as String).toInt() }
+                cartQuantity = quantity
+                isCartQuantityInitialized = true
+
+                updateCountInUI()
+
+                Log.i(MENU_FRAGMENT_TAG, " in registerCartListener after updateCountInUI()")
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -91,34 +220,68 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
         super.onResume()
         binding.tvScambane.text = "Scambane"
         binding.tvScambane.isEnabled = true
-        binding.tvScambane.setTextColor(ContextCompat.getColor(requireContext(),
-            R.color.colorPrimaryText))
+        binding.tvScambane.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorPrimaryText
+            )
+        )
 
         binding.tvChips.text = "Chips"
         binding.tvChips.isEnabled = true
-        binding.tvChips.setTextColor(ContextCompat.getColor(requireContext(),
-            R.color.colorPrimaryText))
+        binding.tvChips.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorPrimaryText
+            )
+        )
 
         binding.tvRussian.text = "Russian"
         binding.tvRussian.isEnabled = true
-        binding.tvRussian.setTextColor(ContextCompat.getColor(requireContext(),
-            R.color.colorPrimaryText))
+        binding.tvRussian.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorPrimaryText
+            )
+        )
 
         binding.tvAdditionalMeals.text = "Additionals"
         binding.tvAdditionalMeals.isEnabled = true
-        binding.tvAdditionalMeals.setTextColor(ContextCompat.getColor(requireContext(),
-            R.color.colorPrimaryText))
+        binding.tvAdditionalMeals.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorPrimaryText
+            )
+        )
 
         binding.tvDrinks.text = "Drinks"
         binding.tvDrinks.isEnabled = true
-        binding.tvDrinks.setTextColor(ContextCompat.getColor(requireContext(),
-            R.color.colorPrimaryText))
+        binding.tvDrinks.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorPrimaryText
+            )
+        )
+
+
+        // Register a listener to listen for changes to the cart items
+        if (isMenuInitialized) {
+            registerCartListener()
+            Log.i(MENU_FRAGMENT_TAG, " in onResume After registerCartListener()")
+        }
+        if (isCartQuantityInitialized || isMenuInitialized) {
+            updateCountInUI()
+            Log.i(MENU_FRAGMENT_TAG, " in onResume After updateCountInUI()")
+        }
 
         getMenuItemsList()
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        // Remove the cart listener when the fragment is destroyed
+//        cartListener.remove()
         _binding = null
     }
 
@@ -129,8 +292,12 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
                 R.id.tv_scambane -> {
 
                     binding.tvScambane.text = resources.getString(R.string.please_wait)
-                    binding.tvScambane.setTextColor(ContextCompat.getColor(requireContext(),
-                        R.color.colorOffWhite))
+                    binding.tvScambane.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.colorOffWhite
+                        )
+                    )
                     binding.tvChips.isEnabled = false
                     binding.tvRussian.isEnabled = false
                     binding.tvAdditionalMeals.isEnabled = false
@@ -139,16 +306,16 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
 
                     val scambaneList = ArrayList<Product>()
 
-                    for (product in mMenuItemsList){
+                    for (product in mMenuItemsList) {
 
-                        if (product.category == Constants.SCAMBANE){
+                        if (product.category == Constants.SCAMBANE) {
 
                             scambaneList.add(product)
 
                         }
                     }
 
-                    Log.i(MENU_FRAGMENT_TAG,"List Of Scambanes $scambaneList")
+                    Log.i(MENU_FRAGMENT_TAG, "List Of Scambanes $scambaneList")
 
                     val intent = Intent(context, MenuByCategoryActivity::class.java)
                     intent.putParcelableArrayListExtra(Constants.SCAMBANE, scambaneList)
@@ -161,8 +328,12 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
 
                     binding.tvScambane.isEnabled = false
                     binding.tvChips.text = resources.getString(R.string.please_wait)
-                    binding.tvChips.setTextColor(ContextCompat.getColor(requireContext(),
-                        R.color.colorOffWhite))
+                    binding.tvChips.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.colorOffWhite
+                        )
+                    )
                     binding.tvRussian.isEnabled = false
                     binding.tvAdditionalMeals.isEnabled = false
                     binding.tvDrinks.isEnabled = false
@@ -170,9 +341,9 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
 
                     val chipsList = ArrayList<Product>()
 
-                    for (product in mMenuItemsList){
+                    for (product in mMenuItemsList) {
 
-                        if (product.category == Constants.CHIPS){
+                        if (product.category == Constants.CHIPS) {
 
                             chipsList.add(product)
 
@@ -188,16 +359,20 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
                     binding.tvScambane.isEnabled = false
                     binding.tvChips.isEnabled = false
                     binding.tvRussian.text = resources.getString(R.string.please_wait)
-                    binding.tvRussian.setTextColor(ContextCompat.getColor(requireContext(),
-                        R.color.colorOffWhite))
+                    binding.tvRussian.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.colorOffWhite
+                        )
+                    )
                     binding.tvAdditionalMeals.isEnabled = false
                     binding.tvDrinks.isEnabled = false
 
                     val russianList = ArrayList<Product>()
 
-                    for (product in mMenuItemsList){
+                    for (product in mMenuItemsList) {
 
-                        if (product.category == Constants.RUSSIAN){
+                        if (product.category == Constants.RUSSIAN) {
 
                             russianList.add(product)
 
@@ -214,15 +389,19 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
                     binding.tvChips.isEnabled = false
                     binding.tvRussian.isEnabled = false
                     binding.tvAdditionalMeals.text = resources.getString(R.string.please_wait)
-                    binding.tvAdditionalMeals.setTextColor(ContextCompat.getColor(requireContext(),
-                        R.color.colorOffWhite))
+                    binding.tvAdditionalMeals.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.colorOffWhite
+                        )
+                    )
                     binding.tvDrinks.isEnabled = false
 
                     val additionalList = ArrayList<Product>()
 
-                    for (product in mMenuItemsList){
+                    for (product in mMenuItemsList) {
 
-                        if (product.category == Constants.ADDITIONAL_MEALS){
+                        if (product.category == Constants.ADDITIONAL_MEALS) {
 
                             additionalList.add(product)
 
@@ -240,14 +419,18 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
                     binding.tvRussian.isEnabled = false
                     binding.tvAdditionalMeals.isEnabled = false
                     binding.tvDrinks.text = resources.getString(R.string.please_wait)
-                    binding.tvDrinks.setTextColor(ContextCompat.getColor(requireContext(),
-                        R.color.colorOffWhite))
+                    binding.tvDrinks.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.colorOffWhite
+                        )
+                    )
 
                     val drinksList = ArrayList<Product>()
 
-                    for (product in mMenuItemsList){
+                    for (product in mMenuItemsList) {
 
-                        if (product.category == Constants.DRINKS){
+                        if (product.category == Constants.DRINKS) {
 
                             drinksList.add(product)
 
@@ -329,7 +512,6 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
 
         FirestoreClass().getMenuItemsList(this@MenuFragment)
     }
-
 
 
 }
