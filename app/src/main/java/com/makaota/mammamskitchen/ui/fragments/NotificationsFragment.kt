@@ -55,7 +55,7 @@ class NotificationsFragment : BaseFragment() {
 
         notificationsSwipeRefreshLayout.setOnRefreshListener {
 
-            showProgressDialog(resources.getString(R.string.please_wait))
+
             getMyNotificationsList()
 
             FancyToast.makeText(requireContext(),

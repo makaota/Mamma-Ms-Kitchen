@@ -197,6 +197,10 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
         binding.tvProductDetailsPrice.text = "R${product.price}"
         binding.tvProductDetailsDescription.text = product.description
         binding.tvProductDetailsAvailableQuantity.text = product.stock_quantity
+        if (binding.tvProductDetailsAvailableQuantity.text == "0"){
+            binding.llProductDetailsQuantity.visibility = View.VISIBLE
+        }
+
 
 
         // Update the UI if the stock quantity is 0.

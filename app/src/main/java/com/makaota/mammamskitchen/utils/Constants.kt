@@ -18,6 +18,7 @@ object Constants {
     const val USER_MANAGER: String = "userManager"
     const val PRODUCTS: String = "products"
     const val ORDERS: String = "orders"
+    const val PLACED_ORDERS: String = "placed_orders"
     const val SOLD_PRODUCTS: String = "sold_products"
     const val ADDRESSES: String = "addresses"
     const val NOTIFICATIONS: String = "notifications"

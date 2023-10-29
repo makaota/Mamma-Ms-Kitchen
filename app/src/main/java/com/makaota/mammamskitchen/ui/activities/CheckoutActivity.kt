@@ -44,8 +44,6 @@ class CheckoutActivity : BaseActivity() {
     private lateinit var mProductsList: ArrayList<Product>
     // END
 
-    private lateinit var mUserDetailsList: ArrayList<User>
-
     private var userManagerToken = ""
 
     private var mUserDeviceToken= ""
@@ -219,9 +217,6 @@ class CheckoutActivity : BaseActivity() {
             }
         }
 
-//        binding.tvCheckoutFullName.text =
-//            "$mOrderDetails.user.firstName $mOrderDetails.user.lastName"
-//        binding.tvCheckoutMobileNumber.text = "${mOrderDetails.user.mobile}"
 
         binding.tvCheckoutSubTotal.text = "R$mSubTotal"
         // Here we have kept Shipping Charge is fixed as $10 but in your case it may cary. Also, it depends on the location and total amount.
@@ -469,7 +464,7 @@ class CheckoutActivity : BaseActivity() {
 
         hideProgressDialog()
 
-        FirestoreClass().updateAllDetails(this, mCartItemsList, mOrderDetails)
+        FirestoreClass().updateAllDetails(this, mCartItemsList)
     }
     // END
 

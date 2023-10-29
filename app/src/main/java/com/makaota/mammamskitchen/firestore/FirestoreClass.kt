@@ -21,7 +21,6 @@ import com.makaota.mammamskitchen.ui.activities.AddEditAddressActivity
 import com.makaota.mammamskitchen.ui.activities.AddressListActivity
 import com.makaota.mammamskitchen.ui.activities.CartListActivity
 import com.makaota.mammamskitchen.ui.activities.CheckoutActivity
-import com.makaota.mammamskitchen.ui.activities.DashboardActivity
 import com.makaota.mammamskitchen.ui.activities.LoginActivity
 import com.makaota.mammamskitchen.ui.activities.MenuByCategoryActivity
 import com.makaota.mammamskitchen.ui.activities.MyOrderDetailsActivity
@@ -700,24 +699,10 @@ class FirestoreClass {
      * @param activity Base class.
      * @param cartList List of cart items.
      */
-    fun updateAllDetails(activity: CheckoutActivity, cartList: ArrayList<CartItem>, order: Order) {
+    fun updateAllDetails(activity: CheckoutActivity, cartList: ArrayList<CartItem>) {
 
         val writeBatch = mFirestore.batch()
 
-        // Here we will update the product stock in the products collection based to cart quantity.
-        for (cartItem in cartList) {
-
-            val productHashMap = HashMap<String, Any>()
-
-            productHashMap[Constants.STOCK_QUANTITY] =
-                (cartItem.stock_quantity.toInt() - cartItem.cart_quantity.toInt()).toString()
-
-            val documentReference = mFirestore.collection(Constants.PRODUCTS)
-                .document(cartItem.product_id)
-
-            writeBatch.update(documentReference, productHashMap)
-
-        }
 
         // Delete the list of cart items
         for (cartItem in cartList) {
