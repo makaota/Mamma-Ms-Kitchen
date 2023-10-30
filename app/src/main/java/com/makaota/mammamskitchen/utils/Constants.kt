@@ -23,6 +23,7 @@ object Constants {
     const val ADDRESSES: String = "addresses"
     const val NOTIFICATIONS: String = "notifications"
     const val FAVORITES: String = "favorites"
+    const val OPEN_CLOSE_STORE: String = "openCloseStore"
 
     const val ORDER_STATUS: String = "orderStatus"
     const val ORDER_CONFIRMATION: String = "order_confirmation"

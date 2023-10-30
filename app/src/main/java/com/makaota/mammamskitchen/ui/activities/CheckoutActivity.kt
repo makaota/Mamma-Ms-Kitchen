@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
@@ -16,6 +17,7 @@ import com.makaota.mammamskitchen.models.Address
 import com.makaota.mammamskitchen.models.CartItem
 import com.makaota.mammamskitchen.models.NotificationData
 import com.makaota.mammamskitchen.models.Notifications
+import com.makaota.mammamskitchen.models.OpenCloseStore
 import com.makaota.mammamskitchen.models.Order
 import com.makaota.mammamskitchen.models.Product
 import com.makaota.mammamskitchen.models.PushNotification
@@ -111,11 +113,50 @@ class CheckoutActivity : BaseActivity() {
             if (userProfileComplete == 0) {
                 FirestoreClass().getUserDetails(this)
             }else{
-                placeAnOrder()
+               getOpenCloseStoreInfo()
+            }
+        }
+    }
+
+    private fun getOpenCloseStoreInfo() {
+
+
+        showProgressDialog(resources.getString(R.string.please_wait))
+
+        val mFirestore = FirebaseFirestore.getInstance()
+        val docRef = "KUadjV036C6fvZrjmIWn"
+        // The collection name for OPEN CLOSE STORE
+        mFirestore.collection(Constants.OPEN_CLOSE_STORE)
+            .document(docRef)
+            .get() // Will get the document snapshots.
+            .addOnSuccessListener { document ->
+
+                // Here we get the product details in the form of document.
+                Log.e(javaClass.simpleName, document.toString())
+
+                // Convert the snapshot to the object of open close store data model class.
+                val openCloseStore = document.toObject(OpenCloseStore::class.java)!!
+
+             //  val mOpenCloseStore = openCloseStore
+
+                if (!openCloseStore.isStoreOpen){
+
+                    Toast.makeText(this,"Store is Closed", Toast.LENGTH_SHORT).show()
+                    hideProgressDialog()
+                }
+                else{
+
+                    Toast.makeText(this,"Store is Open", Toast.LENGTH_SHORT).show()
+                    hideProgressDialog()
+                    placeAnOrder()
+
+                }
 
             }
+            .addOnFailureListener { e ->
 
-        }
+                hideProgressDialog()
+            }
     }
 
     // Create a function to get product list to compare it with the cart items stock.
