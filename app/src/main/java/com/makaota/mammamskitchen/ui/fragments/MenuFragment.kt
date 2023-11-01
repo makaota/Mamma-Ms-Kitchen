@@ -23,6 +23,7 @@ import com.makaota.mammamskitchen.databinding.FragmentMenuBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.CartItem
 import com.makaota.mammamskitchen.models.Product
+import com.makaota.mammamskitchen.ui.activities.AboutUsActivity
 import com.makaota.mammamskitchen.ui.activities.CartListActivity
 import com.makaota.mammamskitchen.ui.activities.MenuByCategoryActivity
 import com.makaota.mammamskitchen.ui.activities.ProductDetailsActivity
@@ -187,6 +188,11 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
 
             R.id.action_cart -> {
                 startActivity(Intent(activity, CartListActivity::class.java))
+                return true
+            }
+
+            R.id.action_about_us -> {
+                startActivity(Intent(activity, AboutUsActivity::class.java))
                 return true
             }
         }

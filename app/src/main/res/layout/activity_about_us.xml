@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mamma_m_kitchen_auth"
+    tools:context=".ui.activities.AboutUsActivity">
+
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_about_us_activity"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/app_gradient_color_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingStart="@dimen/toolbar_title_paddingStart"
+            android:paddingEnd="0dp"
+            android:text="ABOUT US"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/toolbar_title_text_size"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <LinearLayout
+        android:id="@+id/ll_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_about_us_activity" >
+
+        <com.makaota.mammamskitchen.utils.RUATextViewBold
+            android:id="@+id/RUATextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:padding="10dp"
+            android:layout_marginStart="15dp"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textColor="@color/colorPrimaryText"
+            android:text="Welcome to Mamma M'S Kitchen"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_opening_closing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:padding="10dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_welcome" >
+
+
+        <com.makaota.mammamskitchen.utils.RUATextViewBold
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimaryText"
+            android:text="Opening and Closing Time" />
+
+        <com.makaota.mammamskitchen.utils.RUATextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryText"
+            android:text="Monday to Friday 08:00am - 18:00pm" />
+
+        <com.makaota.mammamskitchen.utils.RUATextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryText"
+            android:text="Saturday 08:00am - 15:00pm" />
+
+        <com.makaota.mammamskitchen.utils.RUATextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryText"
+            android:text="Sunday Closed" />
+
+        <com.makaota.mammamskitchen.utils.RUATextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryText"
+            android:text="App Orders Ends 30 Minutes Before Closing" />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_contact_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:padding="10dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_opening_closing" >
+
+
+        <com.makaota.mammamskitchen.utils.RUATextViewBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimaryText"
+            android:text="Contact Details" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_phone_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_contact_details" >
+
+        <com.makaota.mammamskitchen.utils.RUATextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryText"
+            android:text="Tab Phone Number to call us" />
+
+        <com.makaota.mammamskitchen.utils.RUATextView
+            android:id="@+id/tv_contact_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+           android:layout_weight="1"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryText"
+            android:text="0744386460" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_address_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_phone_info" >
+
+        <com.makaota.mammamskitchen.utils.RUATextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryText"
+            android:text="Tab Address to find us" />
+
+        <com.makaota.mammamskitchen.utils.RUATextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryText"
+            android:text="105 Block 1 \nKutlwanong Township\nOdendaalsrus\n9480" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
