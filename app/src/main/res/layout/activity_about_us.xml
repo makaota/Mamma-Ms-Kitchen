@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/mamma_m_kitchen_auth"
+    android:background="@color/mammaColorLightYellowTheme"
     tools:context=".ui.activities.AboutUsActivity">
 
 
@@ -42,6 +42,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_about_us_activity" >
 
+        <!-- Welcome Message -->
         <com.makaota.mammamskitchen.utils.RUATextViewBold
             android:id="@+id/RUATextView"
             android:layout_width="match_parent"
@@ -51,8 +52,8 @@
             android:layout_marginStart="15dp"
             android:gravity="center"
             android:textSize="25sp"
-            android:textColor="@color/colorPrimaryText"
-            android:text="Welcome to Mamma M'S Kitchen"/>
+            android:textColor="@color/colorDarkGrey"
+            android:text="Welcome to Mamma M's Kitchen. We're glad you're here!" />
 
     </LinearLayout>
 
@@ -69,6 +70,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ll_welcome" >
 
 
+        <!-- Opening and Closing Time -->
         <com.makaota.mammamskitchen.utils.RUATextViewBold
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
@@ -76,9 +78,10 @@
             android:layout_marginTop="2dp"
             android:layout_gravity="center"
             android:textSize="20sp"
-            android:textColor="@color/colorPrimaryText"
-            android:text="Opening and Closing Time" />
+            android:textColor="@color/colorDarkGrey"
+            android:text="Our Opening and Closing Hours" />
 
+        <!-- Opening Hours -->
         <com.makaota.mammamskitchen.utils.RUATextView
             android:id="@+id/textView10"
             android:layout_width="wrap_content"
@@ -86,8 +89,9 @@
             android:layout_marginTop="12dp"
             android:textSize="15sp"
             android:textColor="@color/colorPrimaryText"
-            android:text="Monday to Friday 08:00am - 18:00pm" />
+            android:text="🕒 Monday to Friday: 08:00 AM - 06:00 PM" />
 
+        <!-- Saturday Hours -->
         <com.makaota.mammamskitchen.utils.RUATextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
@@ -95,8 +99,9 @@
             android:layout_marginTop="12dp"
             android:textSize="15sp"
             android:textColor="@color/colorPrimaryText"
-            android:text="Saturday 08:00am - 15:00pm" />
+            android:text="🕒 Saturday: 08:00 AM - 03:00 PM" />
 
+        <!-- Sunday Hours -->
         <com.makaota.mammamskitchen.utils.RUATextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
@@ -104,8 +109,9 @@
             android:layout_marginTop="12dp"
             android:textSize="15sp"
             android:textColor="@color/colorPrimaryText"
-            android:text="Sunday Closed" />
+            android:text="🕒 Sunday: Closed" />
 
+        <!-- App Orders Information -->
         <com.makaota.mammamskitchen.utils.RUATextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
@@ -113,11 +119,9 @@
             android:layout_marginTop="12dp"
             android:textSize="15sp"
             android:textColor="@color/colorPrimaryText"
-            android:text="App Orders Ends 30 Minutes Before Closing" />
+            android:text="🕒Please note that app orders 🛒 end 30 minutes before closing time." />
 
     </LinearLayout>
-
-
 
     <LinearLayout
         android:id="@+id/ll_contact_details"
@@ -130,14 +134,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_opening_closing" >
 
-
+        <!-- Contact Details -->
         <com.makaota.mammamskitchen.utils.RUATextViewBold
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:textSize="20sp"
-            android:textColor="@color/colorPrimaryText"
-            android:text="Contact Details" />
+            android:textColor="@color/colorDarkGrey"
+            android:text="Contact Information" />
 
     </LinearLayout>
 
@@ -160,7 +163,7 @@
             android:layout_weight="1"
             android:textSize="15sp"
             android:textColor="@color/colorPrimaryText"
-            android:text="Tab Phone Number to call us" />
+            android:text="📞 Tab the phone number to call us:" />
 
         <com.makaota.mammamskitchen.utils.RUATextView
             android:id="@+id/tv_contact_number"
@@ -181,6 +184,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:padding="10dp"
+
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -194,7 +198,7 @@
             android:layout_weight="1"
             android:textSize="15sp"
             android:textColor="@color/colorPrimaryText"
-            android:text="Tab Address to find us" />
+            android:text="📍 Tab Address to find us" />
 
         <com.makaota.mammamskitchen.utils.RUATextView
             android:id="@+id/tv_address"

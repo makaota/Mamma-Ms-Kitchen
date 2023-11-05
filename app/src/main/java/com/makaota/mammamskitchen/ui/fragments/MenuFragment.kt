@@ -1,15 +1,20 @@
 package com.makaota.mammamskitchen.ui.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupWindow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -22,6 +27,7 @@ import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.FragmentMenuBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.CartItem
+import com.makaota.mammamskitchen.models.OpenCloseStore
 import com.makaota.mammamskitchen.models.Product
 import com.makaota.mammamskitchen.ui.activities.AboutUsActivity
 import com.makaota.mammamskitchen.ui.activities.CartListActivity
@@ -43,7 +49,11 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
 
     private lateinit var viewModel: CounterViewModel
 
+    private lateinit var adapter: MenuItemsListAdapter
+
     private lateinit var menu: Menu
+
+    private lateinit var popupWindow: PopupWindow
 
     private var cartQuantity = 0
     private lateinit var cartListener: ListenerRegistration // To listen for changes in the cart
@@ -269,7 +279,6 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
             )
         )
 
-
         // Register a listener to listen for changes to the cart items
         if (isMenuInitialized) {
             registerCartListener()
@@ -310,23 +319,25 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
                     binding.tvDrinks.isEnabled = false
 
 
-                    val scambaneList = ArrayList<Product>()
-
-                    for (product in mMenuItemsList) {
-
-                        if (product.category == Constants.SCAMBANE) {
-
-                            scambaneList.add(product)
-
+                    getOpenCloseStoreInfo { isStoreOpen ->
+                        if (isStoreOpen) {
+                            // Store is open, you can place an order here
+                            val scambaneList = ArrayList<Product>()
+                            for (product in mMenuItemsList) {
+                                if (product.category == Constants.SCAMBANE) {
+                                    scambaneList.add(product)
+                                }
+                            }
+                            Log.i(MENU_FRAGMENT_TAG, "List Of Scambanes $scambaneList")
+                            val intent = Intent(context, MenuByCategoryActivity::class.java)
+                            intent.putParcelableArrayListExtra(Constants.SCAMBANE, scambaneList)
+                            startActivity(intent)
+                        } else {
+                            // Store is closed
+                            showPopup()
                         }
                     }
 
-                    Log.i(MENU_FRAGMENT_TAG, "List Of Scambanes $scambaneList")
-
-                    val intent = Intent(context, MenuByCategoryActivity::class.java)
-                    intent.putParcelableArrayListExtra(Constants.SCAMBANE, scambaneList)
-
-                    startActivity(intent)
 
                 }
 
@@ -345,19 +356,26 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
                     binding.tvDrinks.isEnabled = false
 
 
-                    val chipsList = ArrayList<Product>()
-
-                    for (product in mMenuItemsList) {
-
-                        if (product.category == Constants.CHIPS) {
-
-                            chipsList.add(product)
-
+                    getOpenCloseStoreInfo { isStoreOpen ->
+                        if (isStoreOpen) {
+                            // Store is open, you can place an order here
+                            val chipsList = ArrayList<Product>()
+                            for (product in mMenuItemsList) {
+                                if (product.category == Constants.CHIPS) {
+                                    chipsList.add(product)
+                                }
+                            }
+                            val intent = Intent(context, MenuByCategoryActivity::class.java)
+                            intent.putParcelableArrayListExtra(Constants.CHIPS, chipsList)
+                            startActivity(intent)
+                        } else {
+                            // Store is closed
+                            showPopup()
                         }
                     }
-                    val intent = Intent(context, MenuByCategoryActivity::class.java)
-                    intent.putParcelableArrayListExtra(Constants.CHIPS, chipsList)
-                    startActivity(intent)
+
+
+
                 }
 
                 R.id.tv_russian -> {
@@ -374,19 +392,24 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
                     binding.tvAdditionalMeals.isEnabled = false
                     binding.tvDrinks.isEnabled = false
 
-                    val russianList = ArrayList<Product>()
-
-                    for (product in mMenuItemsList) {
-
-                        if (product.category == Constants.RUSSIAN) {
-
-                            russianList.add(product)
-
+                    getOpenCloseStoreInfo { isStoreOpen ->
+                        if (isStoreOpen) {
+                            // Store is open, you can place an order here
+                            val russianList = ArrayList<Product>()
+                            for (product in mMenuItemsList) {
+                                if (product.category == Constants.RUSSIAN) {
+                                    russianList.add(product)
+                                }
+                            }
+                            val intent = Intent(context, MenuByCategoryActivity::class.java)
+                            intent.putParcelableArrayListExtra(Constants.RUSSIAN, russianList)
+                            startActivity(intent)
+                        } else {
+                            // Store is closed
+                           showPopup()
                         }
                     }
-                    val intent = Intent(context, MenuByCategoryActivity::class.java)
-                    intent.putParcelableArrayListExtra(Constants.RUSSIAN, russianList)
-                    startActivity(intent)
+
                 }
 
                 R.id.tv_additional_meals -> {
@@ -403,19 +426,24 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
                     )
                     binding.tvDrinks.isEnabled = false
 
-                    val additionalList = ArrayList<Product>()
 
-                    for (product in mMenuItemsList) {
-
-                        if (product.category == Constants.ADDITIONAL_MEALS) {
-
-                            additionalList.add(product)
-
+                    getOpenCloseStoreInfo { isStoreOpen ->
+                        if (isStoreOpen) {
+                            // Store is open, you can place an order here
+                            val additionalList = ArrayList<Product>()
+                            for (product in mMenuItemsList) {
+                                if (product.category == Constants.ADDITIONAL_MEALS) {
+                                    additionalList.add(product)
+                                }
+                            }
+                            val intent = Intent(context, MenuByCategoryActivity::class.java)
+                            intent.putParcelableArrayListExtra(Constants.ADDITIONAL_MEALS, additionalList)
+                            startActivity(intent)
+                        } else {
+                            // Store is closed
+                           showPopup()
                         }
                     }
-                    val intent = Intent(context, MenuByCategoryActivity::class.java)
-                    intent.putParcelableArrayListExtra(Constants.ADDITIONAL_MEALS, additionalList)
-                    startActivity(intent)
                 }
 
                 R.id.tv_drinks -> {
@@ -432,19 +460,24 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
                         )
                     )
 
-                    val drinksList = ArrayList<Product>()
 
-                    for (product in mMenuItemsList) {
-
-                        if (product.category == Constants.DRINKS) {
-
-                            drinksList.add(product)
-
+                    getOpenCloseStoreInfo { isStoreOpen ->
+                        if (isStoreOpen) {
+                            // Store is open, you can place an order here
+                            val drinksList = ArrayList<Product>()
+                            for (product in mMenuItemsList) {
+                                if (product.category == Constants.DRINKS) {
+                                    drinksList.add(product)
+                                }
+                            }
+                            val intent = Intent(context, MenuByCategoryActivity::class.java)
+                            intent.putParcelableArrayListExtra(Constants.DRINKS, drinksList)
+                            startActivity(intent)
+                        } else {
+                            // Store is closed
+                           showPopup()
                         }
                     }
-                    val intent = Intent(context, MenuByCategoryActivity::class.java)
-                    intent.putParcelableArrayListExtra(Constants.DRINKS, drinksList)
-                    startActivity(intent)
                 }
             }
         }
@@ -480,7 +513,7 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
             binding.rvMyProductItems.layoutManager = GridLayoutManager(activity, 2)
             binding.rvMyProductItems.setHasFixedSize(true)
 
-            val adapter = MenuItemsListAdapter(requireActivity(), menuItemsList, this)
+             adapter = MenuItemsListAdapter(requireActivity(), menuItemsList, this)
             binding.rvMyProductItems.adapter = adapter
 
 
@@ -492,13 +525,52 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
                 MenuItemsListAdapter.OnClickListener {
                 override fun onClick(position: Int, product: Product) {
 
-                    // Launch the product details screen from the dashboard.
-                    // START
 
-                    val intent = Intent(context, ProductDetailsActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_PRODUCT_ID, product.product_id)
-                    startActivity(intent)
-                    // END
+                    showProgressDialog(resources.getString(R.string.please_wait))
+
+                    val mFirestore = FirebaseFirestore.getInstance()
+                    val docRef = "KUadjV036C6fvZrjmIWn"
+                    // The collection name for OPEN CLOSE STORE
+                    mFirestore.collection(Constants.OPEN_CLOSE_STORE)
+                        .document(docRef)
+                        .get() // Will get the document snapshots.
+                        .addOnSuccessListener { document ->
+
+                            // Here we get the product details in the form of document.
+                            Log.e(javaClass.simpleName, document.toString())
+
+                            // Convert the snapshot to the object of open close store data model class.
+                            val openCloseStore = document.toObject(OpenCloseStore::class.java)!!
+
+                            //  val mOpenCloseStore = openCloseStore
+
+                            if (!openCloseStore.isStoreOpen){
+
+                                Toast.makeText(requireContext(),"Store is Closed", Toast.LENGTH_SHORT).show()
+                                hideProgressDialog()
+
+                                showPopup()
+
+                            }
+                            else{
+
+                                Toast.makeText(requireContext(),"Store is Open", Toast.LENGTH_SHORT).show()
+                                hideProgressDialog()
+
+                                // Launch the product details screen from the dashboard.
+                                // START
+
+                                val intent = Intent(context, ProductDetailsActivity::class.java)
+                                intent.putExtra(Constants.EXTRA_PRODUCT_ID, product.product_id)
+                                startActivity(intent)
+                                // END
+                            }
+
+                        }
+                        .addOnFailureListener { e ->
+
+                            hideProgressDialog()
+                        }
                 }
             })
             // END
@@ -508,6 +580,36 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
             binding.tvNoProductsFound.visibility = View.VISIBLE
         }
     }
+
+    private fun getOpenCloseStoreInfo(callback: (Boolean) -> Unit) {
+
+        showProgressDialog(resources.getString(R.string.please_wait))
+
+        val mFirestore = FirebaseFirestore.getInstance()
+        val docRef = "KUadjV036C6fvZrjmIWn"
+
+        mFirestore.collection(Constants.OPEN_CLOSE_STORE)
+            .document(docRef)
+            .get()
+            .addOnSuccessListener { document ->
+
+                val openCloseStore = document.toObject(OpenCloseStore::class.java)
+
+                if (openCloseStore != null) {
+                    val isStoreOpen = openCloseStore.isStoreOpen
+                    hideProgressDialog()
+                    callback(isStoreOpen)
+                } else {
+                    hideProgressDialog()
+                    callback(false) // Handle the case when the document is not found or cannot be converted to the expected type.
+                }
+            }
+            .addOnFailureListener { e ->
+                hideProgressDialog()
+                callback(false) // Handle the failure case.
+            }
+    }
+
 
     /**
      * A function to get the dashboard items list from cloud firestore.
@@ -519,5 +621,35 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
         FirestoreClass().getMenuItemsList(this@MenuFragment)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private fun showPopup() {
+        val inflater = LayoutInflater.from(context)
+        val popupView = inflater.inflate(R.layout.popup_window, null)
+
+        // Initialize the PopupWindow
+        val width = ViewGroup.LayoutParams.MATCH_PARENT
+        val height = ViewGroup.LayoutParams.WRAP_CONTENT
+        val focusable = true
+        popupWindow = PopupWindow(popupView, width, height, focusable)
+
+        // Dismiss the popup window when touched outside
+        popupView.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_OUTSIDE) {
+                popupWindow.dismiss()
+                return@setOnTouchListener true
+            }
+            return@setOnTouchListener false
+        }
+
+        val aboutUsTextView = popupView.findViewById<TextView>(R.id.about_us_popup)
+
+        aboutUsTextView.setOnClickListener {
+            startActivity(Intent(activity, AboutUsActivity::class.java))
+        }
+
+
+        // Display the popup window
+        popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0)
+    }
 
 }
