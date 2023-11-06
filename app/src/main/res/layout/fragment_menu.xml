@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="?actionBarSize"
     tools:context=".ui.fragments.MenuFragment">
 
@@ -124,20 +124,115 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/menu_swipe_refresh_layout"
+            <!--scambane items-->
+            <com.makaota.mammamskitchen.utils.RUATextView
+                android:id="@+id/tv_scambane_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/mammaColorLightYellowTheme">
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Scambane"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/no_data_found_textSize"/>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_my_product_items"
+                    android:id="@+id/rv_my_scambane_items"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     tools:visibility="visible" />
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <!--chips items-->
+            <com.makaota.mammamskitchen.utils.RUATextView
+                android:id="@+id/tv_chips_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Chips"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/no_data_found_textSize"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_my_chips_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <!--russian items-->
+            <com.makaota.mammamskitchen.utils.RUATextView
+                android:id="@+id/tv_russian_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Russian"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/no_data_found_textSize"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_my_russian_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+
+            <!--Additional Meals items-->
+            <com.makaota.mammamskitchen.utils.RUATextView
+                android:id="@+id/tv_additional_meals_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Additional Meals"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/no_data_found_textSize"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_my_addtional_meals_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <!--drinks items-->
+            <com.makaota.mammamskitchen.utils.RUATextView
+                android:id="@+id/tv_drinks_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:text="Drinks"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/no_data_found_textSize"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_my_drinks_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
         </LinearLayout>
+
+
     </ScrollView>
 
     <com.makaota.mammamskitchen.utils.RUATextView

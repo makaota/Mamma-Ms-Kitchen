@@ -13,14 +13,14 @@
 
     <FrameLayout
         android:id="@+id/fl_dish_image"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content">
 
         <!-- Main Image -->
     <ImageView
         android:id="@+id/iv_dashboard_item_image"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/item_dashboard_image_height"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
         android:layout_marginStart="@dimen/item_dashboard_image_margin"
         android:layout_marginTop="@dimen/item_dashboard_image_margin"
         android:layout_marginEnd="@dimen/item_dashboard_image_margin"

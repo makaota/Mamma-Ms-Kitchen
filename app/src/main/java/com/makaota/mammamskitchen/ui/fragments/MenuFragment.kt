@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -218,8 +219,8 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
 
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        menuSwipeRefreshLayout = root.findViewById(R.id.menu_swipe_refresh_layout)
-        refreshPage()
+//        menuSwipeRefreshLayout = root.findViewById(R.id.menu_swipe_refresh_layout)
+//        refreshPage()
 
 
         _binding!!.tvScambane.setOnClickListener(this)
@@ -483,102 +484,330 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    private fun refreshPage() {
+//    private fun refreshPage() {
+//
+//        menuSwipeRefreshLayout.setOnRefreshListener {
+//            getMenuItemsList() // Reload Menu Items
+//            FancyToast.makeText(
+//                requireContext(),
+//                "Menu Refreshed",
+//                FancyToast.LENGTH_SHORT,
+//                FancyToast.SUCCESS,
+//                true
+//            ).show()
+//
+//            _binding!!.menuSwipeRefreshLayout.isRefreshing = false
+//        }
+//    }
 
-        menuSwipeRefreshLayout.setOnRefreshListener {
-            getMenuItemsList() // Reload Menu Items
-            FancyToast.makeText(
-                requireContext(),
-                "Menu Refreshed",
-                FancyToast.LENGTH_SHORT,
-                FancyToast.SUCCESS,
-                true
-            ).show()
+//    fun successMenuItemsList(menuItemsList: ArrayList<Product>) {
+//
+//        hideProgressDialog()
+//
+//        if (menuItemsList.size > 0) {
+//
+//            mMenuItemsList = menuItemsList
+//
+//            binding.rvMyProductItems.visibility = View.VISIBLE
+//            binding.tvNoProductsFound.visibility = View.GONE
+//
+//            binding.rvMyProductItems.layoutManager = GridLayoutManager(activity, 2)
+//            binding.rvMyProductItems.setHasFixedSize(true)
+//
+//             adapter = MenuItemsListAdapter(requireActivity(), menuItemsList, this)
+//            binding.rvMyProductItems.adapter = adapter
+//
+//
+//            //Define the onclick listener here that is defined in the adapter class and handle the click on an item in the base class.
+//            // Earlier we have done is a different way of creating the function and calling it from the adapter class based on the instance of the class.
+//
+//            // START
+//            adapter.setOnClickListener(object :
+//                MenuItemsListAdapter.OnClickListener {
+//                override fun onClick(position: Int, product: Product) {
+//
+//
+//                    showProgressDialog(resources.getString(R.string.please_wait))
+//
+//                    val mFirestore = FirebaseFirestore.getInstance()
+//                    val docRef = "KUadjV036C6fvZrjmIWn"
+//                    // The collection name for OPEN CLOSE STORE
+//                    mFirestore.collection(Constants.OPEN_CLOSE_STORE)
+//                        .document(docRef)
+//                        .get() // Will get the document snapshots.
+//                        .addOnSuccessListener { document ->
+//
+//                            // Here we get the product details in the form of document.
+//                            Log.e(javaClass.simpleName, document.toString())
+//
+//                            // Convert the snapshot to the object of open close store data model class.
+//                            val openCloseStore = document.toObject(OpenCloseStore::class.java)!!
+//
+//                            //  val mOpenCloseStore = openCloseStore
+//
+//                            if (!openCloseStore.isStoreOpen){
+//
+//                                Toast.makeText(requireContext(),"Store is Closed", Toast.LENGTH_SHORT).show()
+//                                hideProgressDialog()
+//
+//                                showPopup()
+//
+//                            }
+//                            else{
+//
+//                                Toast.makeText(requireContext(),"Store is Open", Toast.LENGTH_SHORT).show()
+//                                hideProgressDialog()
+//
+//                                // Launch the product details screen from the dashboard.
+//                                // START
+//
+//                                val intent = Intent(context, ProductDetailsActivity::class.java)
+//                                intent.putExtra(Constants.EXTRA_PRODUCT_ID, product.product_id)
+//                                startActivity(intent)
+//                                // END
+//                            }
+//
+//                        }
+//                        .addOnFailureListener { e ->
+//
+//                            hideProgressDialog()
+//                        }
+//                }
+//            })
+//            // END
+//
+//        } else {
+//            binding.rvMyProductItems.visibility = View.GONE
+//            binding.tvNoProductsFound.visibility = View.VISIBLE
+//        }
+//    }
 
-            _binding!!.menuSwipeRefreshLayout.isRefreshing = false
-        }
-    }
 
-    fun successMenuItemsList(menuItemsList: ArrayList<Product>) {
+    fun successMenuItemsList(productsList: ArrayList<Product>) {
 
         hideProgressDialog()
 
-        if (menuItemsList.size > 0) {
+//            binding.rvMyProductItems.visibility = View.VISIBLE
+//            binding.tvNoProductsFound.visibility = View.GONE
+//
+//            binding.rvMyProductItems.layoutManager = GridLayoutManager(activity, 2)
+//            binding.rvMyProductItems.setHasFixedSize(true)
+//
+//             adapter = MenuItemsListAdapter(requireActivity(), menuItemsList, this)
+//            binding.rvMyProductItems.adapter = adapter
 
-            mMenuItemsList = menuItemsList
 
-            binding.rvMyProductItems.visibility = View.VISIBLE
+        mMenuItemsList = productsList
+
+        val scambaneList = ArrayList<Product>()
+        val chipsList = ArrayList<Product>()
+        val russianList = ArrayList<Product>()
+        val additionalMealList = ArrayList<Product>()
+        val drinksList = ArrayList<Product>()
+
+
+        for (product in productsList) {
+
+            //Scambane List
+            if (product.category == Constants.SCAMBANE) {
+                scambaneList.add(product)
+            }
+
+            //Chips List
+            if (product.category == Constants.CHIPS){
+                chipsList.add(product)
+            }
+
+            //Russian List
+            if (product.category == Constants.RUSSIAN){
+                russianList.add(product)
+            }
+
+            //Additional List
+            if (product.category == Constants.ADDITIONAL_MEALS){
+                additionalMealList.add(product)
+            }
+
+            //Drinks List
+            if (product.category == Constants.DRINKS){
+                drinksList.add(product)
+            }
+
+        }
+
+        //Scambane List RecycleView
+        if (scambaneList.size > 0) {
+            binding.rvMyScambaneItems.visibility = View.VISIBLE
             binding.tvNoProductsFound.visibility = View.GONE
+            binding.tvScambaneText.visibility = View.VISIBLE
 
-            binding.rvMyProductItems.layoutManager = GridLayoutManager(activity, 2)
-            binding.rvMyProductItems.setHasFixedSize(true)
+            binding.rvMyScambaneItems.layoutManager = LinearLayoutManager(requireActivity(),
+                LinearLayoutManager.HORIZONTAL,false)
+            binding.rvMyScambaneItems.setHasFixedSize(true)
 
-             adapter = MenuItemsListAdapter(requireActivity(), menuItemsList, this)
-            binding.rvMyProductItems.adapter = adapter
-
-
-            //Define the onclick listener here that is defined in the adapter class and handle the click on an item in the base class.
-            // Earlier we have done is a different way of creating the function and calling it from the adapter class based on the instance of the class.
-
-            // START
-            adapter.setOnClickListener(object :
-                MenuItemsListAdapter.OnClickListener {
-                override fun onClick(position: Int, product: Product) {
+            adapter = MenuItemsListAdapter(requireActivity(), scambaneList, this)
+            binding.rvMyScambaneItems.adapter = adapter
 
 
-                    showProgressDialog(resources.getString(R.string.please_wait))
+            myClickListener()
 
-                    val mFirestore = FirebaseFirestore.getInstance()
-                    val docRef = "KUadjV036C6fvZrjmIWn"
-                    // The collection name for OPEN CLOSE STORE
-                    mFirestore.collection(Constants.OPEN_CLOSE_STORE)
-                        .document(docRef)
-                        .get() // Will get the document snapshots.
-                        .addOnSuccessListener { document ->
-
-                            // Here we get the product details in the form of document.
-                            Log.e(javaClass.simpleName, document.toString())
-
-                            // Convert the snapshot to the object of open close store data model class.
-                            val openCloseStore = document.toObject(OpenCloseStore::class.java)!!
-
-                            //  val mOpenCloseStore = openCloseStore
-
-                            if (!openCloseStore.isStoreOpen){
-
-                                Toast.makeText(requireContext(),"Store is Closed", Toast.LENGTH_SHORT).show()
-                                hideProgressDialog()
-
-                                showPopup()
-
-                            }
-                            else{
-
-                                Toast.makeText(requireContext(),"Store is Open", Toast.LENGTH_SHORT).show()
-                                hideProgressDialog()
-
-                                // Launch the product details screen from the dashboard.
-                                // START
-
-                                val intent = Intent(context, ProductDetailsActivity::class.java)
-                                intent.putExtra(Constants.EXTRA_PRODUCT_ID, product.product_id)
-                                startActivity(intent)
-                                // END
-                            }
-
-                        }
-                        .addOnFailureListener { e ->
-
-                            hideProgressDialog()
-                        }
-                }
-            })
-            // END
 
         } else {
-            binding.rvMyProductItems.visibility = View.GONE
+            binding.rvMyScambaneItems.visibility = View.GONE
             binding.tvNoProductsFound.visibility = View.VISIBLE
         }
+
+        //Chips List RecycleView
+        if (chipsList.size > 0) {
+            binding.rvMyChipsItems.visibility = View.VISIBLE
+            binding.tvNoProductsFound.visibility = View.GONE
+            binding.tvChipsText.visibility = View.VISIBLE
+
+            binding.rvMyChipsItems.layoutManager = LinearLayoutManager(activity,
+                LinearLayoutManager.HORIZONTAL,false)
+            binding.rvMyChipsItems.setHasFixedSize(true)
+
+            adapter = MenuItemsListAdapter(requireActivity(), chipsList, this)
+            binding.rvMyChipsItems.adapter = adapter
+
+
+            myClickListener()
+
+
+        } else {
+            binding.rvMyChipsItems.visibility = View.GONE
+            binding.tvNoProductsFound.visibility = View.VISIBLE
+        }
+
+        //Russian List RecycleView
+        if (russianList.size > 0) {
+            binding.rvMyRussianItems.visibility = View.VISIBLE
+            binding.tvNoProductsFound.visibility = View.GONE
+            binding.tvRussianText.visibility = View.VISIBLE
+
+            binding.rvMyRussianItems.layoutManager = LinearLayoutManager(activity,
+                LinearLayoutManager.HORIZONTAL,false)
+            binding.rvMyRussianItems.setHasFixedSize(true)
+
+            adapter = MenuItemsListAdapter(requireActivity(), russianList, this)
+            binding.rvMyRussianItems.adapter = adapter
+
+
+            myClickListener()
+
+        } else {
+            binding.rvMyRussianItems.visibility = View.GONE
+            binding.tvNoProductsFound.visibility = View.VISIBLE
+        }
+
+        //Additional Meals List RecycleView
+        if (additionalMealList.size > 0) {
+            binding.rvMyAddtionalMealsItems.visibility = View.VISIBLE
+            binding.tvNoProductsFound.visibility = View.GONE
+            binding.tvAdditionalMealsText.visibility = View.VISIBLE
+
+            binding.rvMyAddtionalMealsItems.layoutManager = LinearLayoutManager(activity,
+                LinearLayoutManager.HORIZONTAL,false)
+            binding.rvMyAddtionalMealsItems.setHasFixedSize(true)
+
+            adapter = MenuItemsListAdapter(requireActivity(), additionalMealList, this)
+            binding.rvMyAddtionalMealsItems.adapter = adapter
+
+
+            myClickListener()
+
+        } else {
+            binding.rvMyAddtionalMealsItems.visibility = View.GONE
+            binding.tvNoProductsFound.visibility = View.VISIBLE
+        }
+
+        //Drinks List RecycleView
+        if (drinksList.size > 0) {
+            binding.rvMyDrinksItems.visibility = View.VISIBLE
+            binding.tvNoProductsFound.visibility = View.GONE
+            binding.tvDrinksText.visibility = View.VISIBLE
+
+            binding.rvMyDrinksItems.layoutManager = LinearLayoutManager(activity,
+                LinearLayoutManager.HORIZONTAL,false)
+            binding.rvMyDrinksItems.setHasFixedSize(true)
+            adapter = MenuItemsListAdapter(requireActivity(), drinksList, this)
+            binding.rvMyDrinksItems.adapter = adapter
+
+
+            myClickListener()
+
+        } else {
+            binding.rvMyDrinksItems.visibility = View.GONE
+            binding.tvNoProductsFound.visibility = View.VISIBLE
+        }
+
+
+
+    }
+
+
+    private fun myClickListener(){
+
+
+        //Define the onclick listener here that is defined in the adapter class and handle the click on an item in the base class.
+        // Earlier we have done is a different way of creating the function and calling it from the adapter class based on the instance of the class.
+
+        // START
+        adapter.setOnClickListener(object :
+            MenuItemsListAdapter.OnClickListener {
+            override fun onClick(position: Int, product: Product) {
+
+
+                showProgressDialog(resources.getString(R.string.please_wait))
+
+                val mFirestore = FirebaseFirestore.getInstance()
+                val docRef = "KUadjV036C6fvZrjmIWn"
+                // The collection name for OPEN CLOSE STORE
+                mFirestore.collection(Constants.OPEN_CLOSE_STORE)
+                    .document(docRef)
+                    .get() // Will get the document snapshots.
+                    .addOnSuccessListener { document ->
+
+                        // Here we get the product details in the form of document.
+                        Log.e(javaClass.simpleName, document.toString())
+
+                        // Convert the snapshot to the object of open close store data model class.
+                        val openCloseStore = document.toObject(OpenCloseStore::class.java)!!
+
+                        //  val mOpenCloseStore = openCloseStore
+
+                        if (!openCloseStore.isStoreOpen){
+
+                            Toast.makeText(requireContext(),"Store is Closed", Toast.LENGTH_SHORT).show()
+                            hideProgressDialog()
+
+                            showPopup()
+
+                        }
+                        else{
+
+                            Toast.makeText(requireContext(),"Store is Open", Toast.LENGTH_SHORT).show()
+                            hideProgressDialog()
+
+                            // Launch the product details screen from the dashboard.
+                            // START
+
+                            val intent = Intent(context, ProductDetailsActivity::class.java)
+                            intent.putExtra(Constants.EXTRA_PRODUCT_ID, product.product_id)
+                            startActivity(intent)
+                            // END
+                        }
+
+                    }
+                    .addOnFailureListener { e ->
+
+                        hideProgressDialog()
+                    }
+            }
+        })
+        // END
+
+
     }
 
     private fun getOpenCloseStoreInfo(callback: (Boolean) -> Unit) {
