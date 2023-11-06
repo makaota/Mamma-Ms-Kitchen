@@ -136,7 +136,7 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:textAlignment="textStart"
-                android:textSize="@dimen/no_data_found_textSize"/>
+                android:textSize="25sp"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_my_scambane_items"
@@ -157,7 +157,7 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:textAlignment="textStart"
-                android:textSize="@dimen/no_data_found_textSize"/>
+                android:textSize="25sp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_my_chips_items"
@@ -178,7 +178,7 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:textAlignment="textStart"
-                android:textSize="@dimen/no_data_found_textSize"/>
+                android:textSize="25sp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_my_russian_items"
@@ -200,7 +200,7 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:textAlignment="textStart"
-                android:textSize="@dimen/no_data_found_textSize"/>
+                android:textSize="25sp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_my_addtional_meals_items"
@@ -221,7 +221,7 @@
                 tools:visibility="visible"
                 android:text="Drinks"
                 android:textAlignment="textStart"
-                android:textSize="@dimen/no_data_found_textSize"/>
+                android:textSize="25sp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_my_drinks_items"
