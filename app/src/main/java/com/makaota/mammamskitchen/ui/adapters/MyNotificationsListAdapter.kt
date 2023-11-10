@@ -5,7 +5,9 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.ItemListLayoutBinding
 import com.makaota.mammamskitchen.databinding.NotificationsListLayoutBinding
 import com.makaota.mammamskitchen.models.Notifications
@@ -56,7 +58,6 @@ open class MyNotificationsListAdapter(
             with(model) {
 
 
-
                 // Set the Date in the UI.
                 // START
                 // Date Format in which the date will be displayed in the UI.
@@ -76,6 +77,69 @@ open class MyNotificationsListAdapter(
                 binding.orderStatus.text = model.orderStatus
                 binding.orderMessage.text = model.orderMessage
                 binding.orderNumber.text = model.orderNumber
+
+
+                if (model.orderNumber.isEmpty()){
+                    binding.orderNumber.visibility = View.GONE
+                    binding.tvOrderNumberText.visibility = View.GONE
+                }
+                else{
+                    binding.orderNumber.visibility = View.VISIBLE
+                    binding.tvOrderNumberText.visibility = View.VISIBLE
+                }
+
+                when (model.orderStatus) {
+
+                    ContextCompat.getString(context, R.string.order_status_pending) -> {
+
+                        binding.orderStatus.setTextColor(
+                            ContextCompat.getColor(
+                                context, R.color.colorAccent
+                            )
+                        )
+                    }
+
+                    ContextCompat.getString(context, R.string.order_status_in_process) -> {
+
+                        binding.orderStatus.setTextColor(
+                            ContextCompat.getColor(
+                                context, R.color.colorOrderStatusInProcess
+                            )
+                        )
+                    }
+
+
+                    ContextCompat.getString(context, R.string.order_status_preparing) -> {
+
+                        binding.orderStatus.setTextColor(
+                            ContextCompat.getColor(
+                                context, R.color.colorOrderStatusPreparing
+                            )
+                        )
+                    }
+
+                    ContextCompat.getString(
+                        context,
+                        R.string.order_status_ready_for_collection
+                    ) -> {
+
+                        binding.orderStatus.setTextColor(
+                            ContextCompat.getColor(
+                                context, R.color.colorOrderStatusReadyForCollection
+                            )
+                        )
+                    }
+
+                    ContextCompat.getString(context, R.string.order_status_delivered) -> {
+
+                        binding.orderStatus.setTextColor(
+                            ContextCompat.getColor(
+                                context, R.color.colorOrderStatusDelivered
+                            )
+                        )
+                    }
+
+                }
 
                 binding.deleteNotification.setOnClickListener {
 

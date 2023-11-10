@@ -7,6 +7,7 @@ import android.net.Uri
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -27,6 +28,8 @@ import com.makaota.mammamskitchen.ui.activities.MyOrderDetailsActivity
 import com.makaota.mammamskitchen.ui.activities.ProductDetailsActivity
 import com.makaota.mammamskitchen.ui.activities.RegisterActivity
 import com.makaota.mammamskitchen.ui.activities.SettingsActivity
+import com.makaota.mammamskitchen.ui.activities.SplashActivity
+import com.makaota.mammamskitchen.ui.activities.TAG
 import com.makaota.mammamskitchen.ui.activities.UserProfileActivity
 import com.makaota.mammamskitchen.ui.fragments.MenuFragment
 import com.makaota.mammamskitchen.ui.fragments.MyFavoritesFragment
@@ -34,9 +37,12 @@ import com.makaota.mammamskitchen.ui.fragments.NotificationsFragment
 import com.makaota.mammamskitchen.ui.fragments.OrdersFragment
 import com.makaota.mammamskitchen.utils.Constants
 
-const val FIRESTORE_CLASS_TAG = "FirestoreClass"
+
 
 class FirestoreClass {
+
+
+    val TAG = "FirestoreClass"
 
     private val mFirestore = FirebaseFirestore.getInstance()
 
@@ -91,76 +97,85 @@ class FirestoreClass {
      */
     fun getUserDetails(activity: Activity) {
 
-        // Here we pass the collection name from which we wants the data.
-        mFirestore.collection(Constants.USER)
-            // The document id to get the Fields of user.
-            .document(getCurrentUserId())
-            .get()
-            .addOnSuccessListener { document ->
 
-                Log.i(activity.javaClass.simpleName, document.toString())
+            // Here we pass the collection name from which we wants the data.
+            mFirestore.collection(Constants.USER)
+                // The document id to get the Fields of user.
 
-                // Here we have received the document snapshot which is converted into the User Data model object.
-                val user = document.toObject(User::class.java)!!
-                val userDeviceToken = user.userToken
+                .document(getCurrentUserId())
+                .get()
+                .addOnSuccessListener { document ->
 
-                // if (userDeviceToken)
+                    Log.i(activity.javaClass.simpleName, document.toString())
+
+                    // Here we have received the document snapshot which is converted into the User Data model object.
+                    val user = document.toObject(User::class.java)!!
+                    val userDeviceToken = user.userToken
 
 
-                // Create an instance of the Android SharedPreferences.
-                // START
-                val sharedPreferences =
-                    activity.getSharedPreferences(
-                        Constants.RESTAURANT_USER_PREFERENCES,
-                        Context.MODE_PRIVATE
+                    // Create an instance of the Android SharedPreferences.
+                    // START
+                    val sharedPreferences =
+                        activity.getSharedPreferences(
+                            Constants.RESTAURANT_USER_PREFERENCES,
+                            Context.MODE_PRIVATE
+                        )
+
+                    // Create an instance of the editor which is help us to edit the SharedPreference.
+                    val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                    editor.putString(
+                        Constants.LOGGED_IN_USERNAME,
+                        "${user.firstName} ${user.lastName}"
                     )
+                    editor.putString(Constants.LOGGED_IN_USER_MOBILE, user.mobile)
+                    editor.putString("EMAIL", user.email)
+                    editor.apply()
+                    // END
 
-                // Create an instance of the editor which is help us to edit the SharedPreference.
-                val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                editor.putString(
-                    Constants.LOGGED_IN_USERNAME,
-                    "${user.firstName} ${user.lastName}"
-                )
-                editor.putString(Constants.LOGGED_IN_USER_MOBILE, user.mobile)
-                editor.apply()
-                // END
+                    // START
+                    when (activity) {
+                        is LoginActivity -> {
+                            // Call a function of base activity for transferring the result to it.
+                            activity.userDeviceTokenListener(user)
+                            activity.userLoggedInSuccess(user)
+                        }
 
-                // START
-                when (activity) {
-                    is LoginActivity -> {
-                        // Call a function of base activity for transferring the result to it.
-                        activity.userDeviceTokenListener(user)
-                        activity.userLoggedInSuccess(user)
+                        is SettingsActivity -> {
+                            activity.userDetailsSuccess(user)
+                        }
+
+                        is CheckoutActivity -> {
+                            activity.isUserProfileComplete(user)
+                        }
+
+                        is SplashActivity -> {
+                            activity.userLoggedInSuccess()
+                        }
+
+
                     }
-
-                    is SettingsActivity -> {
-                        activity.userDetailsSuccess(user)
-                    }
-
-                    is CheckoutActivity -> {
-                        activity.isUserProfileComplete(user)
-                    }
-
+                    // END
                 }
-                // END
-            }
-            .addOnFailureListener { e ->
-                // Hide the progress dialog if there is any error. And print the error in log.
-                when (activity) {
-                    is LoginActivity -> {
-                        activity.hideProgressDialog()
+                .addOnFailureListener { e ->
+                    // Hide the progress dialog if there is any error. And print the error in log.
+                    when (activity) {
+                        is LoginActivity -> {
+                            activity.hideProgressDialog()
+                        }
+
+                        is SettingsActivity -> {
+                            activity.hideProgressDialog()
+                        }
+
+
                     }
 
-                    is SettingsActivity -> {
-                        activity.hideProgressDialog()
-                    }
+                    Log.e(
+                        activity.javaClass.simpleName,
+                        "Error while getting user details.", e
+                    )
                 }
 
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while getting user details.", e
-                )
-            }
     }
 
     // Create a function to update user details in the database.
@@ -1019,7 +1034,7 @@ class FirestoreClass {
 
                     val notifications = i.toObject(Notifications::class.java)!!
                     notifications.documentId = i.id
-                    Log.i(FIRESTORE_CLASS_TAG, "the doc ref of noti " + notifications.documentId)
+                    Log.i(TAG, "the doc ref of noti " + notifications.documentId)
 
                     list.add(0, notifications)
                 }
@@ -1131,7 +1146,7 @@ class FirestoreClass {
 
                     val favorites = i.toObject(Favorites::class.java)!!
                     favorites.documentId = i.id
-                    Log.i(FIRESTORE_CLASS_TAG, "the doc ref of noti " + favorites.documentId)
+                    Log.i(TAG, "the doc ref of noti " + favorites.documentId)
 
                     list.add(0, favorites)
                 }
@@ -1168,7 +1183,7 @@ class FirestoreClass {
 
                     val favorites = i.toObject(Favorites::class.java)!!
                     favorites.documentId = i.id
-                    Log.i(FIRESTORE_CLASS_TAG, "the doc ref " + favorites.documentId)
+                    Log.i(TAG, "the doc ref " + favorites.documentId)
 
                     favList.add(0, favorites)
                 }

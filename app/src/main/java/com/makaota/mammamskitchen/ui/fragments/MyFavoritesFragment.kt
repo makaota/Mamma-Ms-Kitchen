@@ -2,23 +2,17 @@ package com.makaota.mammamskitchen.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makaota.mammamskitchen.R
-import com.makaota.mammamskitchen.databinding.FragmentMenuBinding
 import com.makaota.mammamskitchen.databinding.FragmentMyFavoritesBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.Favorites
-import com.makaota.mammamskitchen.models.Product
 import com.makaota.mammamskitchen.ui.activities.ProductDetailsActivity
-import com.makaota.mammamskitchen.ui.adapters.MenuItemsListAdapter
 import com.makaota.mammamskitchen.ui.adapters.MyFavoritesListAdapter
-import com.makaota.mammamskitchen.ui.adapters.MyNotificationsListAdapter
 import com.makaota.mammamskitchen.utils.Constants
 import com.shashank.sony.fancytoastlib.FancyToast
 import java.util.ArrayList

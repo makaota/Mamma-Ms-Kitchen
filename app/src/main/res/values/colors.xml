@@ -21,6 +21,8 @@
     <color name="colorPrimaryText">#222934</color>
     <color name="colorSecondaryText">#989898</color>
 
+    <color name="light_coral">#FFFF00</color>
+
     <color name="colorSnackBarSuccess">#8BC34A</color>
     <color name="colorSnackBarError">#F72400</color>
     <color name="colorLightGrey">#F1F1F1</color>

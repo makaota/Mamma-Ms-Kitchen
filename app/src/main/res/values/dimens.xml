@@ -30,7 +30,7 @@
     <dimen name="progress_text_marginStart">16dp</dimen>
     <dimen name="progress_text_size">16sp</dimen>
 
-    <dimen name="notification_textSize">10sp</dimen>
+    <dimen name="notification_textSize">15sp</dimen>
 
     <dimen name="forgot_password_title_textSize">18sp</dimen>
     <dimen name="forgot_password_title_description_textSize">14sp</dimen>
@@ -76,12 +76,12 @@
     <dimen name="item_list_marginTop">16dp</dimen>
     <dimen name="item_list_padding">10dp</dimen>
     <dimen name="item_image_padding">2dp</dimen>
-    <dimen name="item_image_width">80dp</dimen>
-    <dimen name="item_image_height">70dp</dimen>
+    <dimen name="item_image_width">150dp</dimen>
+    <dimen name="item_image_height">140dp</dimen>
     <dimen name="item_image_title_price_marginStart">10dp</dimen>
-    <dimen name="rv_item_name_textSize">14sp</dimen>
+    <dimen name="rv_item_name_textSize">25sp</dimen>
     <dimen name="rv_item_price_marginTop">2dp</dimen>
-    <dimen name="rv_item_price_textSize">12sp</dimen>
+    <dimen name="rv_item_price_textSize">20sp</dimen>
 
     <dimen name="item_dashboard_margin">5dp</dimen>
     <dimen name="item_dashboard_padding">1dp</dimen>
@@ -183,6 +183,8 @@
     <dimen name="sold_details_content_paddingTopBottom">10dp</dimen>
     <dimen name="sold_details_items_receipt">16dp</dimen>
     <dimen name="sold_details_label_value_textSize">18sp</dimen>
+    <dimen name="notifications_top_margin">7dp</dimen>
+    <dimen name="spacing">10dp</dimen>
 
     <!--END-->
 

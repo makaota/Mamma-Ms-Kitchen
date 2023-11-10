@@ -6,23 +6,30 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.makaota.mammamskitchen.R
+import com.makaota.mammamskitchen.firestore.FirestoreClass
+import com.makaota.mammamskitchen.models.User
+import com.makaota.mammamskitchen.utils.Constants
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity() {
+
+    val TAG = "SplashActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
         @Suppress("DEPRECATION")
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else
-        {
+        } else {
             window.setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -31,7 +38,7 @@ class SplashActivity : AppCompatActivity() {
 
         val splashAnimation = AnimationUtils.loadAnimation(this@SplashActivity, R.anim.anim_splash)
         val splashText = findViewById<ImageView>(R.id.splash_text)
-            splashText.animation = splashAnimation
+        splashText.animation = splashAnimation
 
         splashAnimation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {
@@ -42,8 +49,18 @@ class SplashActivity : AppCompatActivity() {
                 // "Add the code that you want to execute when animation ends")
 
                 Handler(Looper.getMainLooper()).postDelayed({
-                    startActivity(Intent(this@SplashActivity, DashboardActivity::class.java))
-                    finish()
+                    try {
+
+                        showProgressDialog(resources.getString(R.string.please_wait))
+                        FirestoreClass().getUserDetails(this@SplashActivity)
+
+                    } catch (e: IllegalArgumentException) {
+
+                        hideProgressDialog()
+                        Log.i(TAG, "error message $e.message")
+                        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                    }
                 }, 500)
             }
 
@@ -52,4 +69,16 @@ class SplashActivity : AppCompatActivity() {
             }
         })
     }
+
+    fun userLoggedInSuccess() {
+
+        hideProgressDialog()
+        // Redirect the user to Main Screen after log in.
+        startActivity(Intent(this@SplashActivity, DashboardActivity::class.java))
+
+        finish()
+        // END
+    }
+
+
 }

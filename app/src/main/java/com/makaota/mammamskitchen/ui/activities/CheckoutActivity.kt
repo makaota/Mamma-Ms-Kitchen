@@ -90,6 +90,7 @@ class CheckoutActivity : BaseActivity() {
             binding.tvCheckoutAddress.text = "${mAddressDetails!!.address}, ${mAddressDetails!!.zipCode}"
             binding.tvCheckoutAdditionalNote.text = mAddressDetails?.additionalNote
 
+
             if (mAddressDetails?.otherDetails!!.isNotEmpty()) {
                 binding.tvCheckoutOtherDetails.text = mAddressDetails?.otherDetails
             }
@@ -260,18 +261,40 @@ class CheckoutActivity : BaseActivity() {
 
 
         binding.tvCheckoutSubTotal.text = "R$mSubTotal"
-        // Here we have kept Shipping Charge is fixed as $10 but in your case it may cary. Also, it depends on the location and total amount.
-        binding.tvCheckoutShippingCharge.text = "R10.0"
 
-        if (mSubTotal > 0) {
-            binding.llCheckoutPlaceOrder.visibility = View.VISIBLE
 
-            mTotalAmount = mSubTotal + 10
-            binding.tvCheckoutTotalAmount.text = "R$mTotalAmount"
-        } else {
-            binding.llCheckoutPlaceOrder.visibility = View.GONE
+        if (mAddressDetails != null){
+            // Here we have kept Delivery Charge is fixed as R10 but in your case it may cary. Also, it depends on the location and total amount.
+            binding.tvCheckoutDeliveryCharge.text = "R10.0"
+
+            if (mSubTotal > 0) {
+                binding.llCheckoutPlaceOrder.visibility = View.VISIBLE
+
+                mTotalAmount = mSubTotal + 10
+                binding.tvCheckoutTotalAmount.text = "R$mTotalAmount"
+            } else {
+                binding.llCheckoutPlaceOrder.visibility = View.GONE
+            }
+            // END
         }
-        // END
+        else{
+
+            binding.tvCheckoutDeliveryCharge.text = "R0"
+
+            if (mSubTotal > 0) {
+                binding.llCheckoutPlaceOrder.visibility = View.VISIBLE
+
+                mTotalAmount = mSubTotal
+                binding.tvCheckoutTotalAmount.text = "R$mTotalAmount"
+            } else {
+                binding.llCheckoutPlaceOrder.visibility = View.GONE
+            }
+
+        }
+
+
+
+
     }
     // END
 

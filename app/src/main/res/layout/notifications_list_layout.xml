@@ -9,14 +9,12 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         app:cardElevation="10dp"
         app:cardCornerRadius="20dp"
         app:cardBackgroundColor="@color/white"
         app:cardMaxElevation="12dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -36,22 +34,17 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.makaota.mammamskitchen.utils.RUATextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/order_details_lbl_order_id"
-                    android:textColor="@color/colorDarkGrey"
-                    android:textSize="@dimen/notification_textSize" />
 
                 <com.makaota.mammamskitchen.utils.RUATextView
                     android:id="@+id/order_details_id"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/colorSecondaryText"
+                    android:layout_marginTop="@dimen/notifications_top_margin"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/notification_textSize"
-                    tools:text="123456" />
+                    tools:text="zana Papa 123456" />
             </LinearLayout>
 
             <LinearLayout
@@ -60,19 +53,13 @@
                 android:orientation="horizontal">
 
                 <com.makaota.mammamskitchen.utils.RUATextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/order_details_lbl_order_date"
-                    android:textColor="@color/colorDarkGrey"
-                    android:textSize="@dimen/notification_textSize" />
-
-                <com.makaota.mammamskitchen.utils.RUATextView
                     android:id="@+id/order_details_date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/colorSecondaryText"
+                    android:textAlignment="center"
+                    android:layout_marginTop="@dimen/notifications_top_margin"
+                    android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/notification_textSize"
                     tools:text="04 May 2022" />
             </LinearLayout>
@@ -86,7 +73,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/order_details_lbl_order_status"
-                    android:textColor="@color/colorDarkGrey"
+                    android:textColor="@color/colorPrimaryText"
+                    android:layout_marginTop="@dimen/notifications_top_margin"
                     android:textSize="@dimen/notification_textSize" />
 
                 <com.makaota.mammamskitchen.utils.RUATextView
@@ -96,6 +84,7 @@
                     android:layout_weight="1"
                     android:text="@string/order_status_pending"
                     android:textAlignment="textEnd"
+                    android:layout_marginTop="@dimen/notifications_top_margin"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/notification_textSize" />
             </LinearLayout>
@@ -108,20 +97,13 @@
                 android:orientation="horizontal">
 
                 <com.makaota.mammamskitchen.utils.RUATextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/order_details_lbl_order_message"
-                    android:textColor="@color/colorDarkGrey"
-                    android:textSize="@dimen/notification_textSize" />
-
-                <com.makaota.mammamskitchen.utils.RUATextView
                     android:id="@+id/order_message"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginTop="@dimen/notifications_top_margin"
                     android:text="Message"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/notification_textSize" />
 
             </LinearLayout>
@@ -134,10 +116,12 @@
                 android:orientation="horizontal">
 
                 <com.makaota.mammamskitchen.utils.RUATextView
+                    android:id="@+id/tv_order_number_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/order_details_lbl_order_number"
-                    android:textColor="@color/colorDarkGrey"
+                    android:layout_marginTop="@dimen/notifications_top_margin"
+                    android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/notification_textSize" />
 
                 <com.makaota.mammamskitchen.utils.RUATextView
@@ -146,6 +130,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="123"
+                    android:layout_marginTop="@dimen/notifications_top_margin"
                     android:textAlignment="textEnd"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/notification_textSize" />
@@ -157,6 +142,7 @@
                 android:layout_height="wrap_content"
                 android:text="DELETE"
                 android:textSize="12sp"
+                android:layout_marginTop="@dimen/notifications_top_margin"
                 android:textColor="@color/colorThemePink"
                 android:background="@android:color/transparent"
                 android:foreground="?attr/selectableItemBackground"

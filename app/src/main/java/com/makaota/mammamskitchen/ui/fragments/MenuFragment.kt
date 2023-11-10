@@ -219,8 +219,8 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
 
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
         val root: View = binding.root
-//        menuSwipeRefreshLayout = root.findViewById(R.id.menu_swipe_refresh_layout)
-//        refreshPage()
+        menuSwipeRefreshLayout = root.findViewById(R.id.menu_swipe_refresh_layout)
+        refreshPage()
 
 
         _binding!!.tvScambane.setOnClickListener(this)
@@ -484,21 +484,21 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-//    private fun refreshPage() {
-//
-//        menuSwipeRefreshLayout.setOnRefreshListener {
-//            getMenuItemsList() // Reload Menu Items
-//            FancyToast.makeText(
-//                requireContext(),
-//                "Menu Refreshed",
-//                FancyToast.LENGTH_SHORT,
-//                FancyToast.SUCCESS,
-//                true
-//            ).show()
-//
-//            _binding!!.menuSwipeRefreshLayout.isRefreshing = false
-//        }
-//    }
+    private fun refreshPage() {
+
+        menuSwipeRefreshLayout.setOnRefreshListener {
+            getMenuItemsList() // Reload Menu Items
+            FancyToast.makeText(
+                requireContext(),
+                "Menu Refreshed",
+                FancyToast.LENGTH_SHORT,
+                FancyToast.SUCCESS,
+                true
+            ).show()
+
+            _binding!!.menuSwipeRefreshLayout.isRefreshing = false
+        }
+    }
 
 //    fun successMenuItemsList(menuItemsList: ArrayList<Product>) {
 //

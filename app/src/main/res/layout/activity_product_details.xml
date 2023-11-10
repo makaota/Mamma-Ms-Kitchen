@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/product_details_title_price_marginTop"
-                android:background="@color/dashboard_item_details_bg"
+                android:background="@drawable/app_gradient_color_background"
                 android:orientation="vertical"
                 android:padding="@dimen/product_details_title_price_padding"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -110,26 +110,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/item_value_text_color"
-                    android:textSize="@dimen/product_details_title_textSize"
+                    android:textSize="25sp"
                     tools:text="Product Title" />
 
-                <com.makaota.mammamskitchen.utils.RUATextView
-                    android:id="@+id/tv_product_details_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/item_value_text_color"
-                    android:textSize="@dimen/product_details_price_textSize"
-                    tools:text="R100" />
+
             </LinearLayout>
 
             <com.makaota.mammamskitchen.utils.RUATextViewBold
-                android:id="@+id/tv_product_details_label"
+                android:id="@+id/tv_product_details_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/product_details_label_margin"
-                android:text="@string/lbl_product_description"
+                tools:text="R100"
                 android:textColor="@color/item_value_text_color"
-                android:textSize="@dimen/product_details_label_textSize"
+                android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ll_product_details_title_price" />
@@ -141,10 +135,10 @@
                 android:layout_marginStart="@dimen/product_details_label_margin"
                 android:layout_marginEnd="@dimen/product_details_label_margin"
                 android:textColor="@color/colorSecondaryText"
-                android:textSize="@dimen/product_details_description_textSize"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_product_details_label"
+                app:layout_constraintTop_toBottomOf="@id/tv_product_details_price"
                 tools:text="This is product details description." />
 
             <LinearLayout

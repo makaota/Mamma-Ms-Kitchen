@@ -28,8 +28,8 @@
 
             <com.makaota.mammamskitchen.utils.RUATextViewBold
                 android:id="@+id/tv_category_all"
-                android:layout_width="100dp"
-                android:layout_height="48dp"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="8dp"
                 android:background="@drawable/chip_shape_layout"
                 android:clickable="true"
@@ -37,12 +37,12 @@
                 android:gravity="center"
                 android:text="All"
                 android:textColor="@color/colorPrimary_dark"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <com.makaota.mammamskitchen.utils.RUATextViewBold
                 android:id="@+id/tv_scambane"
-                android:layout_width="100dp"
-                android:layout_height="48dp"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="8dp"
                 android:background="@drawable/chip_shape_layout"
                 android:clickable="true"
@@ -50,7 +50,7 @@
                 android:gravity="center"
                 android:text="Scambane"
                 android:textColor="@color/colorPrimary_dark"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <ProgressBar
                 android:id="@+id/progressBar2"
@@ -62,62 +62,71 @@
 
             <com.makaota.mammamskitchen.utils.RUATextViewBold
                 android:id="@+id/tv_chips"
-                android:layout_width="100dp"
-                android:layout_height="48dp"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="8dp"
                 android:background="@drawable/chip_shape_layout"
                 android:gravity="center"
                 android:text="Chips"
                 android:textColor="@color/colorPrimary_dark"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <com.makaota.mammamskitchen.utils.RUATextViewBold
                 android:id="@+id/tv_russian"
-                android:layout_width="100dp"
-                android:layout_height="48dp"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="8dp"
                 android:background="@drawable/chip_shape_layout"
                 android:gravity="center"
                 android:text="Russian"
                 android:textColor="@color/colorPrimary_dark"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <com.makaota.mammamskitchen.utils.RUATextViewBold
                 android:id="@+id/tv_additional_meals"
-                android:layout_width="100dp"
-                android:layout_height="48dp"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="8dp"
                 android:background="@drawable/chip_shape_layout"
                 android:gravity="center"
                 android:text="Additionals"
                 android:textColor="@color/colorPrimary_dark"
-                android:textSize="16sp" />
+                android:textSize="19.5sp" />
 
             <com.makaota.mammamskitchen.utils.RUATextViewBold
                 android:id="@+id/tv_drinks"
-                android:layout_width="100dp"
-                android:layout_height="48dp"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/chip_shape_layout"
                 android:gravity="center"
                 android:text="Drinks"
                 android:textColor="@color/colorPrimary_dark"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
     </HorizontalScrollView>
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/menu_swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="65dp"
+        android:fillViewport="true"
+        app:swipeRefreshLayoutProgressSpinnerBackgroundColor="@color/mammaColorLightYellowTheme"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" >
+
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="65dp"
-        android:fillViewport="true"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -125,7 +134,7 @@
             android:orientation="vertical">
 
             <!--scambane items-->
-            <com.makaota.mammamskitchen.utils.RUATextView
+            <com.makaota.mammamskitchen.utils.RUATextViewBold
                 android:id="@+id/tv_scambane_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -135,8 +144,11 @@
                 android:text="Scambane"
                 android:visibility="gone"
                 tools:visibility="visible"
+                android:textColor="@color/colorPrimaryText"
                 android:textAlignment="textStart"
-                android:textSize="25sp"/>
+                android:textSize="27sp"/>
+
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_my_scambane_items"
@@ -145,8 +157,10 @@
                     android:visibility="gone"
                     tools:visibility="visible" />
 
+
+
             <!--chips items-->
-            <com.makaota.mammamskitchen.utils.RUATextView
+            <com.makaota.mammamskitchen.utils.RUATextViewBold
                 android:id="@+id/tv_chips_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -154,10 +168,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="Chips"
+                android:textColor="@color/colorPrimaryText"
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:textAlignment="textStart"
-                android:textSize="25sp"/>
+                android:textSize="27sp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_my_chips_items"
@@ -167,7 +182,7 @@
                 tools:visibility="visible" />
 
             <!--russian items-->
-            <com.makaota.mammamskitchen.utils.RUATextView
+            <com.makaota.mammamskitchen.utils.RUATextViewBold
                 android:id="@+id/tv_russian_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -175,10 +190,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="Russian"
+                android:textColor="@color/colorPrimaryText"
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:textAlignment="textStart"
-                android:textSize="25sp"/>
+                android:textSize="27sp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_my_russian_items"
@@ -189,7 +205,7 @@
 
 
             <!--Additional Meals items-->
-            <com.makaota.mammamskitchen.utils.RUATextView
+            <com.makaota.mammamskitchen.utils.RUATextViewBold
                 android:id="@+id/tv_additional_meals_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -197,10 +213,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="Additional Meals"
+                android:textColor="@color/colorPrimaryText"
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:textAlignment="textStart"
-                android:textSize="25sp"/>
+                android:textSize="27sp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_my_addtional_meals_items"
@@ -210,7 +227,7 @@
                 tools:visibility="visible" />
 
             <!--drinks items-->
-            <com.makaota.mammamskitchen.utils.RUATextView
+            <com.makaota.mammamskitchen.utils.RUATextViewBold
                 android:id="@+id/tv_drinks_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -220,8 +237,9 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:text="Drinks"
+                android:textColor="@color/colorPrimaryText"
                 android:textAlignment="textStart"
-                android:textSize="25sp"/>
+                android:textSize="27sp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_my_drinks_items"
@@ -234,6 +252,8 @@
 
 
     </ScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.makaota.mammamskitchen.utils.RUATextView
         android:id="@+id/tv_no_products_found"
