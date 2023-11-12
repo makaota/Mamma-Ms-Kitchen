@@ -19,7 +19,7 @@
 
         <LinearLayout
             android:id="@+id/ll_chips_layout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_marginStart="3dp"
             android:layout_marginEnd="3dp"
@@ -51,14 +51,6 @@
                 android:text="Scambane"
                 android:textColor="@color/colorPrimary_dark"
                 android:textSize="20sp" />
-
-            <ProgressBar
-                android:id="@+id/progressBar2"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:visibility="gone"/>
 
             <com.makaota.mammamskitchen.utils.RUATextViewBold
                 android:id="@+id/tv_chips"
@@ -146,7 +138,7 @@
                 tools:visibility="visible"
                 android:textColor="@color/colorPrimaryText"
                 android:textAlignment="textStart"
-                android:textSize="27sp"/>
+                android:textSize="@dimen/menu_by_category_title_fragment"/>
 
 
 
@@ -172,7 +164,7 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:textAlignment="textStart"
-                android:textSize="27sp"/>
+                android:textSize="@dimen/menu_by_category_title_fragment"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_my_chips_items"
@@ -194,7 +186,7 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:textAlignment="textStart"
-                android:textSize="27sp"/>
+                android:textSize="@dimen/menu_by_category_title_fragment"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_my_russian_items"
@@ -217,7 +209,7 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:textAlignment="textStart"
-                android:textSize="27sp"/>
+                android:textSize="@dimen/menu_by_category_title_fragment"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_my_addtional_meals_items"
@@ -239,7 +231,7 @@
                 android:text="Drinks"
                 android:textColor="@color/colorPrimaryText"
                 android:textAlignment="textStart"
-                android:textSize="27sp"/>
+                android:textSize="@dimen/menu_by_category_title_fragment"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_my_drinks_items"

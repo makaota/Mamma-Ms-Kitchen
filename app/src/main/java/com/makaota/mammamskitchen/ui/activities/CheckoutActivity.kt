@@ -279,13 +279,15 @@ class CheckoutActivity : BaseActivity() {
         }
         else{
 
-            binding.tvCheckoutDeliveryCharge.text = "R0"
+            binding.tvCheckoutDeliveryCharge.text = "R0.0"
 
             if (mSubTotal > 0) {
                 binding.llCheckoutPlaceOrder.visibility = View.VISIBLE
 
                 mTotalAmount = mSubTotal
+
                 binding.tvCheckoutTotalAmount.text = "R$mTotalAmount"
+
             } else {
                 binding.llCheckoutPlaceOrder.visibility = View.GONE
             }
@@ -315,6 +317,20 @@ class CheckoutActivity : BaseActivity() {
         val userMobile = sharedPreferences.getString(Constants.LOGGED_IN_USER_MOBILE, "")
         editor.apply()
 
+        val currentTimeMillis = System.currentTimeMillis()
+
+        // Convert the current time to a string
+        val currentTimeString = currentTimeMillis.toString()
+
+        var lastFiveDigits = ""
+        // Extract the last five digits
+        if (currentTimeString.length >= 5) {
+            lastFiveDigits = currentTimeString.takeLast(5)
+            println("Last five digits: $lastFiveDigits")
+        }
+
+
+
         // Now prepare the order details based on all the required details.
         // START
         if (mAddressDetails != null) {
@@ -322,15 +338,15 @@ class CheckoutActivity : BaseActivity() {
                 user_id = FirestoreClass().getCurrentUserId(),
                 mCartItemsList,
                 mAddressDetails!!,
-                title = "$username ${System.currentTimeMillis()}",
+                title = "$username $lastFiveDigits",
                 orderStatus = resources.getString(R.string.order_status_pending),
                 userName = username!!,
                 userMobile = userMobile!!,
                 image = mCartItemsList[0].image,
                 sub_total_amount = mSubTotal.toString(),
-                shipping_charge = "10.0", // The Shipping Charge is fixed as $10 for now in our case.
+                delivery_charge = "10.0", // The Shipping Charge is fixed as R10 for now in our case.
                 total_amount = mTotalAmount.toString(),
-                order_datetime = System.currentTimeMillis()
+                order_datetime = currentTimeMillis
             )
             // END
 
@@ -347,13 +363,13 @@ class CheckoutActivity : BaseActivity() {
             mOrderDetails = Order(
                 user_id = FirestoreClass().getCurrentUserId(),
                 mCartItemsList,
-                title = "$username ${System.currentTimeMillis()}",
+                title = "$username $lastFiveDigits",
                 orderStatus = resources.getString(R.string.order_status_pending),
                 userName = username!!,
                 userMobile = userMobile!!,
                 image = mCartItemsList[0].image,
                 sub_total_amount = mSubTotal.toString(),
-                shipping_charge = "10.0", // The Shipping Charge is fixed as $10 for now in our case.
+                delivery_charge = "0.0", // The Shipping Charge is fixed as R0 for now in our case.
                 total_amount = mTotalAmount.toString(),
                 order_datetime = System.currentTimeMillis()
             )

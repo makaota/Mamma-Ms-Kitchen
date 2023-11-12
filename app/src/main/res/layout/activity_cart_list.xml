@@ -114,7 +114,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/checkout_label_value_textSize"
-                tools:text="R0" />
+                tools:text="R0.0" />
         </LinearLayout>
 
         <LinearLayout
@@ -138,12 +138,12 @@
                 android:textAlignment="center"
                 android:textColor="@color/colorDarkGrey"
                 android:textSize="@dimen/checkout_label_value_textSize"
-                tools:text="R110" />
+                tools:text="R100" />
         </LinearLayout>
 
         <com.makaota.mammamskitchen.utils.RUAButton
             android:id="@+id/btn_checkout"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/btn_320dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="16dp"

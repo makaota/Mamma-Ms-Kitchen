@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorOffWhite"
+    android:background="@drawable/app_gradient_color_background"
     tools:context=".ui.activities.CheckoutActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -51,7 +51,7 @@
                 android:paddingTop="@dimen/checkout_content_lbl_padding"
                 android:paddingBottom="@dimen/checkout_content_lbl_padding"
                 android:text="@string/checkout_lbl_product_items"
-                android:textColor="@color/colorSecondaryText"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/checkout_lbl_textSize" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -72,7 +72,7 @@
                 android:paddingTop="@dimen/checkout_content_lbl_padding"
                 android:paddingBottom="@dimen/checkout_content_lbl_padding"
                 android:text="@string/checkout_lbl_selected_address"
-                android:textColor="@color/colorSecondaryText"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/checkout_lbl_textSize" />
 
             <LinearLayout
@@ -155,7 +155,7 @@
                 android:paddingTop="@dimen/checkout_content_lbl_padding"
                 android:paddingBottom="@dimen/checkout_content_lbl_padding"
                 android:text="@string/checkout_lbl_items_receipt"
-                android:textColor="@color/colorSecondaryText"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/checkout_lbl_textSize" />
 
             <LinearLayout
@@ -206,7 +206,7 @@
                         android:id="@+id/tv_checkout_delivery_charge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="R10.0"
+                        android:text="R0.0"
                         android:textAlignment="center"
                         android:textColor="@color/colorSecondaryText"
                         android:textSize="@dimen/checkout_label_value_textSize" />

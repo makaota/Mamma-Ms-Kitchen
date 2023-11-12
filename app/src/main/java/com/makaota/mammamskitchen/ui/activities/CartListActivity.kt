@@ -111,7 +111,7 @@ class CartListActivity : BaseActivity(), View.OnClickListener {
             }
 
             binding.tvSubTotal.text = "R$subTotal"
-            // Here we have kept Shipping Charge is fixed as $10 but in your case it may cary. Also, it depends on the location and total amount.
+            // Here we have kept Shipping Charge is fixed as R10 but in your case it may cary. Also, it depends on the location and total amount.
             binding.tvDeliveryCharge.text = "R0.0"
 
 

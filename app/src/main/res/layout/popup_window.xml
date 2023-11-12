@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/mammaColorLightYellowTheme">
@@ -40,7 +39,7 @@
                 <com.makaota.mammamskitchen.utils.RUATextViewBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Thank you for using our app!"
+                    android:text="@string/title_store_closed"
                     android:textColor="@color/colorDarkGrey"
                     android:gravity="center"
                     android:textSize="20sp" />
@@ -56,8 +55,8 @@
                 <com.makaota.mammamskitchen.utils.RUATextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Our store is currently closed,\nbut we'll be open and ready to take your orders again during our regular hours. "
-                    android:textColor="@color/colorDarkGrey"
+                    android:text="@string/message1_store_closed"
+                    android:textColor="@color/colorPrimaryText"
                     android:gravity="center"
                     android:textSize="15sp" />
 
@@ -73,8 +72,8 @@
                 <com.makaota.mammamskitchen.utils.RUATextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="You can place your orders between [Opening Time] and [Closing Time]. We look forward to serving you then! 🛒🕒"
-                    android:textColor="@color/colorDarkGrey"
+                    android:text="@string/message2"
+                    android:textColor="@color/colorPrimaryText"
                     android:gravity="center"
                     android:textSize="15sp" />
 
@@ -85,13 +84,13 @@
                 android:id="@+id/about_us_popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="About Us"
+                android:text="@string/about_us"
                 android:textSize="13sp"
-                android:textColor="@color/colorThemePink"
+                android:textColor="@color/colorPrimaryText"
                 android:background="@android:color/darker_gray"
                 android:foreground="?attr/selectableItemBackground"
                 android:padding="@dimen/delete_icon_padding"
-                android:layout_gravity="right" />
+                android:layout_gravity="end" />
         </LinearLayout>
 
 

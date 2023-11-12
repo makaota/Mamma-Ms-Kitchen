@@ -58,7 +58,7 @@
                 <com.makaota.mammamskitchen.utils.RUAEditText
                     android:id="@+id/et_first_name"
                     android:importantForAccessibility="no"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/et_488dp"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:padding="@dimen/et_padding"
@@ -84,7 +84,7 @@
                 <com.makaota.mammamskitchen.utils.RUAEditText
                     android:id="@+id/et_last_name"
                     android:importantForAccessibility="no"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/et_488dp"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:padding="@dimen/et_padding"
@@ -109,7 +109,7 @@
 
                 <com.makaota.mammamskitchen.utils.RUAEditText
                     android:id="@+id/et_email"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/et_488dp"
                     android:importantForAccessibility="no"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
@@ -135,7 +135,7 @@
 
                 <com.makaota.mammamskitchen.utils.RUAEditText
                     android:id="@+id/et_password"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/et_488dp"
                     android:importantForAccessibility="no"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -161,7 +161,7 @@
 
                 <com.makaota.mammamskitchen.utils.RUAEditText
                     android:id="@+id/et_confirm_password"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/et_488dp"
                     android:importantForAccessibility="no"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -193,13 +193,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/txt_terms_condition_marginStart"
                     android:text="@string/i_agree_to_the_terms_and_condition"
-                    android:textColor="@color/colorSecondaryText"
+                    android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/txt_terms_and_condition_textSize" />
             </LinearLayout>
 
             <com.makaota.mammamskitchen.utils.RUAButton
                 android:id="@+id/btn_register"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/btn_320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"

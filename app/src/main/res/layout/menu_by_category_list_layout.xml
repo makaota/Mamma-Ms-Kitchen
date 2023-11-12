@@ -47,7 +47,7 @@
                     android:gravity="center"
                     android:textColor="@color/colorPrimaryText"
                     android:text="Title TextView"
-                    android:textSize="25sp" />
+                    android:textSize="@dimen/menu_by_category_title" />
 
 
                 <com.makaota.mammamskitchen.utils.RUATextView
@@ -59,7 +59,7 @@
                     android:gravity="start"
                     android:textColor="@color/colorDarkGrey"
                     android:text="Description TextView Description TextView Description TextView Description TextView Description TextView Description TextView"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <com.makaota.mammamskitchen.utils.RUATextViewBold
                     android:id="@+id/tv_item_price"
@@ -71,7 +71,7 @@
                     android:gravity="end"
                     android:textStyle="italic"
                     android:text="R53.20"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
 
                 <LinearLayout

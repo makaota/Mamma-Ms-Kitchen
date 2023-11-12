@@ -140,14 +140,14 @@
                 android:id="@+id/delete_notification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DELETE"
+                android:text="@string/notifications_delete"
                 android:textSize="12sp"
                 android:layout_marginTop="@dimen/notifications_top_margin"
-                android:textColor="@color/colorThemePink"
+                android:textColor="@color/colorRed"
                 android:background="@android:color/transparent"
                 android:foreground="?attr/selectableItemBackground"
                 android:padding="@dimen/delete_icon_padding"
-                android:layout_gravity="right" />
+                android:layout_gravity="end" />
         </LinearLayout>
 
 

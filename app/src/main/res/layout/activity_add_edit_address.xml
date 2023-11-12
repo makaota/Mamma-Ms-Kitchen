@@ -57,7 +57,7 @@
 
                 <com.makaota.mammamskitchen.utils.RUAEditText
                     android:id="@+id/et_full_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/et_488dp"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:padding="@dimen/et_padding"
@@ -82,7 +82,7 @@
 
                 <com.makaota.mammamskitchen.utils.RUAEditText
                     android:id="@+id/et_phone_number"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/et_488dp"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
                     android:padding="@dimen/et_padding"
@@ -107,7 +107,7 @@
 
                 <com.makaota.mammamskitchen.utils.RUAEditText
                     android:id="@+id/et_address"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/et_488dp"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:minLines="3"
@@ -134,7 +134,7 @@
 
                 <com.makaota.mammamskitchen.utils.RUAEditText
                     android:id="@+id/et_zip_code"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/et_488dp"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:padding="@dimen/et_padding"
@@ -159,7 +159,7 @@
 
                 <com.makaota.mammamskitchen.utils.RUAEditText
                     android:id="@+id/et_additional_note"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/et_488dp"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:padding="@dimen/et_padding"
@@ -247,7 +247,7 @@
 
             <com.makaota.mammamskitchen.utils.RUAButton
                 android:id="@+id/btn_submit_address"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/btn_320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"

@@ -170,6 +170,7 @@
     <string name="checkout_lbl_product_items">Product Items</string>
     <string name="checkout_lbl_selected_address">Selected Address</string>
     <string name="checkout_lbl_items_receipt">Items Receipt</string>
+    <string name="checkout_lbl_customer_info">Customer Details</string>
     <string name="lbl_payment_mode">Payment Mode</string>
     <string name="lbl_cash_on_delivery">Cash On Delivery</string>
     <string name="btn_lbl_place_order">PLACE ORDER</string>
@@ -203,6 +204,11 @@
     <string name="title_menu">Menu</string>
     <string name="title_notifications">Notifications</string>
     <string name="lbl_product_category">Product Category</string>
+    <string name="about_us">About Us</string>
+    <string name="message1_store_closed">Our store is currently closed,\nbut we\'ll be open and ready to take your orders again during our regular hours.</string>
+    <string name="message2">You can place your orders between [Opening Time] and [Closing Time]. We look forward to serving you then! 🛒🕒</string>
+    <string name="title_store_closed">Thank you for using our app!</string>
+    <string name="notifications_delete">DELETE</string>
 
 
 </resources>

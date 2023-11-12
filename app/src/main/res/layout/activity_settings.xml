@@ -84,7 +84,7 @@
             android:paddingEnd="@dimen/settings_edit_label_marginStartEnd"
             android:paddingBottom="@dimen/settings_edit_label_marginTopBottom"
             android:text="@string/lbl_edit"
-            android:textColor="@color/colorSecondaryText"
+            android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/settings_edit_label_textSize" />
 
         <com.makaota.mammamskitchen.utils.RUATextViewBold
@@ -105,7 +105,7 @@
             android:layout_below="@id/tv_name"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/settings_info_marginTop"
-            android:textColor="@color/colorSecondaryText"
+            android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/settings_info_textSize"
             tools:text="Male" />
 
@@ -116,7 +116,7 @@
             android:layout_below="@id/tv_gender"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/settings_info_marginTop"
-            android:textColor="@color/colorSecondaryText"
+            android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/settings_info_textSize"
             tools:text="sa.makaota@gmail.com" />
 
@@ -127,7 +127,7 @@
             android:layout_below="@id/tv_email"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/settings_info_marginTop"
-            android:textColor="@color/colorSecondaryText"
+            android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/settings_info_textSize"
             tools:text="123456789" />
 
@@ -148,7 +148,7 @@
                 android:layout_margin="@dimen/settings_lbl_addresses_margin"
                 android:layout_weight="1"
                 android:text="@string/lbl_addresses"
-                android:textColor="@color/colorSecondaryText"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/settings_lbl_addresses_textSize" />
 
             <ImageView
@@ -161,7 +161,7 @@
 
         <com.makaota.mammamskitchen.utils.RUAButton
             android:id="@+id/btn_logout"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/btn_320dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_address"
             android:layout_gravity="center"

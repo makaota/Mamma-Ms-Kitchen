@@ -44,4 +44,14 @@
 
     <color name="chip_color_gradiant">#ABF7B1</color>
 
+
+    <color name="colorRed">#FF0000</color>
+    <color name="colorLime">#00FF00</color>
+    <color name="colorBlue">#0000FF</color>
+    <color name="colorYellow">#FFFF00</color>
+    <color name="colorCyan">#00FFFF</color>
+    <color name="colorDeepPink">#FF1493</color>
+
+
+
 </resources>

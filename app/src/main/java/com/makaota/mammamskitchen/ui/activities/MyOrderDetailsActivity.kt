@@ -35,7 +35,7 @@ import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 
-const val ORDER_TAG = "MyOrderDetailsActivity"
+
 class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
 
     lateinit var binding: ActivityMyOrderDetailsBinding
@@ -429,8 +429,33 @@ class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
         binding.tvMyOrderDetailsMobileNumber.text = userMobile
 
         binding.tvOrderDetailsSubTotal.text = orderDetails.sub_total_amount
-        binding.tvOrderDetailsShippingCharge.text = orderDetails.shipping_charge
+        binding.tvOrderDetailsDeliveryCharge.text = orderDetails.delivery_charge
         binding.tvOrderDetailsTotalAmount.text = orderDetails.total_amount
+
+
+        // Set the selected address details to UI that is received through intent.
+        // START
+        if (myOrderDetails.address.type.isNotEmpty()) {
+            binding.tvCheckoutAddressType.text = myOrderDetails.address.type
+            binding.tvCheckoutFullName.text = myOrderDetails.address.name
+            binding.tvCheckoutAddress.text = "${myOrderDetails.address.address} ${myOrderDetails.address.zipCode}"
+            binding.tvCheckoutAdditionalNote.text = myOrderDetails.address.additionalNote
+            binding.tvCheckoutMobileNumber.text = myOrderDetails.address.mobileNumber
+
+            if (myOrderDetails.address.otherDetails.isNotEmpty()) {
+                binding.tvCheckoutOtherDetails.text = myOrderDetails.address.otherDetails
+            }
+
+        }else{
+          //  binding.llCheckoutAddressDetails.visibility = View.GONE
+          //  binding.tvSelectedAddress.visibility = View.GONE
+
+            binding.tvCheckoutAddressType.text = "Address not selected"
+            binding.tvCheckoutFullName.text = "Customer to pickup"
+        }
+        // END
+
+
     }
     // END
 
