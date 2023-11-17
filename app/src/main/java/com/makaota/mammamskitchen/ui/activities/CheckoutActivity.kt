@@ -451,7 +451,7 @@ class CheckoutActivity : BaseActivity() {
 
                     }
 
-                    Log.i("TAG","userManager Token = $mUserDeviceToken")
+                    Log.i("TAG","user Token = $mUserDeviceToken")
                 } else {
                     // User document does not exist
                 }

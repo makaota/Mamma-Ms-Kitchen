@@ -175,9 +175,6 @@ class FirestoreClass {
                             activity.hideProgressDialog()
                         }
 
-
-
-
                     }
 
                     Log.e(
@@ -692,7 +689,7 @@ class FirestoreClass {
 
 
     /** This code write a new batch to token field in the user collection by checking if
-     * the app has been logged on using the new device
+     * the app has been logged in using the new device
      * if that is the case then update the new token in the userToken field with the new tokenDevice
      * this process happens automatically no user intervention
      */
