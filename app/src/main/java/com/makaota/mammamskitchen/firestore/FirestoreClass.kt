@@ -167,6 +167,16 @@ class FirestoreClass {
                             activity.hideProgressDialog()
                         }
 
+                        is SplashActivity -> {
+                            activity.hideProgressDialog()
+                        }
+
+                        is CheckoutActivity -> {
+                            activity.hideProgressDialog()
+                        }
+
+
+
 
                     }
 

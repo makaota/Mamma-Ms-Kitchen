@@ -186,10 +186,26 @@
     <dimen name="notifications_top_margin">7dp</dimen>
     <dimen name="spacing">10dp</dimen>
     <dimen name="btn_320dp">320dp</dimen>
-    <dimen name="et_488dp">488dp</dimen>
     <dimen name="menu_by_category_title">20sp</dimen>
     <dimen name="menu_by_category_title_fragment">25sp</dimen>
 
     <!--END-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </resources>

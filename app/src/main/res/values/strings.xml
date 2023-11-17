@@ -5,7 +5,7 @@
     <string name="content_description">image</string>
     <string name="title_login">LOGIN</string>
     <string name="et_hint_phone_number">Phone Number</string>
-    <string name="et_hint_email_id">Email ID</string>
+    <string name="et_hint_email_id">Email</string>
     <string name="et_hint_password">Password</string>
     <string name="lbl_forgot_password">Forgot Password?</string>
     <string name="lbl_resend_otp">Resend OTP?</string>
@@ -52,7 +52,7 @@
     <string name="register_success">You are registered successfully.</string>
 
     <string name="title_complete_profile">PLEASE COMPLETE PROFILE</string>
-    <string name="et_hint_mobile_number">Mobile Number</string>
+    <string name="et_hint_mobile_number">Phone Number e.g 0671234567 </string>
 
     <string name="rb_lbl_male">MALE</string>
     <string name="rb_lbl_female">FEMALE</string>

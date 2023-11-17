@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize">
 
-                <TextView
+                <com.makaota.mammamskitchen.utils.RUATextView
                     android:id="@+id/tv_title"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -136,7 +136,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_mobile_number"
-            android:layout_margin="@dimen/settings_address_margin"
+            android:layout_marginStart="@dimen/settings_address_margin"
+            android:layout_marginTop="@dimen/settings_address_margin"
+            android:layout_marginEnd="@dimen/settings_address_margin"
+            android:layout_marginBottom="@dimen/settings_address_margin"
             android:background="@drawable/item_grey_border_background"
             android:foreground="?attr/selectableItemBackground"
             android:orientation="horizontal"

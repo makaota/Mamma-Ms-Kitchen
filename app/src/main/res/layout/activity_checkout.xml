@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/app_gradient_color_background">
 
-        <TextView
+        <com.makaota.mammamskitchen.utils.RUATextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

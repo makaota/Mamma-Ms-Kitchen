@@ -80,7 +80,7 @@
             </LinearLayout>
 
 
-            <TextView
+            <com.makaota.mammamskitchen.utils.RUATextView
                 android:id="@+id/about_us_popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -50,7 +50,7 @@
 
         <com.makaota.mammamskitchen.utils.RUAEditText
             android:id="@+id/et_email"
-            android:layout_width="@dimen/et_488dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:padding="@dimen/et_padding"
@@ -76,7 +76,7 @@
 
         <com.makaota.mammamskitchen.utils.RUAEditText
             android:id="@+id/et_password"
-            android:layout_width="@dimen/et_488dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:padding="@dimen/et_padding"
@@ -121,7 +121,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_margin="10dp"
         android:padding="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
