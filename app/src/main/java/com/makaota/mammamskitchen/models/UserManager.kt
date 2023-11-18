@@ -14,5 +14,5 @@ data class UserManager(
     val firstName: String = "",
     val lastName: String = "",
     val email: String = "",
-    val userToken: String = "",
+    var userToken: String = "",
     val profileCompleted: Int = 0) : Parcelable
