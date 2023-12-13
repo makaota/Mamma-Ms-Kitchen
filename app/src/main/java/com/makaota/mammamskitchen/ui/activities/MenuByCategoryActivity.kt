@@ -176,7 +176,7 @@ class MenuByCategoryActivity : BaseActivity() {
         hideProgressDialog()
 
         FancyToast.makeText(
-            this, "removed from favorites successfully",
+            this, "removed",
             FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, true
         ).show()
 
@@ -267,7 +267,7 @@ class MenuByCategoryActivity : BaseActivity() {
         hideProgressDialog()
 
         FancyToast.makeText(
-            this, "added to favorites successfully",
+            this, "added",
             FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, true
         ).show()
 

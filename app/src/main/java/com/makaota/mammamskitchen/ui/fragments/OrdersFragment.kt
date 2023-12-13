@@ -53,11 +53,7 @@ class OrdersFragment : BaseFragment() {
 
             getMyOrdersList() //Reload order List Items
 
-            FancyToast.makeText(requireContext(),
-                "Orders Refreshed",
-                FancyToast.LENGTH_SHORT,
-                FancyToast.SUCCESS,
-                true).show()
+
 
             _binding!!.swipeRefreshLayout.isRefreshing = false
 

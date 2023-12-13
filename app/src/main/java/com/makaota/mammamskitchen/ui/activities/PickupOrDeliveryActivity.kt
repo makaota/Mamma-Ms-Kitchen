@@ -23,6 +23,7 @@ class PickupOrDeliveryActivity : BaseActivity() {
             val intent = Intent(this, CheckoutActivity::class.java)
             //intent.putExtra(Constants.EXTRA_SELECT_ADDRESS, true)
             startActivity(intent)
+            finish()
         }
 
         binding.tvDelivery.setOnClickListener{
@@ -30,6 +31,7 @@ class PickupOrDeliveryActivity : BaseActivity() {
             val intent = Intent(this, AddressListActivity::class.java)
             intent.putExtra(Constants.EXTRA_SELECT_ADDRESS, true)
             startActivity(intent)
+            finish()
         }
 
     }

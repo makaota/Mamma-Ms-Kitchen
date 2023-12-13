@@ -11,6 +11,8 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.ActivityLoginBinding
@@ -107,13 +109,13 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 .addOnCompleteListener { task ->
 
                     if (task.isSuccessful) {
-                        // if (Firebase.auth.currentUser!!.isEmailVerified){
+                         if (Firebase.auth.currentUser!!.isEmailVerified){
                         FirestoreClass().getUserDetails(this)
-//                        }else{
-//                            // Hide the progress dialog
-//                            hideProgressDialog()
-                        //      showErrorSnackBar("Please verify your email address", true)
-                        //   }
+                        }else{
+                            // Hide the progress dialog
+                            hideProgressDialog()
+                              showErrorSnackBar("Please verify your email address", true)
+                           }
                     } else {
                         // Hide the progress dialog
                         hideProgressDialog()

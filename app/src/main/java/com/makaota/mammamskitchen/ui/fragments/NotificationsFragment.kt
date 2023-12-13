@@ -58,11 +58,7 @@ class NotificationsFragment : BaseFragment() {
 
             getMyNotificationsList()
 
-            FancyToast.makeText(requireContext(),
-                "Notifications Refreshed",
-                FancyToast.LENGTH_SHORT,
-                FancyToast.SUCCESS,
-                true).show()
+
 
             _binding!!.notificationsSwipeRefreshLayout.isRefreshing = false
 

@@ -488,13 +488,7 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
 
         menuSwipeRefreshLayout.setOnRefreshListener {
             getMenuItemsList() // Reload Menu Items
-            FancyToast.makeText(
-                requireContext(),
-                "Menu Refreshed",
-                FancyToast.LENGTH_SHORT,
-                FancyToast.SUCCESS,
-                true
-            ).show()
+
 
             _binding!!.menuSwipeRefreshLayout.isRefreshing = false
         }
@@ -778,7 +772,6 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
 
                         if (!openCloseStore.isStoreOpen){
 
-                            Toast.makeText(requireContext(),"Store is Closed", Toast.LENGTH_SHORT).show()
                             hideProgressDialog()
 
                             showPopup()
@@ -786,7 +779,6 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
                         }
                         else{
 
-                            Toast.makeText(requireContext(),"Store is Open", Toast.LENGTH_SHORT).show()
                             hideProgressDialog()
 
                             // Launch the product details screen from the dashboard.

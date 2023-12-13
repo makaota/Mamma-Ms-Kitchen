@@ -170,17 +170,17 @@ class RegisterActivity : BaseActivity(), View.OnClickListener {
 
                             val newUser = Firebase.auth.currentUser
 
-//                            newUser!!.sendEmailVerification()
-//                                .addOnCompleteListener { task ->
-//                                    if (task.isSuccessful) {
-//                                        Log.d(ContentValues.TAG, "Email sent.")
-//                                        FancyToast.makeText(this,"Your are registered successfully. \n" +
-//                                                "Please check your email address for verification",
-//                                            FancyToast.LENGTH_LONG,FancyToast.INFO,true).show()
-//                                    }else{
-//                                        showErrorSnackBar(task.exception!!.message.toString(), true)
-//                                    }
-//                                }
+                            newUser!!.sendEmailVerification()
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+
+                                        FancyToast.makeText(this,"Your are registered successfully. \n" +
+                                                "Please check your email address for verification",
+                                            FancyToast.LENGTH_LONG,FancyToast.INFO,true).show()
+                                    }else{
+                                        showErrorSnackBar(task.exception!!.message.toString(), true)
+                                    }
+                                }
 
                             //  Firebase registered user
                             val firebaseUser: FirebaseUser = task.result!!.user!!

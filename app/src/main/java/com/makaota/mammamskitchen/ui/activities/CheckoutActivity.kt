@@ -142,12 +142,10 @@ class CheckoutActivity : BaseActivity() {
 
                 if (!openCloseStore.isStoreOpen){
 
-                    Toast.makeText(this,"Store is Closed", Toast.LENGTH_SHORT).show()
                     hideProgressDialog()
                 }
                 else{
 
-                    Toast.makeText(this,"Store is Open", Toast.LENGTH_SHORT).show()
                     hideProgressDialog()
                     placeAnOrder()
 
@@ -512,12 +510,6 @@ class CheckoutActivity : BaseActivity() {
 
       //  hideProgressDialog()
 
-        FancyToast.makeText(
-            this@CheckoutActivity,
-            "Notifications Info Uploaded successfully.",
-            FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, true
-        )
-            .show()
     }
 
     // This Function get the id of user manager via product

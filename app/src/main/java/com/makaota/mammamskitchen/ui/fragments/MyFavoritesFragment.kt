@@ -52,11 +52,6 @@ class MyFavoritesFragment : BaseFragment() {
 
             getMyFavoritesList()
 
-            FancyToast.makeText(requireContext(),
-                "Favorites Refreshed",
-                FancyToast.LENGTH_SHORT,
-                FancyToast.SUCCESS,
-                true).show()
 
             _binding!!.favoritesSwipeRefreshLayout.isRefreshing = false
 
