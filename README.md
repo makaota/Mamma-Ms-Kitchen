@@ -5,6 +5,14 @@ Leveraging my expertise in Android development,
 this app provides an intuitive interface for users to seamlessly browse menus, 
 place orders, and manage their profiles.
 
+# Scope
+
+The app encompasses features like user registration, menu browsing, order placement, notifications, and more.
+
+# Target Audience
+
+This app is designed for customers who want to conveniently order food from Mama M's Kitchen.
+
 # Features
 
 - **_User Authentication:_** Implemented secure user registration and login functionalities.
