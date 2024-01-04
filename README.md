@@ -14,7 +14,17 @@ place orders, and manage their profiles.
 - **_User Profile Management:_** Efficiently manage user profiles and preferences.
 - **_Notifications:_** Implement push notifications for order updates and special offers.
 - **_Payment Mode:_** Securely handle transactions at the store, cash on delivery.
-- **_Feedback and Ratings:_** Allow users to provide feedback and rate dishes. to be implemented 
+- **_Feedback and Ratings:_** Allow users to provide feedback and rate dishes. to be implemented
+
+# Screen Shot
+
+![Screenshot_20240104_154131_com makaota mammamskitchen_284x600_242x512](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/11ad53ae-fc91-41e0-950a-b9dc8ea2623a)
+![Screenshot_20240104_154150_com makaota mammamskitchen_284x600_242x512](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/43afe859-c03a-4202-a41c-2a0ff8979881)
+![Screenshot_20240104_141150_com makaota mammamskitchen_284x600_242x512](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/faa33a90-1724-4a4e-a2ce-33150c5ce144)
+![Screenshot_20240104_141225_com makaota mammamskitchen_284x600_242x512](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/2a69d85b-7cd3-42aa-b924-d5e38479e9a3)
+![Screenshot_20240104_141250_com makaota mammamskitchen_284x600_242x512](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/9bdffcd5-6785-4298-8993-28f18db3990c)
+![Screenshot_20240104_141353_com makaota mammamskitchen_284x600_242x512](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/a8b64d79-525a-4726-89fc-26f43218e009)
+
 
 # Project Structure
 
