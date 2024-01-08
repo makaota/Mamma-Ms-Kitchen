@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/content_description"
                 android:scaleType="fitXY"
-                android:src="@drawable/mamma_m_kitchen_logo" />
+                android:src="@mipmap/mamma_m_kitchen_logo" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_settings_activity"
@@ -62,7 +62,7 @@
                 android:layout_margin="@dimen/settings_user_picture_margin"
                 android:contentDescription="@string/content_description"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_user_placeholder" />
+                android:src="@mipmap/ic_user_placeholder" />
 
             <View
                 android:layout_width="match_parent"

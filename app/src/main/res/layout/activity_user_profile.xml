@@ -60,7 +60,7 @@
                     android:background="@color/colorLightGrey"
                     android:contentDescription="@string/content_description"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_user_placeholder" />
+                    android:src="@mipmap/ic_user_placeholder" />
 
                 <View
                     android:layout_width="match_parent"

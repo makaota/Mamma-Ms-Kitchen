@@ -13,7 +13,7 @@
         android:id="@+id/fl_header_image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/auth_header_image_height"
-        android:background="@drawable/mamma_m_kitchen_logo"
+        android:background="@mipmap/mamma_m_kitchen_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

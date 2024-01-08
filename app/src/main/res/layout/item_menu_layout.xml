@@ -29,7 +29,7 @@
         android:minHeight="@dimen/item_dashboard_image_height"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
-        android:src="@drawable/mamma_m_kitchen_auth" />
+        android:src="@mipmap/mamma_m_kitchen_auth" />
 
     </FrameLayout>
 
