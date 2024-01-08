@@ -138,7 +138,6 @@ class CheckoutActivity : BaseActivity() {
                 // Convert the snapshot to the object of open close store data model class.
                 val openCloseStore = document.toObject(OpenCloseStore::class.java)!!
 
-             //  val mOpenCloseStore = openCloseStore
 
                 if (!openCloseStore.isStoreOpen){
 

@@ -106,12 +106,12 @@ class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
                 batch.commit()
                     .addOnSuccessListener {
                         // Update successful
-                        //hideProgressDialog()
+
 
                     }
                     .addOnFailureListener { e ->
                         // Handle error
-                        //hideProgressDialog()
+
                     }
 
                 sendOrderNotificationToUserManager()
@@ -441,8 +441,6 @@ class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
             }
 
         }else{
-          //  binding.llCheckoutAddressDetails.visibility = View.GONE
-          //  binding.tvSelectedAddress.visibility = View.GONE
 
             binding.tvCheckoutAddressType.text = "Address not selected"
             binding.tvCheckoutFullName.text = "Customer to pickup"

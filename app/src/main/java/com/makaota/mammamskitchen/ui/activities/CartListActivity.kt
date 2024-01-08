@@ -36,12 +36,7 @@ class CartListActivity : BaseActivity(), View.OnClickListener {
                 R.id.btn_checkout->{
 
                     val intent = Intent(this@CartListActivity, PickupOrDeliveryActivity::class.java)
-                   // intent.putExtra(Constants.EXTRA_SELECT_ADDRESS, true)
                     startActivity(intent)
-
-//                    val intent = Intent(this@CartListActivity, AddressListActivity::class.java)
-//                    intent.putExtra(Constants.EXTRA_SELECT_ADDRESS, true)
-//                    startActivity(intent)
                 }
             }
         }
@@ -135,9 +130,6 @@ class CartListActivity : BaseActivity(), View.OnClickListener {
     // Create a function to get the list of cart items in the activity.
     // START
     private fun getCartItemsList() {
-
-        // Show the progress dialog.
-        //  showProgressDialog(resources.getString(R.string.please_wait))
 
         FirestoreClass().getCartList(this@CartListActivity)
     }
