@@ -24,7 +24,7 @@ This app is designed for customers who want to conveniently order food from Mama
 - **_Payment Mode:_** Securely handle transactions at the store, cash on delivery.
 - **_Feedback and Ratings:_** Allow users to provide feedback and rate dishes. to be implemented
 
-# Screen Shot
+# Screen Shots
 
 ![Samsung Galaxy S9 Screenshot 0_480x960](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/dac129cb-dc26-4ade-9eac-a653ced9d185)
 ![Samsung Galaxy S9 Screenshot 1_480x960](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/d43c9fed-4cd6-43a8-a608-419971e793b2)
