@@ -26,12 +26,11 @@ This app is designed for customers who want to conveniently order food from Mama
 
 # Screen Shot
 
-![Screenshot_20240104_154131_com makaota mammamskitchen_284x600_242x512](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/11ad53ae-fc91-41e0-950a-b9dc8ea2623a)
-![Screenshot_20240104_154150_com makaota mammamskitchen_284x600_242x512](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/43afe859-c03a-4202-a41c-2a0ff8979881)
-![Screenshot_20240104_141150_com makaota mammamskitchen_284x600_242x512](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/faa33a90-1724-4a4e-a2ce-33150c5ce144)
-![Screenshot_20240104_141225_com makaota mammamskitchen_284x600_242x512](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/2a69d85b-7cd3-42aa-b924-d5e38479e9a3)
-![Screenshot_20240104_141250_com makaota mammamskitchen_284x600_242x512](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/9bdffcd5-6785-4298-8993-28f18db3990c)
-![Screenshot_20240104_141353_com makaota mammamskitchen_284x600_242x512](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/a8b64d79-525a-4726-89fc-26f43218e009)
+![Samsung Galaxy S9 Screenshot 0](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/3b464365-8431-4a52-9481-b1ddf7fee5e5)
+![Samsung Galaxy S9 Screenshot 1](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/7f586cb9-ce16-44d5-ade9-9d2d68b49aa2)
+
+
+
 
 
 # Project Structure
