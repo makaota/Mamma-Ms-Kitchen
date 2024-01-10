@@ -27,6 +27,8 @@ This app is designed for customers who want to conveniently order food from Mama
 # Screen Shots
 
 
+![Samsung Galaxy S9 Screenshot 0_384x768](https://github.com/makaota/Mamma-Ms-Kitchen/assets/74915165/6bbed120-fe01-42ed-bae6-999cbc84841f)
+
 
 
 
