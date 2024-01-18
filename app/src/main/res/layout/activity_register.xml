@@ -170,32 +170,6 @@
                     android:textSize="@dimen/et_textSize" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_terms_and_condition"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_confirm_password">
-
-                <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/cb_terms_and_condition"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:checked="false" />
-
-                <com.makaota.mammamskitchen.utils.RUATextView
-                    android:id="@+id/tv_terms_condition"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/txt_terms_condition_marginStart"
-                    android:text="@string/i_agree_to_the_terms_and_condition"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/txt_terms_and_condition_textSize" />
-            </LinearLayout>
 
             <com.makaota.mammamskitchen.utils.RUAButton
                 android:id="@+id/btn_register"
@@ -215,7 +189,7 @@
                 android:textSize="@dimen/btn_textSize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_terms_and_condition" />
+                app:layout_constraintTop_toBottomOf="@id/til_confirm_password" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

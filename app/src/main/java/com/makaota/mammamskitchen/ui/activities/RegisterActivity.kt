@@ -1,9 +1,15 @@
 package com.makaota.mammamskitchen.ui.activities
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.TextUtils
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.View
 import android.view.WindowInsets
@@ -25,7 +31,7 @@ import com.shashank.sony.fancytoastlib.FancyToast
 class RegisterActivity : BaseActivity(), View.OnClickListener {
 
 
-    lateinit var token : String
+    lateinit var token: String
 
     lateinit var binding: ActivityRegisterBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,10 +41,9 @@ class RegisterActivity : BaseActivity(), View.OnClickListener {
 
         setupActionBar()
         @Suppress("DEPRECATION")
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else
-        {
+        } else {
             window.setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -65,14 +70,14 @@ class RegisterActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.tv_login -> {
                 // Launch the register screen when the user clicks on the text.
                 onBackPressedDispatcher.onBackPressed()
 
             }
 
-            R.id.btn_register ->{
+            R.id.btn_register -> {
                 registerUser()
             }
         }
@@ -126,19 +131,23 @@ class RegisterActivity : BaseActivity(), View.OnClickListener {
             }
 
             TextUtils.isEmpty(binding.etConfirmPassword.text.toString().trim { it <= ' ' }) -> {
-                showErrorSnackBar(resources.getString(R.string.err_msg_enter_confirm_password), true)
+                showErrorSnackBar(
+                    resources.getString(R.string.err_msg_enter_confirm_password),
+                    true
+                )
                 false
             }
 
-            binding.etPassword.text.toString().trim { it <= ' ' } != binding.etConfirmPassword.text.toString()
+            binding.etPassword.text.toString()
+                .trim { it <= ' ' } != binding.etConfirmPassword.text.toString()
                 .trim { it <= ' ' } -> {
-                showErrorSnackBar(resources.getString(R.string.err_msg_password_and_confirm_password_mismatch), true)
+                showErrorSnackBar(
+                    resources.getString(R.string.err_msg_password_and_confirm_password_mismatch),
+                    true
+                )
                 false
             }
-            !binding.cbTermsAndCondition.isChecked -> {
-                showErrorSnackBar(resources.getString(R.string.err_msg_agree_terms_and_condition), true)
-                false
-            }
+
             else -> {
                 true
             }
@@ -174,10 +183,12 @@ class RegisterActivity : BaseActivity(), View.OnClickListener {
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
 
-                                        FancyToast.makeText(this,"Your are registered successfully. \n" +
-                                                "Please check your email address for verification",
-                                            FancyToast.LENGTH_LONG,FancyToast.INFO,true).show()
-                                    }else{
+                                        FancyToast.makeText(
+                                            this, "Your are registered successfully. \n" +
+                                                    "Please check your email address for verification",
+                                            FancyToast.LENGTH_LONG, FancyToast.INFO, true
+                                        ).show()
+                                    } else {
                                         showErrorSnackBar(task.exception!!.message.toString(), true)
                                     }
                                 }
@@ -186,16 +197,15 @@ class RegisterActivity : BaseActivity(), View.OnClickListener {
                             val firebaseUser: FirebaseUser = task.result!!.user!!
 
 
-
                             val user = User(
                                 id = firebaseUser.uid,
-                                firstName = binding.etFirstName.text.toString().trim{it <= ' '},
-                                lastName = binding.etLastName.text.toString().trim{it <= ' '},
-                                email = binding.etEmail.text.toString().trim{it <= ' '},
+                                firstName = binding.etFirstName.text.toString().trim { it <= ' ' },
+                                lastName = binding.etLastName.text.toString().trim { it <= ' ' },
+                                email = binding.etEmail.text.toString().trim { it <= ' ' },
                                 userToken = token
                             )
 
-                            FirestoreClass().registerUser(this@RegisterActivity,user)
+                            FirestoreClass().registerUser(this@RegisterActivity, user)
 
                         } else {
 
@@ -217,7 +227,7 @@ class RegisterActivity : BaseActivity(), View.OnClickListener {
         FancyToast.makeText(
             this@RegisterActivity,
             resources.getString(R.string.register_success),
-            FancyToast.LENGTH_SHORT, FancyToast.SUCCESS,true
+            FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, true
         ).show()
 
         FirebaseAuth.getInstance().signOut()
