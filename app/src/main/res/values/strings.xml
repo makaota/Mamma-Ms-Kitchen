@@ -82,6 +82,7 @@
     <string name="title_settings">SETTINGS</string>
     <string name="lbl_edit">Edit</string>
     <string name="lbl_addresses">Addresses</string>
+    <string name="lbl_delete_account"><U>Delete account?</U></string>
     <string name="btn_lbl_logout">Logout</string>
 
     <string name="title_edit_profile">EDIT PROFILE</string>
@@ -107,6 +108,7 @@
     <string name="product_delete_success_message">Your product is deleted successfully.</string>
     <string name="notification_delete_success_message">Your notification is deleted successfully.</string>
     <string name="order_delete_success_message">Your order is deleted successfully.</string>
+    <string name="delete_account_dialog_message">Are you sure you want to delete the account?</string>
     <string name="delete_notification_dialog_message">Are you sure you want to delete the notification?</string>
     <string name="delete_dialog_title">Delete</string>
     <string name="delete_dialog_message">Are you sure you want to delete the product?</string>

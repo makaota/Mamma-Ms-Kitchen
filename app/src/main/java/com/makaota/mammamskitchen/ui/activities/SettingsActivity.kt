@@ -5,16 +5,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.ActivitySettingsBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.User
 import com.makaota.mammamskitchen.utils.Constants
 import com.makaota.mammamskitchen.utils.GlideLoader
+import com.shashank.sony.fancytoastlib.FancyToast
 
-class SettingsActivity :  BaseActivity(), View.OnClickListener {
+class SettingsActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var mUserDetails: User
@@ -28,6 +31,7 @@ class SettingsActivity :  BaseActivity(), View.OnClickListener {
         binding.btnLogout.setOnClickListener(this)
         binding.tvEdit.setOnClickListener(this)
         binding.llAddress.setOnClickListener(this)
+        binding.tvDeleteAccount.setOnClickListener(this)
 
     }
 
@@ -69,7 +73,7 @@ class SettingsActivity :  BaseActivity(), View.OnClickListener {
         hideProgressDialog()
 
         // Load the image using the Glide Loader class.
-        GlideLoader(this@SettingsActivity).loadUserPicture(user.image,binding.ivUserPhoto)
+        GlideLoader(this@SettingsActivity).loadUserPicture(user.image, binding.ivUserPhoto)
 
         binding.tvName.text = "${user.firstName} ${user.lastName}"
         binding.tvEmail.text = user.email
@@ -105,17 +109,101 @@ class SettingsActivity :  BaseActivity(), View.OnClickListener {
                     val intent = Intent(this@SettingsActivity, LoginActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
-                    Log.i("INFO","Flag Executed")
+                    Log.i("INFO", "Flag Executed")
                     finish()
                 }
                 // END
 
-                R.id.ll_address ->{
+                R.id.ll_address -> {
                     val intent = Intent(this@SettingsActivity, AddressListActivity::class.java)
                     startActivity(intent)
+                }
+
+                R.id.tv_delete_account -> {
+
+                    showAlertDialogToDeleteAccount()
                 }
             }
         }
 
     }
+
+    // Create a function to show the alert dialog for the confirmation of delete account from cloud firestore.
+    // START
+    /**
+     * A function to show the alert dialog for the confirmation of delete account from cloud firestore.
+     */
+    private fun showAlertDialogToDeleteAccount() {
+
+        val builder = AlertDialog.Builder(this)
+        //set title for alert dialog
+        builder.setTitle(resources.getString(R.string.delete_dialog_title))
+        //set message for alert dialog
+        builder.setMessage(resources.getString(R.string.delete_account_dialog_message))
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+        //performing positive action
+        builder.setPositiveButton(resources.getString(R.string.yes)) { dialogInterface, _ ->
+
+
+            val userId = FirebaseAuth.getInstance().currentUser?.uid
+            val db = FirebaseFirestore.getInstance()
+            val userDocRef = db.collection(Constants.USER).document(userId!!)
+
+            userDocRef.delete()
+                .addOnSuccessListener {
+                    // User data deleted successfully
+
+                    // Show the progress dialog.
+                    showProgressDialog(resources.getString(R.string.please_wait))
+
+                    val user = FirebaseAuth.getInstance().currentUser
+                    user?.delete()
+                        ?.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                // User deleted successfully
+
+                                FancyToast.makeText(
+                                    this, "User account deleted successfully",
+                                    FancyToast.LENGTH_LONG, FancyToast.SUCCESS, true
+                                ).show()
+
+                                val intent = Intent(this@SettingsActivity, LoginActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+
+                                hideProgressDialog()
+
+                                finish()
+
+
+                            } else {
+                                // Handle failure
+                            }
+                        }
+
+
+                }
+                .addOnFailureListener { e ->
+                    // Handle failure
+                }
+            // END
+
+            hideProgressDialog()
+
+            dialogInterface.dismiss()
+        }
+
+        //performing negative action
+        builder.setNegativeButton(resources.getString(R.string.no)) { dialogInterface, _ ->
+
+            dialogInterface.dismiss()
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
+
 }

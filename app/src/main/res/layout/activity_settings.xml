@@ -181,5 +181,32 @@
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/btn_textSize" />
 
+        <LinearLayout
+            android:id="@+id/ll_delete_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_logout"
+            android:layout_marginStart="@dimen/settings_address_margin"
+            android:layout_marginTop="@dimen/settings_address_margin"
+            android:layout_marginEnd="@dimen/settings_address_margin"
+            android:layout_marginBottom="@dimen/settings_address_margin"
+            android:orientation="horizontal"
+            android:padding="@dimen/settings_address_padding">
+
+            <com.makaota.mammamskitchen.utils.RUATextView
+                android:id="@+id/tv_delete_account"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/settings_lbl_addresses_margin"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/lbl_delete_account"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/settings_lbl_addresses_textSize" />
+
+        </LinearLayout>
+
+
+
     </RelativeLayout>
 </ScrollView>
