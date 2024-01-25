@@ -1,21 +1,23 @@
 package com.makaota.mammamskitchen.ui.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
+import android.graphics.Paint
+import android.net.Uri
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.ActivitySettingsBinding
 import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.User
 import com.makaota.mammamskitchen.utils.Constants
 import com.makaota.mammamskitchen.utils.GlideLoader
-import com.shashank.sony.fancytoastlib.FancyToast
+
 
 class SettingsActivity : BaseActivity(), View.OnClickListener {
 
@@ -121,89 +123,23 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
 
                 R.id.tv_delete_account -> {
 
-                    showAlertDialogToDeleteAccount()
+                    binding.tvDeleteAccount.setTextColor(Color.CYAN)
+                    binding.tvDeleteAccount.paintFlags = binding.tvDeleteAccount.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
+                    // Define the URL you want to open
+                    val url = "http://mammamskitchen.mobie.in/index"
+
+                    // Create an Intent to open the URL
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+
+                    // Start the activity
+                    startActivity(intent)
+
                 }
             }
         }
 
     }
 
-    // Create a function to show the alert dialog for the confirmation of delete account from cloud firestore.
-    // START
-    /**
-     * A function to show the alert dialog for the confirmation of delete account from cloud firestore.
-     */
-    private fun showAlertDialogToDeleteAccount() {
-
-        val builder = AlertDialog.Builder(this)
-        //set title for alert dialog
-        builder.setTitle(resources.getString(R.string.delete_dialog_title))
-        //set message for alert dialog
-        builder.setMessage(resources.getString(R.string.delete_account_dialog_message))
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
-
-        //performing positive action
-        builder.setPositiveButton(resources.getString(R.string.yes)) { dialogInterface, _ ->
-
-
-            val userId = FirebaseAuth.getInstance().currentUser?.uid
-            val db = FirebaseFirestore.getInstance()
-            val userDocRef = db.collection(Constants.USER).document(userId!!)
-
-            userDocRef.delete()
-                .addOnSuccessListener {
-                    // User data deleted successfully
-
-                    // Show the progress dialog.
-                    showProgressDialog(resources.getString(R.string.please_wait))
-
-                    val user = FirebaseAuth.getInstance().currentUser
-                    user?.delete()
-                        ?.addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                // User deleted successfully
-
-                                FancyToast.makeText(
-                                    this, "User account deleted successfully",
-                                    FancyToast.LENGTH_LONG, FancyToast.SUCCESS, true
-                                ).show()
-
-                                val intent = Intent(this@SettingsActivity, LoginActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                startActivity(intent)
-
-                                hideProgressDialog()
-
-                                finish()
-
-
-                            } else {
-                                // Handle failure
-                            }
-                        }
-
-
-                }
-                .addOnFailureListener { e ->
-                    // Handle failure
-                }
-            // END
-
-            hideProgressDialog()
-
-            dialogInterface.dismiss()
-        }
-
-        //performing negative action
-        builder.setNegativeButton(resources.getString(R.string.no)) { dialogInterface, _ ->
-
-            dialogInterface.dismiss()
-        }
-        // Create the AlertDialog
-        val alertDialog: AlertDialog = builder.create()
-        // Set other dialog properties
-        alertDialog.setCancelable(false)
-        alertDialog.show()
-    }
 
 }

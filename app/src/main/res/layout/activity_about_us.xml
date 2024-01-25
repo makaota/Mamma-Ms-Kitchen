@@ -163,7 +163,7 @@
             android:layout_weight="1"
             android:textSize="15sp"
             android:textColor="@color/colorPrimaryText"
-            android:text="📞 Tab the phone number to call us:" />
+            android:text="📞 Tap the phone number to call us:" />
 
         <com.makaota.mammamskitchen.utils.RUATextView
             android:id="@+id/tv_contact_number"
@@ -198,7 +198,7 @@
             android:layout_weight="1"
             android:textSize="15sp"
             android:textColor="@color/colorPrimaryText"
-            android:text="📍 Tab Address to find us" />
+            android:text="📍 Tap Address to find us" />
 
         <com.makaota.mammamskitchen.utils.RUATextView
             android:id="@+id/tv_address"

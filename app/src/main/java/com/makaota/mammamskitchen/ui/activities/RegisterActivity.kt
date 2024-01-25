@@ -224,12 +224,6 @@ class RegisterActivity : BaseActivity(), View.OnClickListener {
         // Hide the progress dialog
         hideProgressDialog()
 
-        FancyToast.makeText(
-            this@RegisterActivity,
-            resources.getString(R.string.register_success),
-            FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, true
-        ).show()
-
         FirebaseAuth.getInstance().signOut()
         onBackPressedDispatcher.onBackPressed()
 
