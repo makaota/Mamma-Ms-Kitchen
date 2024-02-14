@@ -407,6 +407,25 @@ class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
                 binding.tvOrderStatus.text = resources.getString(R.string.order_status_delivered)
                 binding.btnSendCancelOrder.visibility = View.GONE
                 binding.btnUserConfirmOrder.visibility = View.GONE
+
+
+                val myDb = Firebase.firestore
+                val batch = myDb.batch()
+
+                val documentRef = myDb.collection(Constants.USER)
+                    .document(myOrderDetails.user_id)
+                // Update the value of the order status
+                batch.update(documentRef, "hasCompleteOrder", true)
+                batch.commit()
+                    .addOnSuccessListener {
+                        // Update successful
+
+
+                    }
+                    .addOnFailureListener { e ->
+                        // Handle error
+
+                    }
             }
         }
         // END
@@ -450,6 +469,7 @@ class MyOrderDetailsActivity : BaseActivity(), View.OnClickListener {
 
     }
     // END
+
 
 
 

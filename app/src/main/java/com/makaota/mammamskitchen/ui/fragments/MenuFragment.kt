@@ -23,6 +23,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.play.core.review.ReviewException
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.ReviewManagerFactory
+import com.google.android.play.core.review.model.ReviewErrorCode
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.makaota.mammamskitchen.R
@@ -31,6 +36,7 @@ import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.CartItem
 import com.makaota.mammamskitchen.models.OpenCloseStore
 import com.makaota.mammamskitchen.models.Product
+import com.makaota.mammamskitchen.models.User
 import com.makaota.mammamskitchen.ui.activities.AboutUsActivity
 import com.makaota.mammamskitchen.ui.activities.CartListActivity
 import com.makaota.mammamskitchen.ui.activities.MenuByCategoryActivity
@@ -40,6 +46,7 @@ import com.makaota.mammamskitchen.ui.adapters.MenuItemsListAdapter
 import com.makaota.mammamskitchen.utils.Constants
 import com.makaota.mammamskitchen.viewmodel.CounterViewModel
 import com.shashank.sony.fancytoastlib.FancyToast
+import kotlin.concurrent.timerTask
 
 const val MENU_FRAGMENT_TAG = "MenuFragment"
 
@@ -63,6 +70,9 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
     private var isCartQuantityInitialized: Boolean = false
 
     private val mFirestore = FirebaseFirestore.getInstance()
+
+    private lateinit var reviewManager: ReviewManager
+    private lateinit var reviewInfo : ReviewInfo
 
 
     // This property is only valid between onCreateView and
@@ -292,8 +302,12 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
         }
 
         getMenuItemsList()
+        checkIfUserHasCompleteOrder()
+
 
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -781,5 +795,59 @@ class MenuFragment : BaseFragment(), View.OnClickListener {
         // Display the popup window
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0)
     }
+
+
+    private fun requestReviewInfo() {
+
+        reviewManager = ReviewManagerFactory.create(requireContext())
+        val request = reviewManager.requestReviewFlow()
+        request.addOnCompleteListener { task ->
+
+            if (task.isSuccessful) {
+                reviewInfo = task.result
+                showReviewFlow()
+            } else {
+                // There was some problem, log or handle the error code.
+                @ReviewErrorCode val reviewErrorCode =
+                    (task.getException() as ReviewException).errorCode
+            }
+
+        }
+
+    }
+
+    private fun showReviewFlow() {
+
+        val flow = reviewManager.launchReviewFlow(requireActivity(), reviewInfo)
+        flow.addOnCompleteListener { _ ->
+            // The flow has finished. The API does not indicate whether the user
+            // reviewed or not, or even whether the review dialog was shown. Thus, no
+            // matter the result, we continue our app flow.
+        }
+    }
+
+
+    // This function checks if the user has completed an order if true then the app asks for a review
+    private fun checkIfUserHasCompleteOrder(){
+        // Here we pass the collection name from which we wants the data.
+        mFirestore.collection(Constants.USER)
+            // The document id to get the Fields of user.
+
+            .document(FirestoreClass().getCurrentUserId())
+            .get()
+            .addOnSuccessListener { document ->
+
+                // Here we have received the document snapshot which is converted into the User Data model object.
+                val user = document.toObject(User::class.java)!!
+
+                if (user.hasCompleteOrder == true) {
+                    requestReviewInfo()
+                }
+
+            }.addOnFailureListener { e->
+                e.message
+            }
+    }
+
 
 }
