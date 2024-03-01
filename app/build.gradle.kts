@@ -15,8 +15,8 @@ android {
         applicationId = "com.makaota.mammamskitchen"
         minSdk = 24
         targetSdk = 33
-        versionCode = 9
-        versionName = "1.9"
+        versionCode = 11
+        versionName = "2.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
