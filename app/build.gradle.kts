@@ -15,8 +15,8 @@ android {
         applicationId = "com.makaota.mammamskitchen"
         minSdk = 24
         targetSdk = 33
-        versionCode = 11
-        versionName = "2.1"
+        versionCode = 14
+        versionName = "2.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -108,4 +108,5 @@ dependencies {
 
     // For Kotlin users also import the Kotlin extensions library for Play In-App Review:
     implementation("com.google.android.play:review-ktx:2.0.1")
+
 }

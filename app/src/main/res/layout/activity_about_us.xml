@@ -89,7 +89,7 @@
             android:layout_marginTop="12dp"
             android:textSize="15sp"
             android:textColor="@color/colorPrimaryText"
-            android:text="🕒 Monday to Friday: 08:00 AM - 06:00 PM" />
+            android:text="🕒 Monday to Friday: 07:30 AM - 07:30 PM" />
 
         <!-- Saturday Hours -->
         <com.makaota.mammamskitchen.utils.RUATextView
@@ -99,7 +99,7 @@
             android:layout_marginTop="12dp"
             android:textSize="15sp"
             android:textColor="@color/colorPrimaryText"
-            android:text="🕒 Saturday: 08:00 AM - 03:00 PM" />
+            android:text="🕒 Saturday: 07:30 AM - 07:30 PM" />
 
         <!-- Sunday Hours -->
         <com.makaota.mammamskitchen.utils.RUATextView
@@ -208,7 +208,7 @@
             android:layout_weight="1"
             android:textSize="15sp"
             android:textColor="@color/colorPrimaryText"
-            android:text="105 Block 1 \nKutlwanong Township\nOdendaalsrus\n9480" />
+            android:text="454 Block 1 \nKutlwanong Township\nOdendaalsrus\n9480" />
 
     </LinearLayout>
 

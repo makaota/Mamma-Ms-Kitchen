@@ -222,8 +222,8 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                 // You can proceed with the authenticated user here.
                 Log.i(TAG,"sms code = ${credential.smsCode}")
                 if (user != null) {
-                    user.delete().addOnCompleteListener{ task->
 
+                    user.delete().addOnCompleteListener{ task->
                         if (task.isSuccessful){
                             Log.i(TAG,"GET THE CURRENT USER ID FROM FIRESTORE CLASS = ${FirestoreClass().getCurrentUserId()}")
                             Log.i(TAG,"user account deleted")

@@ -7,6 +7,7 @@ import android.widget.Toast
 import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.ActivityPickupOrDeliveryBinding
 import com.makaota.mammamskitchen.utils.Constants
+import com.shashank.sony.fancytoastlib.FancyToast
 
 class PickupOrDeliveryActivity : BaseActivity() {
 
@@ -28,10 +29,14 @@ class PickupOrDeliveryActivity : BaseActivity() {
 
         binding.tvDelivery.setOnClickListener{
 
-            val intent = Intent(this, AddressListActivity::class.java)
-            intent.putExtra(Constants.EXTRA_SELECT_ADDRESS, true)
-            startActivity(intent)
-            finish()
+            FancyToast.makeText(this,"This Section of the app is still under construction " +
+                    "please select pickup for now",FancyToast.LENGTH_LONG,FancyToast.INFO,
+                true).show()
+
+//            val intent = Intent(this, AddressListActivity::class.java)
+//            intent.putExtra(Constants.EXTRA_SELECT_ADDRESS, true)
+//            startActivity(intent)
+//            finish()
         }
 
     }

@@ -17,6 +17,7 @@ import com.makaota.mammamskitchen.firestore.FirestoreClass
 import com.makaota.mammamskitchen.models.User
 import com.makaota.mammamskitchen.utils.Constants
 import com.makaota.mammamskitchen.utils.GlideLoader
+import com.shashank.sony.fancytoastlib.FancyToast
 
 
 class SettingsActivity : BaseActivity(), View.OnClickListener {
@@ -117,8 +118,13 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
                 // END
 
                 R.id.ll_address -> {
-                    val intent = Intent(this@SettingsActivity, AddressListActivity::class.java)
-                    startActivity(intent)
+
+                    FancyToast.makeText(this,"This Section of the app is still under construction " +
+                            "please select pickup for now", FancyToast.LENGTH_LONG, FancyToast.INFO,
+                        true).show()
+
+//                    val intent = Intent(this@SettingsActivity, AddressListActivity::class.java)
+//                    startActivity(intent)
                 }
 
                 R.id.tv_delete_account -> {

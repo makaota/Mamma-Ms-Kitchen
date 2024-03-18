@@ -57,6 +57,8 @@ class CheckoutActivity : BaseActivity() {
 
     private lateinit var mOrderDetails: Order
 
+    private lateinit var mUser: User
+
     // Create a global variables for SubTotal and Total Amount.
     // START
     // A global variable for the SubTotal Amount.
@@ -103,6 +105,8 @@ class CheckoutActivity : BaseActivity() {
 
         getProductList()
 
+        mUser = User()
+
 
         FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
 
@@ -111,7 +115,7 @@ class CheckoutActivity : BaseActivity() {
             val sharedPreferences = getSharedPreferences("CheckoutPrefs", Context.MODE_PRIVATE)
              userProfileComplete = sharedPreferences.getInt("userProfileComplete", 0)
 
-            if (userProfileComplete == 0) {
+            if (mUser.profileCompleted == 0) {
                 FirestoreClass().getUserDetails(this)
             }else{
                getOpenCloseStoreInfo()
@@ -396,12 +400,12 @@ class CheckoutActivity : BaseActivity() {
             // If the user profile is incomplete then launch the UserProfileActivity.
             val intent = Intent(this, UserProfileActivity::class.java)
 
-            val sharedPreferences = getSharedPreferences("CheckoutPrefs", Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            userProfileComplete = 1 // Set your value here (0 or 1)
-            editor.putInt("userProfileComplete", userProfileComplete)
+           // val sharedPreferences = getSharedPreferences("CheckoutPrefs", Context.MODE_PRIVATE)
+           // val editor = sharedPreferences.edit()
+          //  userProfileComplete = 1 // Set your value here (0 or 1)
+          //  editor.putInt("userProfileComplete", userProfileComplete)
             //editor.clear()
-            editor.apply()
+          //  editor.apply()
             intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
             startActivity(intent)
 
@@ -413,16 +417,17 @@ class CheckoutActivity : BaseActivity() {
              *  the user has previously completed the user profile
              */
 
-            // If the user profile is complete then launch the CartListActivity.
-            val intent = Intent(this, CartListActivity::class.java)
-
-            val sharedPreferences = getSharedPreferences("CheckoutPrefs", Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            userProfileComplete = 1 // Set your value here (0 or 1)
-            editor.putInt("userProfileComplete", userProfileComplete)
-            //editor.clear()
-            editor.apply()
-            startActivity(intent)
+//            // If the user profile is complete then launch the CartListActivity.
+//            val intent = Intent(this, CartListActivity::class.java)
+//
+//         //   val sharedPreferences = getSharedPreferences("CheckoutPrefs", Context.MODE_PRIVATE)
+//          //  val editor = sharedPreferences.edit()
+//          //  userProfileComplete = 1 // Set your value here (0 or 1)
+//          //  editor.putInt("userProfileComplete", userProfileComplete)
+//            //editor.clear()
+//          //  editor.apply()
+//            startActivity(intent)
+            placeAnOrder()
 
         }
     }
