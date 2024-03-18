@@ -71,4 +71,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ll_product_details"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.makaota.mammamskitchen.utils.RUATextView
+        android:id="@+id/tv_update_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="@dimen/delete_icon_padding"
+        android:textSize="@dimen/rv_item_price_textSize"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_product_details" />
 </androidx.constraintlayout.widget.ConstraintLayout>

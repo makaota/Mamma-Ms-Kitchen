@@ -5,7 +5,9 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.makaota.mammamskitchen.R
 import com.makaota.mammamskitchen.databinding.ItemListLayoutBinding
 import com.makaota.mammamskitchen.models.Order
 import com.makaota.mammamskitchen.ui.activities.MyOrderDetailsActivity
@@ -30,7 +32,7 @@ open class MyOrdersListAdapter(
      * {@link ViewHolder} and initializes some private fields to be used by RecyclerView.
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding = ItemListLayoutBinding.inflate(LayoutInflater.from(context),parent, false)
+        val binding = ItemListLayoutBinding.inflate(LayoutInflater.from(context), parent, false)
         return MyViewHolder(binding)
     }
 
@@ -47,8 +49,8 @@ open class MyOrdersListAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val model = list[position]
 
-        with(holder){
-            with(model){
+        with(holder) {
+            with(model) {
                 GlideLoader(context).loadProductPicture(
                     model.image,
                     binding.ivItemImage
@@ -58,15 +60,58 @@ open class MyOrdersListAdapter(
                 binding.tvItemPrice.text = "R${model.total_amount}"
                 binding.ibDeleteProduct.visibility = View.GONE
 
-                if (model.orderStatus == "Delivered"){
+                if (model.orderStatus == "Pending") {
+                    binding.tvUpdateStatus.text = "Pending"
+                    binding.tvUpdateStatus.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.colorAccent
+                        )
+                    )
+
+                } else if (model.orderStatus == "In Process") {
+                    binding.tvUpdateStatus.text = "In Process"
+                    binding.tvUpdateStatus.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.colorOrderStatusInProcess
+                        )
+                    )
+
+                } else if (model.orderStatus == "Preparing") {
+                    binding.tvUpdateStatus.text = "Preparing"
+                    binding.tvUpdateStatus.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.colorOrderStatusPreparing
+                        )
+                    )
+
+                } else if (model.orderStatus == "Ready For Collection") {
+                    binding.tvUpdateStatus.text = "Ready For Collection"
+                    binding.tvUpdateStatus.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.colorOrderStatusReadyForCollection
+                        )
+                    )
+
+                } else if (model.orderStatus == "Delivered") {
+                    binding.tvUpdateStatus.text = "Delivered"
+                    binding.tvUpdateStatus.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.colorOrderStatusDelivered
+                        )
+                    )
+
                     binding.ibDeleteProduct.visibility = View.VISIBLE
 
-                    binding.ibDeleteProduct.setOnClickListener{
+                    binding.ibDeleteProduct.setOnClickListener {
 
                         fragment.deleteDeliveredOrder(model.id)
                     }
                 }
-
 
                 // Assign the click event to my order item and launch and pass the details to the detail page through intent.
                 // START
@@ -89,6 +134,7 @@ open class MyOrdersListAdapter(
     /**
      * A ViewHolder describes an item view and metadata about its place within the RecyclerView.
      */
-    inner class MyViewHolder(val binding: ItemListLayoutBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class MyViewHolder(val binding: ItemListLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }
 // END

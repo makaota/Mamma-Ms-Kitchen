@@ -79,9 +79,9 @@
     <dimen name="item_image_width">130dp</dimen>
     <dimen name="item_image_height">120dp</dimen>
     <dimen name="item_image_title_price_marginStart">10dp</dimen>
-    <dimen name="rv_item_name_textSize">20sp</dimen>
+    <dimen name="rv_item_name_textSize">16sp</dimen>
     <dimen name="rv_item_price_marginTop">2dp</dimen>
-    <dimen name="rv_item_price_textSize">18sp</dimen>
+    <dimen name="rv_item_price_textSize">16sp</dimen>
 
     <dimen name="item_dashboard_margin">5dp</dimen>
     <dimen name="item_dashboard_padding">1dp</dimen>
